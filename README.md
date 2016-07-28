@@ -1,6 +1,6 @@
 # Android-Source-Code - Newsing IT App -
 
-# Planning Sector Issues 
+# Planning Sector issues 
 
 * Project UI Prototype URL : https://ovenapp.io/view/TPndbnvzLfjpvM47zW2zUx3KPLqIz0Y0
 
@@ -8,7 +8,7 @@
 
 # Development(Server, Android) issues
 
-< Using Library list (updating...) >
+< Android Using Library list (updating...) >
 
 * compile 'com.android.support:support-v4:23.4.0'
 * compile 'com.facebook.android:facebook-android-sdk:4.8.2' //페이스북 관련 오픈소스//
@@ -27,4 +27,4 @@
 
 # Design department issues
 
-
+*
