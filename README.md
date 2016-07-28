@@ -1,8 +1,14 @@
-# Android-Source-Code
+# Android-Source-Code - Newsing IT App -
+
+# Planning Sector Issues 
 
 - Project UI Prototype URL : https://ovenapp.io/view/TPndbnvzLfjpvM47zW2zUx3KPLqIz0Y0
+- 
 
-- Using Library list (updating...)
+
+# Development(Server, Android) issues
+
+< Using Library list (updating...) >
 
 * compile 'com.android.support:support-v4:23.4.0'
 * compile 'com.facebook.android:facebook-android-sdk:4.8.2' //페이스북 관련 오픈소스//
@@ -17,5 +23,10 @@
 * //SUB-DEPENDENCIES
 * //Android-Iconics - used to provide an easy API for icons
 * compile 'com.mikepenz:iconics-core:2.6.6@aar'
+
+- 
+
+
+# Design department issues
 
 - 
