@@ -23,6 +23,7 @@
 * //SUB-DEPENDENCIES
 * //Android-Iconics - used to provide an easy API for icons
 * compile 'com.mikepenz:iconics-core:2.6.6@aar'
+* 
 
 
 # Design department issues
