@@ -128,7 +128,7 @@ public class LoginActivity extends AppCompatActivity {
                                     Toast.makeText(LoginActivity.this, "사용자 정보를 불러올 수 없습니다", Toast.LENGTH_SHORT).show();
                                 }
 
-                                // new joinTask().execute(); //자신의 서버에서 로그인 처리를 해줍니다
+                                // new joinTask().execute(); //자신의 서버에서 로그인 처리를 해줍니다//
                             }
                         });
                 Bundle parameters = new Bundle();
