@@ -4,11 +4,6 @@
 
 - Using Library list (updating...)
 
-dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    testCompile 'junit:junit:4.12'
-    compile 'com.android.support:appcompat-v7:23.4.0'
-
 
     compile 'com.android.support:support-v4:23.4.0'
     compile 'com.facebook.android:facebook-android-sdk:4.8.2' //페이스북 관련 오픈소스//
@@ -23,4 +18,5 @@ dependencies {
     //SUB-DEPENDENCIES
     //Android-Iconics - used to provide an easy API for icons
     compile 'com.mikepenz:iconics-core:2.6.6@aar'
-}
+
+- 
