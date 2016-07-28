@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">Newsing IT</string>
+    <string name="facebook_app_id">1176505682406858</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!-- ActionBar String -->
+    <string name="actionbar_menu_1_str">HEAD</string>
+    <string name="actionbar_menu_1_1_str">ADD HEAD</string>
+    <string name="actionbar_menu_1_2_str">DEL HEAD</string>
+    <string name="actionbar_menu_2_str">FOOT</string>
+    <string name="actionbar_menu_2_1_str">ADD FOOT</string>
+    <string name="actionbar_menu_2_2_str">DEL FOOT</string>
+
+    <string name="load_more_normal">새로고침</string>
+    <string name="load_more_loading">새로고침중...</string>
+    <string name="load_more_error">새로고침 에러</string>
+    <string name="title_activity_tab">TabActivity</string>
+    <string name="action_settings">Settings</string>
+    <string name="section_format">Hello World from section: %1$d</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+</resources>

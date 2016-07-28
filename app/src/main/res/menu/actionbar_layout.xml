@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/next_page"
+        android:orderInCategory="100"
+        android:title="NEXT"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:orderInCategory="101"
+        android:title="@string/actionbar_menu_1_str"
+        app:showAsAction="always">
+
+        <menu>
+
+            <item
+                android:id="@+id/add_headerview"
+                android:title="@string/actionbar_menu_1_1_str"
+                app:showAsAction="ifRoom" />
+
+            <item
+                android:id="@+id/del_headerview"
+                android:title="@string/actionbar_menu_1_2_str"
+                app:showAsAction="ifRoom" />
+
+        </menu>
+    </item>
+
+    <item
+        android:orderInCategory="102"
+        android:title="@string/actionbar_menu_2_str"
+        app:showAsAction="always">
+
+        <menu>
+
+            <item
+                android:id="@+id/add_footerview"
+                android:title="@string/actionbar_menu_2_1_str"
+                app:showAsAction="ifRoom" />
+
+            <item
+                android:id="@+id/del_footerview"
+                android:title="@string/actionbar_menu_2_2_str"
+                app:showAsAction="ifRoom" />
+
+        </menu>
+    </item>
+</menu>
