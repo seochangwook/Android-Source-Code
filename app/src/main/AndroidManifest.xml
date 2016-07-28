@@ -36,6 +36,7 @@
             android:exported="true" />
         <activity
             android:name=".TabActivity"
+            android:exported="true"
             android:label="@string/title_activity_tab"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>

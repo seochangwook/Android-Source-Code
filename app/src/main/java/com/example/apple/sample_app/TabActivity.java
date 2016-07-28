@@ -29,23 +29,22 @@ import com.example.apple.sample_app.view.Fragment_Discussionview;
 import com.example.apple.sample_app.view.Fragment_Keywordview;
 import com.example.apple.sample_app.view.Fragment_scraptview;
 import com.example.apple.sample_app.view.Fragment_settingview;
-import com.michaldrabik.tapbarmenulib.TapBarMenu;
+import com.mikepenz.actionitembadge.library.ActionItemBadge;
+import com.mikepenz.actionitembadge.library.utils.BadgeStyle;
+import com.mikepenz.fontawesome_typeface_library.FontAwesome;
 
 public class TabActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
-    TapBarMenu tapBarMenu; //메뉴생성//
-    /**
-     * 탭바에 있는 아이템
-     **/
-    ImageView item_1;
-    ImageView item_2;
-    ImageView item_3;
-    ImageView item_4;
+    private static final int SAMPLE2_ID = 34535;
+    //액션매뉴배지 설정.//
+    public int write_badgeCount = 10;
+    public int keyword_badgeCount = 10;
     ImageView people_image;
     Button my_info_button;
     CheckBox checkbox;
     Switch switch_widget;
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
+    private BadgeStyle bigStyle = ActionItemBadge.BadgeStyles.DARK_GREY_LARGE.getStyle();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,13 +52,6 @@ public class TabActivity extends AppCompatActivity implements NavigationView.OnN
         setContentView(R.layout.navigation_activity_layout);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        tapBarMenu = (TapBarMenu) findViewById(R.id.tapBarMenu);
-
-        /** TabBar에서 쓰일 아이템 리소스 **/
-        item_1 = (ImageView) findViewById(R.id.item1);
-        item_2 = (ImageView) findViewById(R.id.item2);
-        item_3 = (ImageView) findViewById(R.id.item3);
-        item_4 = (ImageView) findViewById(R.id.item4);
 
         setSupportActionBar(toolbar);
         // Create the adapter that will return a fragment for each of the three
@@ -72,23 +64,6 @@ public class TabActivity extends AppCompatActivity implements NavigationView.OnN
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager); //뷰페이저를 적용//
-
-        //탭바메뉴 토글적용.//
-        tapBarMenu.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                tapBarMenu.toggle(); //탭바메뉴 보이기//
-            }
-        });
-
-        /*FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });*/
 
         //네비게이션 모드에서 애니메이션 적으로 나오게 하기 위해서 설정.//
         //Drawer레이아웃을 만들어서 설정.//
@@ -138,6 +113,7 @@ public class TabActivity extends AppCompatActivity implements NavigationView.OnN
         checkbox = (CheckBox) view.findViewById(R.id.checkBox);
         switch_widget = (Switch) view.findViewById(R.id.switch1);
 
+        /** NavigationDrawer에 있는 위젯 이벤트 처리 **/
         my_info_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -170,35 +146,6 @@ public class TabActivity extends AppCompatActivity implements NavigationView.OnN
         });
 
         navigationView.setNavigationItemSelectedListener(this); //네비게이션의 이벤트 리스너 장착.//
-
-        /** TapBar토글 아이템 메뉴처리 **/
-        item_1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(TabActivity.this, "item 1 click", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        item_2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(TabActivity.this, "item 2 click", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        item_3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(TabActivity.this, "item 3 click", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        item_4.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(TabActivity.this, "item4 click", Toast.LENGTH_SHORT).show();
-            }
-        });
     }
 
     @Override
@@ -216,6 +163,24 @@ public class TabActivity extends AppCompatActivity implements NavigationView.OnN
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_tab, menu);
+
+        /** 배지 스타일 적용 및 초기화 **/
+        if (write_badgeCount > 0) {
+            ActionItemBadge.update(this, menu.findItem(R.id.people_write), FontAwesome.Icon.faw_upload, ActionItemBadge.BadgeStyles.RED, write_badgeCount);
+        }
+
+        if (keyword_badgeCount > 0) {
+            ActionItemBadge.update(this, menu.findItem(R.id.new_keyword), FontAwesome.Icon.faw_info, ActionItemBadge.BadgeStyles.RED, keyword_badgeCount);
+        }
+
+        if (write_badgeCount == 0) {
+            ActionItemBadge.hide(menu.findItem(R.id.people_write));
+        }
+
+        if (keyword_badgeCount == 0) {
+            ActionItemBadge.hide(menu.findItem(R.id.new_keyword));
+        }
+
         return true;
     }
 
@@ -226,8 +191,31 @@ public class TabActivity extends AppCompatActivity implements NavigationView.OnN
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
+        /** 배지 아이템 이미지 처리 **/
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.people_write) {
+            Toast.makeText(this, "댓글확인", Toast.LENGTH_SHORT).show();
+
+            write_badgeCount--;
+
+            if (write_badgeCount == 0) {
+                write_badgeCount = 0;
+            }
+
+            ActionItemBadge.update(item, write_badgeCount);
+
+            return true;
+        } else if (id == R.id.new_keyword) {
+            Toast.makeText(this, "키워드 확인", Toast.LENGTH_SHORT).show();
+
+            keyword_badgeCount--;
+
+            if (keyword_badgeCount == 0) {
+                keyword_badgeCount = 0;
+            }
+
+            ActionItemBadge.update(item, keyword_badgeCount);
+
             return true;
         }
 
@@ -239,9 +227,16 @@ public class TabActivity extends AppCompatActivity implements NavigationView.OnN
         // Handle navigation view item clicks here.
         int id = item.getItemId(); //네비게이션에서 선택된 아이텀의 id값을 가져온다.//'
 
-        if (id == R.id.nav_light) //조도센서.//
+        if (id == R.id.people_setting) //개인정보.//
         {
-            Toast.makeText(TabActivity.this, "click", Toast.LENGTH_SHORT).show();
+            Toast.makeText(TabActivity.this, "click setting", Toast.LENGTH_SHORT).show();
+
+            return true;
+        } else if (id == R.id.my_info_menu) //나의 정보//
+        {
+            Toast.makeText(TabActivity.this, "click my info", Toast.LENGTH_SHORT).show();
+
+            return true;
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

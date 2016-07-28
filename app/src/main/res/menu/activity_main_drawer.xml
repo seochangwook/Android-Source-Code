@@ -5,16 +5,16 @@
         <item android:title="개인설정">
             <menu>
                 <item
-                    android:id="@+id/nav_light"
-                    android:icon="@drawable/ic_menu_camera"
-                    android:title="설정" />
+                    android:id="@+id/people_setting"
+                    android:icon="@android:drawable/ic_menu_agenda"
+                    android:title="개인정보 설정" />
                 <item
-                    android:id="@+id/nav_temperature"
-                    android:icon="@drawable/ic_menu_gallery"
-                    android:title="개인정보 수정" />
+                    android:id="@+id/my_info_menu"
+                    android:icon="@android:drawable/ic_menu_edit"
+                    android:title="나의 정보" />
                 <item
-                    android:id="@+id/nav_gas"
-                    android:icon="@drawable/ic_menu_slideshow"
+                    android:id="@+id/menu_alarm"
+                    android:icon="@android:drawable/ic_menu_set_as"
                     android:title="알람설정" />
             </menu>
         </item>

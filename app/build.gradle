@@ -38,4 +38,24 @@ dependencies {
     //SUB-DEPENDENCIES
     //Android-Iconics - used to provide an easy API for icons
     compile 'com.mikepenz:iconics-core:2.6.6@aar'
+    compile "com.mikepenz:iconics-core:2.7.1@aar" //액션배지 관련 아이콘//
+
+    //추가적인 디자인//
+    compile 'com.mikepenz:google-material-typeface:2.2.0.2.original@aar'
+    compile 'com.mikepenz:material-design-iconic-typeface:2.2.0.2@aar'
+    compile 'com.mikepenz:fontawesome-typeface:4.6.0.2@aar'
+    compile 'com.mikepenz:octicons-typeface:3.2.0.2@aar'
+    compile 'com.mikepenz:meteocons-typeface:1.1.0.2@aar'
+    compile 'com.mikepenz:community-material-typeface:1.5.54.2@aar'
+    compile 'com.mikepenz:weather-icons-typeface:2.0.10.2@aar'
+    compile 'com.mikepenz:typeicons-typeface:2.0.7.2@aar'
+    compile 'com.mikepenz:entypo-typeface:1.0.0.2@aar'
+    compile 'com.mikepenz:devicon-typeface:2.0.0.2@aar'
+    compile 'com.mikepenz:foundation-icons-typeface:3.0.0.2@aar'
+    compile 'com.mikepenz:ionicons-typeface:2.0.1.2@aar'
+    compile 'com.mikepenz:materialdrawer:5.3.2@aar'
+    compile 'com.mikepenz:materialize:0.9.0@aar'
+    compile 'com.mikepenz:iconics-core:2.6.6@aar'
+    compile 'com.mikepenz:aboutlibraries:5.7.0@aar'
+    compile 'com.mikepenz:fastadapter:1.5.8@aar'
 }

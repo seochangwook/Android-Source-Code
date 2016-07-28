@@ -17,9 +17,12 @@
     <string name="load_more_loading">새로고침중...</string>
     <string name="load_more_error">새로고침 에러</string>
     <string name="title_activity_tab">TabActivity</string>
-    <string name="action_settings">Settings</string>
+    <string name="people_write">새로운 댓글보기</string>
     <string name="section_format">Hello World from section: %1$d</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="sample_1">Sample 1</string>
+    <string name="sample_2">Sample 2</string>
 </resources>

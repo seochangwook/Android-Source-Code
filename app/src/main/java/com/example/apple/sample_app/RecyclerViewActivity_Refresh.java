@@ -208,7 +208,7 @@ public class RecyclerViewActivity_Refresh extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Snackbar.make(view,
-                        "원하시는 기사에 버튼을 누르면 스크랩 목록에 추가됩니다." + "\n",
+                        "원하시는 기사에 버튼을 누르면 스크랩 목록에 추가됩니다.!!" + "\n",
                         Snackbar.LENGTH_SHORT).setAction("Action", null).show();
 
                 /** 현재의 어댑터를 스크랩가능한 어댑터로 변경 **/

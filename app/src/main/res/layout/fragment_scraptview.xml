@@ -1,8 +1,7 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.example.apple.sns_connection.view.Fragment_scraptview">
+    android:layout_height="match_parent">
 
     <!-- TODO: Update blank fragment layout -->
     <TextView
@@ -10,4 +9,77 @@
         android:layout_height="match_parent"
         android:text="스크랩 탭" />
 
-</FrameLayout>
+    <com.michaldrabik.tapbarmenulib.TapBarMenu
+        android:id="@+id/tapBarMenu_2"
+        android:layout_width="match_parent"
+        android:layout_height="59dp"
+        android:layout_gravity="bottom"
+        android:layout_marginTop="439dp"
+        android:weightSum="4.5"
+        app:tbm_buttonPosition="right"
+        app:tbm_buttonSize="45dp">
+
+        <Space
+            android:layout_width="1dp"
+            android:layout_height="match_parent" />
+
+        <ImageView
+            android:id="@+id/item5"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.0"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp"
+            android:src="@drawable/ic_person"
+            app:actionLayout="@layout/menu_action_item_badge" />
+
+        <Space
+            android:layout_width="5dp"
+            android:layout_height="match_parent" />
+
+
+        <ImageView
+            android:id="@+id/item6"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.0"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp"
+            android:src="@drawable/ic_thumb_up"
+            app:actionLayout="@layout/menu_action_item_badge" />
+
+        <Space
+            android:layout_width="5dp"
+            android:layout_height="match_parent" />
+
+        <ImageView
+            android:id="@+id/item7"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.0"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp"
+            android:src="@drawable/ic_thumb_down"
+            app:actionLayout="@layout/menu_action_item_badge" />
+
+        <Space
+            android:layout_width="5dp"
+            android:layout_height="match_parent" />
+
+        <ImageView
+            android:id="@+id/item8"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.0"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp"
+            android:src="@drawable/ic_location"
+            app:actionLayout="@layout/menu_action_item_badge" />
+
+        <Space
+            android:layout_width="5dp"
+            android:layout_height="match_parent" />
+
+    </com.michaldrabik.tapbarmenulib.TapBarMenu>
+
+</RelativeLayout>
