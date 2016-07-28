@@ -5,6 +5,7 @@
 - Using Library list (updating...)
 
 compile 'com.android.support:support-v4:23.4.0'
+
 compile 'com.facebook.android:facebook-android-sdk:4.8.2' //페이스북 관련 오픈소스//
 compile 'com.android.support:recyclerview-v7:23.4.0'
 compile 'com.github.iwgang:familiarrecyclerview:1.3.0' //리사이클 뷰를 리스트뷰처럼 사용할 수 있는 라이브러리 오픈소스//
