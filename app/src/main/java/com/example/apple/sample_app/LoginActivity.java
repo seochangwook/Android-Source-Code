@@ -42,7 +42,6 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 public class LoginActivity extends AppCompatActivity {
-    //seo//
     private static final String PERMISSION = "publish_actions";
 
     ShareDialog shareDialog; //공유기능을 위한 다이얼로그 생성//
