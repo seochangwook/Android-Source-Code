@@ -2,8 +2,8 @@
 
 # Planning Sector Issues 
 
-- Project UI Prototype URL : https://ovenapp.io/view/TPndbnvzLfjpvM47zW2zUx3KPLqIz0Y0
-- 
+* Project UI Prototype URL : https://ovenapp.io/view/TPndbnvzLfjpvM47zW2zUx3KPLqIz0Y0
+
 
 
 # Development(Server, Android) issues
@@ -24,9 +24,7 @@
 * //Android-Iconics - used to provide an easy API for icons
 * compile 'com.mikepenz:iconics-core:2.6.6@aar'
 
-- 
-
 
 # Design department issues
 
-- 
+
