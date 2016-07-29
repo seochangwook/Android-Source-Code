@@ -28,10 +28,11 @@
 << Sample image >>
 
 <p align="center">
-  <img src = "/Users/apple/Desktop/Programmingfile/git/Project_SampleImage/screen_1" width="350"/>
-  <img src = "/Users/apple/Desktop/Programmingfile/git/Project_SampleImage/screen_2" width="350"/>
-  <img src = "/Users/apple/Desktop/Programmingfile/git/Project_SampleImage/screen_2" width="350"/>
-
+  <img src = "~/Desktop/Programmingfile/git/Project_SampleImage/screen_1.png" width="350"/>
+  <img src = "/Users/apple/Desktop/Programmingfile/git/Project_SampleImage/screen_2.png" width="350"/>
+  <img src = "/Users/apple/Desktop/Programmingfile/git/Project_SampleImage/screen_3.png" width="350"/>
+  <img src = "/Users/apple/Desktop/Programmingfile/git/Project_SampleImage/screen_4.png" width="350"/>
+</p>
 
 
 # Design department issues
