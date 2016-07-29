@@ -25,15 +25,23 @@
 * compile 'com.mikepenz:iconics-core:2.6.6@aar'
 * 
 
-<< Sample image >>
+Sample image
 
-<p align="center">
-  <img src = "~/Desktop/Programmingfile/git/Project_SampleImage/screen_1.png" width="350"/>
-  <img src = "/Users/apple/Desktop/Programmingfile/git/Project_SampleImage/screen_2.png" width="350"/>
-  <img src = "/Users/apple/Desktop/Programmingfile/git/Project_SampleImage/screen_3.png" width="350"/>
-  <img src = "/Users/apple/Desktop/Programmingfile/git/Project_SampleImage/screen_4.png" width="350"/>
+<p align="left">
+  <title> 탭화면 마다 다르게 구성된 TabBarMenu </title>
+  <div class="photoset-grid" data-layout="13">
+      <img src="https://github.com/seochangwook/Android-Source-Code-Team-Project-Sample-Code-/blob/master/Project_SampleImage/screen_1.png" width="250" height="350">
+      <img src="https://github.com/seochangwook/Android-Source-Code-Team-Project-Sample-Code-/blob/master/Project_SampleImage/screen_2.png" width="250" height="350">
+  </div>
 </p>
 
+<p align="left">
+  <title> ActionBadge 이벤트 처리 </title>
+  <div class="photoset-grid" data-layout="13">
+      <img src="https://github.com/seochangwook/Android-Source-Code-Team-Project-Sample-Code-/blob/master/Project_SampleImage/screen_3.png" width="250" height="350">
+      <img src="https://github.com/seochangwook/Android-Source-Code-Team-Project-Sample-Code-/blob/master/Project_SampleImage/screen_4.png" width="250" height="350">
+  </div>
+</p>
 
 # Design department issues
 
