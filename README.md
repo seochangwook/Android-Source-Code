@@ -37,7 +37,8 @@
 </p>
 
 <p align="left">
-  <title> ActionBadge 이벤트 처리</title>
+  <title> ActionBadge 이벤트 처리
+  (사용자에게 새로운 '키워드 제공알람', '새로운 댓글알람'이 제공되고 해당 버튼을 클릭하여 정보를 볼 수 있다.)</title>
   <div class="photoset-grid" data-layout="13">
       <img src="https://github.com/seochangwook/Android-Source-Code-Team-Project-Sample-Code-/blob/master/Project_SampleImage/screen_3.png" width="250" height="350">
       <img src="https://github.com/seochangwook/Android-Source-Code-Team-Project-Sample-Code-/blob/master/Project_SampleImage/screen_4.png" width="250" height="350">
