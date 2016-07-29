@@ -23,17 +23,27 @@
 * //SUB-DEPENDENCIES
 * //Android-Iconics - used to provide an easy API for icons
 * compile 'com.mikepenz:iconics-core:2.6.6@aar'
-* 
+* (새로운 라이브러리 추가 시 계속 업데이트)
 
 << Sample image >>
 
-<p align="center">
-  <img src = "~/Desktop/Programmingfile/git/Project_SampleImage/screen_1.png" width="350"/>
-  <img src = "/Users/apple/Desktop/Programmingfile/git/Project_SampleImage/screen_2.png" width="350"/>
-  <img src = "/Users/apple/Desktop/Programmingfile/git/Project_SampleImage/screen_3.png" width="350"/>
-  <img src = "/Users/apple/Desktop/Programmingfile/git/Project_SampleImage/screen_4.png" width="350"/>
+<p align="left">
+  <title> 탭화면 마다 다르게 구성된 TabBarMenu 
+  (UI/UX를 고려하면 우선은 하단 매뉴가 없어 뷰를 보는데에 방해를 주지 않고, 버튼을 눌렀을 경우 필요한 메뉴들이 나온다.)</title>
+  <div class="photoset-grid" data-layout="13">
+      <img src="https://github.com/seochangwook/Android-Source-Code-Team-Project-Sample-Code-/blob/master/Project_SampleImage/screen_1.png" width="250" height="350">
+      <img src="https://github.com/seochangwook/Android-Source-Code-Team-Project-Sample-Code-/blob/master/Project_SampleImage/screen_2.png" width="250" height="350">
+  </div>
 </p>
 
+<p align="left">
+  <title> ActionBadge 이벤트 처리
+  (사용자에게 '새로운 키워드 제공알람', '새로운 댓글알람'이 제공되고 해당 버튼을 클릭하여 정보를 볼 수 있다.)</title>
+  <div class="photoset-grid" data-layout="13">
+      <img src="https://github.com/seochangwook/Android-Source-Code-Team-Project-Sample-Code-/blob/master/Project_SampleImage/screen_3.png" width="250" height="350">
+      <img src="https://github.com/seochangwook/Android-Source-Code-Team-Project-Sample-Code-/blob/master/Project_SampleImage/screen_4.png" width="250" height="350">
+  </div>
+</p>
 
 # Design department issues
 
