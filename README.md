@@ -25,6 +25,14 @@
 * compile 'com.mikepenz:iconics-core:2.6.6@aar'
 * 
 
+<< Sample image >>
+
+<p align="center">
+  <img src = "/Users/apple/Desktop/Programmingfile/git/Project_SampleImage/screen_1" width="350"/>
+  <img src = "/Users/apple/Desktop/Programmingfile/git/Project_SampleImage/screen_2" width="350"/>
+  <img src = "/Users/apple/Desktop/Programmingfile/git/Project_SampleImage/screen_2" width="350"/>
+
+
 
 # Design department issues
 
