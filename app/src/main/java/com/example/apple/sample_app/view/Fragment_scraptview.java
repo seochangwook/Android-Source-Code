@@ -56,7 +56,7 @@ public class Fragment_scraptview extends Fragment {
         item_1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getActivity(), "item 2-1 click", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "item 2-1 click!!", Toast.LENGTH_SHORT).show();
             }
         });
 
