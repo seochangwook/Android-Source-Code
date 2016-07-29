@@ -25,7 +25,7 @@
 * compile 'com.mikepenz:iconics-core:2.6.6@aar'
 * 
 
-Sample image
+<< Sample image >>
 
 <p align="left">
   <title> 탭화면 마다 다르게 구성된 TabBarMenu </title>
