@@ -50,8 +50,8 @@
 <p align="left">
   <title> 친구에 대한 팔로우/팔로잉에 대한 뷰 구현 </title>
   <div class="photoset-grid" data-layout="13">
-      <img src="https://github.com/seochangwook/Android-Source-Code-Team-Project-Sample-Code-/blob/master/Project_SampleImage/screen_1.png" width="250" height="350">
-      <img src="https://github.com/seochangwook/Android-Source-Code-Team-Project-Sample-Code-/blob/master/Project_SampleImage/screen_2.png" width="250" height="350">
+      <img src="https://github.com/seochangwook/Android-Source-Code-Team-Project-Sample-Code-/blob/master/Project_SampleImage/screen_5.png" width="250" height="350">
+      <img src="https://github.com/seochangwook/Android-Source-Code-Team-Project-Sample-Code-/blob/master/Project_SampleImage/screen_6.jpeg" width="250" height="350">
   </div>
 </p>
 
