@@ -55,6 +55,16 @@
   </div>
 </p>
 
+<< Sample image >>
+
+<p align="left">
+  <title> 각 Activity에 따른 다양한 NavigationDrawable구현 </title>
+  <div class="photoset-grid" data-layout="13">
+      <img src="https://github.com/seochangwook/Android-Source-Code-Team-Project-Sample-Code-/blob/master/Project_SampleImage/android_network_info_image_2.png" width="250" height="350">
+      <img src="https://github.com/seochangwook/Android-Source-Code-Team-Project-Sample-Code-/blob/master/Project_SampleImage/screen_8.jpeg" width="250" height="350">
+  </div>
+</p>
+
 * JSON Structure Information
 
 <p align="left">
