@@ -62,7 +62,7 @@ public class Fragment_Keywordview extends Fragment {
         item_1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getActivity(), "item 1-1 click", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "팔로우/팔로잉 목록으로 이동", Toast.LENGTH_SHORT).show();
             }
         });
 

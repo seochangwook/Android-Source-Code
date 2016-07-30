@@ -38,7 +38,13 @@
             android:name=".TabActivity"
             android:exported="true"
             android:label="@string/title_activity_tab"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".Following_Follow_FriendActivity"
+            android:exported="true"
+            android:label="@string/title_activity_following__follow__friend"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:uiOptions="splitActionBarWhenNarrow"></activity>
     </application>
 
 </manifest>

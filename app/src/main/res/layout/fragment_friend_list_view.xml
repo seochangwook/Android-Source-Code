@@ -1,0 +1,29 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.apple.sample_app.view.Fragment_FriendListView">
+
+    <TextView
+        android:id="@+id/tv_friend_empty"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:background="#ffffff"
+        android:gravity="center"
+        android:text="Wait..."
+        android:visibility="gone" />
+
+    <!-- TODO: Update blank fragment layout -->
+    <cn.iwgang.familiarrecyclerview.FamiliarRefreshRecyclerView
+        android:id="@+id/rv_list_friend"
+        android:layout_width="match_parent"
+        android:layout_height="500dp"
+        android:scrollbars="vertical"
+        app:frv_dividerHeight="0.5dp"
+        app:frv_emptyView="@id/tv_friend_empty"
+        app:frv_isEmptyViewKeepShowHeadOrFooter="true"
+        app:frv_layoutManager="linear"
+        app:frv_layoutManagerOrientation="vertical" />
+
+</RelativeLayout>

@@ -1,5 +1,6 @@
 package com.example.apple.sample_app;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.TabLayout;
@@ -232,11 +233,24 @@ public class TabActivity extends AppCompatActivity implements NavigationView.OnN
             Toast.makeText(TabActivity.this, "click setting", Toast.LENGTH_SHORT).show();
 
             return true;
-        } else if (id == R.id.my_info_menu) //나의 정보//
+        }
+
+        if (id == R.id.my_info_menu) //나의 정보//
         {
             Toast.makeText(TabActivity.this, "click my info", Toast.LENGTH_SHORT).show();
 
             return true;
+        }
+
+        if (id == R.id.menu_friend_info) //팔로잉, 팔로우 정보.//
+        {
+            Toast.makeText(TabActivity.this, "필로잉/팔로우로 이동", Toast.LENGTH_SHORT).show();
+
+            Intent intent = new Intent(TabActivity.this, Following_Follow_FriendActivity.class);
+
+            //이동할 클래스로 넘길 추가적인 정보를 입력.//
+
+            startActivity(intent);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

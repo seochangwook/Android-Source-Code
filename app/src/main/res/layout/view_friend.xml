@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:card="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <!--카드뷰로 감싸기(Metrial Design적용) -->
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        card:cardBackgroundColor="#ffffff"
+        card:cardCornerRadius="8dp"
+        card:cardElevation="8dp">
+
+        <com.github.siyamed.shapeimageview.CircularImageView
+            android:id="@+id/friend_imageview"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="14dp"
+            android:src="@drawable/facebook_people_image"
+            app:siBorderColor="@color/colorPrimaryDark"
+            app:siBorderWidth="3dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="70dp"
+            android:layout_marginTop="5dp"
+            android:text="이름 : "
+            android:textColor="#000000" />
+
+        <TextView
+            android:id="@+id/friend_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="110dp"
+            android:layout_marginTop="5dp"
+            android:text="*"
+            android:textColor="#000000" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="70dp"
+            android:layout_marginTop="23dp"
+            android:text="이메일 주소 : "
+            android:textColor="#000000" />
+
+        <TextView
+            android:id="@+id/friend_email"
+            android:layout_width="110dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="148dp"
+            android:layout_marginTop="22dp"
+            android:singleLine="true"
+            android:text="*"
+            android:textColor="#000000" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="70dp"
+            android:layout_marginTop="40dp"
+            android:text="집 전화 : "
+            android:textColor="#000000" />
+
+        <TextView
+            android:id="@+id/friend_home_phone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="123dp"
+            android:layout_marginTop="40dp"
+            android:text="*"
+            android:textColor="#000000" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="70dp"
+            android:layout_marginTop="57dp"
+            android:text="핸드폰 번호 : "
+            android:textColor="#000000" />
+
+        <TextView
+            android:id="@+id/friend_mobile_phone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="148dp"
+            android:layout_marginTop="57dp"
+            android:text="*"
+            android:textColor="#000000" />
+
+        <Button
+            android:id="@+id/option_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="260dp"
+            android:layout_marginTop="17dp"
+            android:text="+팔로우"
+            android:textColor="#000000"
+            android:textStyle="bold" />
+
+    </android.support.v7.widget.CardView>
+</RelativeLayout>
