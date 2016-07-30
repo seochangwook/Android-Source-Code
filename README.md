@@ -71,6 +71,13 @@
 
 * Android Network Structure Information
 
+<p align="left">
+  <img src="https://github.com/seochangwook/Android-Source-Code-Team-Project-Sample-Code-/blob/master/Project_SampleImage/android_network_info_image_1.png" width="650" height="350">
+</p>
+
+<p align="left">
+  <img src="https://github.com/seochangwook/Android-Source-Code-Team-Project-Sample-Code-/blob/master/Project_SampleImage/android_network_info_image_2.png" width="650" height="350">
+</p>
 
 # Design department issues
 
