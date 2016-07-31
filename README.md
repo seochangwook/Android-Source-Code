@@ -6,7 +6,7 @@
 
 
 
-# Development(Server, Android) issues
+# Development(Android) issues
 
 < Android Using Library list (updating...) >
 
