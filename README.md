@@ -1,4 +1,4 @@
-# Android-Source-Code - Newsing IT App -
+# Team Project Sample Code (android) - Newsing IT App -
 
 # Planning Sector issues 
 
