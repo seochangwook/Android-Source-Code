@@ -44,7 +44,11 @@
             android:exported="true"
             android:label="@string/title_activity_following__follow__friend"
             android:theme="@style/AppTheme.NoActionBar"
-            android:uiOptions="splitActionBarWhenNarrow"></activity>
+            android:uiOptions="splitActionBarWhenNarrow" />
+        <activity
+            android:name=".My_Info_Activity"
+            android:label="@string/title_activity_my__info_"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

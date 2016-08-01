@@ -212,8 +212,15 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         item_profile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(LoginActivity.this, "프로필 화면으로 이동", Toast.LENGTH_SHORT).show();
+                Toast.makeText(LoginActivity.this, "나의 프로필 화면으로 이동", Toast.LENGTH_SHORT).show();
 
+                Intent intent = new Intent(LoginActivity.this, My_Info_Activity.class);
+
+                //페이스북에서 받아온 정보를 넘긴다.//
+
+                startActivity(intent);
+
+                resideMenu.closeMenu(); //메뉴를 다시 닫는다.//
             }
         });
 
