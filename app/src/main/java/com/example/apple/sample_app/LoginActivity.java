@@ -12,6 +12,9 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Base64;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -30,6 +33,8 @@ import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.facebook.share.model.ShareLinkContent;
 import com.facebook.share.widget.ShareDialog;
+import com.special.ResideMenu.ResideMenu;
+import com.special.ResideMenu.ResideMenuItem;
 
 import org.json.JSONObject;
 
@@ -41,9 +46,8 @@ import java.net.URL;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
     private static final String PERMISSION = "publish_actions";
-
     ShareDialog shareDialog; //공유기능을 위한 다이얼로그 생성//
     TextView user_id_text;
     TextView user_name_text;
@@ -56,6 +60,7 @@ public class LoginActivity extends AppCompatActivity {
     Button next_button;
     String id, name, profile_link, gender, birthday;
     ImageTask get_profile_image_task; //계정 이미지 불러오기 작업//
+    private ResideMenu resideMenu;
     private CallbackManager callbackManager; //세션연결 콜백관리자.//
 
     @Override
@@ -173,6 +178,58 @@ public class LoginActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        /** Reside Menu 구성 **/
+        //리사이드 메뉴 구성//
+        resideMenu = new ResideMenu(this); //액티비티에 겹쳐서 뿌려지므로 액티비티의 자원을 얻는다.//
+        resideMenu.setBackground(R.drawable.menu_background);
+        resideMenu.attachToActivity(this);
+        resideMenu.setScaleValue(0.5f);
+
+        resideMenu.setSwipeDirectionDisable(ResideMenu.DIRECTION_RIGHT); //오른쪽 스크롤을 막는다.//
+
+        //메뉴아이템 등록//
+        ResideMenuItem item_home = new ResideMenuItem(this, R.drawable.icon_home, "Home");
+        resideMenu.addMenuItem(item_home, ResideMenu.DIRECTION_LEFT); //왼쪽에서 메뉴가 등장.//
+
+        ResideMenuItem item_profile = new ResideMenuItem(this, R.drawable.icon_profile, "Profile");
+        resideMenu.addMenuItem(item_profile, ResideMenu.DIRECTION_LEFT); //왼쪽에서 메뉴가 등장.//
+
+        ResideMenuItem item_calendar = new ResideMenuItem(this, R.drawable.icon_calendar, "Calendar");
+        resideMenu.addMenuItem(item_calendar, ResideMenu.DIRECTION_LEFT); //왼쪽에서 메뉴가 등장.//
+
+        ResideMenuItem item_settings = new ResideMenuItem(this, R.drawable.icon_settings, "Settings");
+        resideMenu.addMenuItem(item_settings, ResideMenu.DIRECTION_LEFT); //왼쪽에서 메뉴가 등장.//
+
+        //이벤트 처리.//
+        item_home.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(LoginActivity.this, "홉 화면으로 이동", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        item_profile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(LoginActivity.this, "프로필 화면으로 이동", Toast.LENGTH_SHORT).show();
+
+            }
+        });
+
+        item_calendar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(LoginActivity.this, "달력 화면으로 이동", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        item_settings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(LoginActivity.this, "설정 화면으로 이동", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override
@@ -205,6 +262,38 @@ public class LoginActivity extends AppCompatActivity {
     public void set_user_image(String user_id) {
         get_profile_image_task = new ImageTask(user_id);
         get_profile_image_task.execute(); //스레드 작업 실행//
+    }
+
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+        return resideMenu.dispatchTouchEvent(ev); //모션이벤트 등록//
+    }
+
+    @Override
+    public void onClick(View view) {
+
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.login_activity_menu, menu);
+
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        if (id == R.id.home_menu) {
+            resideMenu.openMenu(ResideMenu.DIRECTION_LEFT);
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     class ImageTask extends AsyncTask<Void, Void, Boolean> {
