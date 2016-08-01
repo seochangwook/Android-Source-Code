@@ -1,4 +1,4 @@
-# Android-Source-Code - Newsing IT App -
+# Team Project Sample Code (android) - Newsing IT App -
 
 # Planning Sector issues 
 
@@ -6,7 +6,7 @@
 
 
 
-# Development(Server, Android) issues
+# Development(Android) issues
 
 < Android Using Library list (updating...) >
 
@@ -23,6 +23,7 @@
 * //SUB-DEPENDENCIES
 * //Android-Iconics - used to provide an easy API for icons
 * compile 'com.mikepenz:iconics-core:2.6.6@aar'
+* compile 'com.specyci:residemenu:1.6+' //향상된 3D메뉴 라이브러리리
 * (새로운 라이브러리 추가 시 계속 업데이트)
 
 << Sample image >>
@@ -43,6 +44,50 @@
       <img src="https://github.com/seochangwook/Android-Source-Code-Team-Project-Sample-Code-/blob/master/Project_SampleImage/screen_3.png" width="250" height="350">
       <img src="https://github.com/seochangwook/Android-Source-Code-Team-Project-Sample-Code-/blob/master/Project_SampleImage/screen_4.png" width="250" height="350">
   </div>
+</p>
+
+<< Sample image >>
+
+<p align="left">
+  <title> 친구에 대한 팔로우/팔로잉에 대한 뷰 구현(RecyclerView, CardView사용) </title>
+  <div class="photoset-grid" data-layout="13">
+      <img src="https://github.com/seochangwook/Android-Source-Code-Team-Project-Sample-Code-/blob/master/Project_SampleImage/screen_5.png" width="250" height="350">
+      <img src="https://github.com/seochangwook/Android-Source-Code-Team-Project-Sample-Code-/blob/master/Project_SampleImage/screen_6.jpeg" width="250" height="350">
+  </div>
+</p>
+
+<< Sample image >>
+
+<p align="left">
+  <title> 각 Activity에 따른 다양한 NavigationDrawable구현 </title>
+  <div class="photoset-grid" data-layout="13">
+      <img src="https://github.com/seochangwook/Android-Source-Code-Team-Project-Sample-Code-/blob/master/Project_SampleImage/screen_7.jpeg" width="250" height="350">
+      <img src="https://github.com/seochangwook/Android-Source-Code-Team-Project-Sample-Code-/blob/master/Project_SampleImage/screen_8.jpeg" width="250" height="350">
+  </div>
+</p>
+
+* JSON Structure Information
+
+<p align="left">
+  <img src="https://github.com/seochangwook/Android-Source-Code-Team-Project-Sample-Code-/blob/master/Project_SampleImage/json_info_image_1.png" width="650" height="350">
+</p>
+
+<p align="left">
+  <img src="https://github.com/seochangwook/Android-Source-Code-Team-Project-Sample-Code-/blob/master/Project_SampleImage/json_info_image_2.png" width="650" height="350">
+</p>
+
+<p align="left">
+  <img src="https://github.com/seochangwook/Android-Source-Code-Team-Project-Sample-Code-/blob/master/Project_SampleImage/json_info_image_3.png" width="650" height="350">
+</p>
+
+* Android Network Structure Information
+
+<p align="left">
+  <img src="https://github.com/seochangwook/Android-Source-Code-Team-Project-Sample-Code-/blob/master/Project_SampleImage/android_network_info_image_1.png" width="650" height="350">
+</p>
+
+<p align="left">
+  <img src="https://github.com/seochangwook/Android-Source-Code-Team-Project-Sample-Code-/blob/master/Project_SampleImage/android_network_info_image_2.png" width="650" height="350">
 </p>
 
 # Design department issues
