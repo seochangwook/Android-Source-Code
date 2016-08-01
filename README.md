@@ -23,6 +23,7 @@
 * //SUB-DEPENDENCIES
 * //Android-Iconics - used to provide an easy API for icons
 * compile 'com.mikepenz:iconics-core:2.6.6@aar'
+* compile 'com.specyci:residemenu:1.6+' //향상된 3D메뉴 라이브러리리
 * (새로운 라이브러리 추가 시 계속 업데이트)
 
 << Sample image >>
