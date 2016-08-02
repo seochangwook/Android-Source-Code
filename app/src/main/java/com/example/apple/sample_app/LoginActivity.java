@@ -48,6 +48,10 @@ import java.security.NoSuchAlgorithmException;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
     private static final String PERMISSION = "publish_actions";
+
+    private static final String KEY_USER_ID = "user_id";
+    private static final String KEY_USER_NAME = "user_name";
+
     ShareDialog shareDialog; //공유기능을 위한 다이얼로그 생성//
     TextView user_id_text;
     TextView user_name_text;
@@ -216,7 +220,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                 Intent intent = new Intent(LoginActivity.this, My_Info_Activity.class);
 
-                //페이스북에서 받아온 정보를 넘긴다.//
+                //페이스북에서 받아온 정보를 넘긴다. 객체를 넘길 시 Parceable사용.//
+                intent.putExtra(KEY_USER_ID, id);
+                intent.putExtra(KEY_USER_NAME, name);
 
                 startActivity(intent);
 
