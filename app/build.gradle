@@ -65,4 +65,5 @@ dependencies {
     compile 'com.mikepenz:aboutlibraries:5.7.0@aar'
     compile 'com.mikepenz:fastadapter:1.5.8@aar'
     compile 'com.specyci:residemenu:1.6+' //향상된 3D메뉴 라이브러리
+    compile 'com.hkm.taglib:tag:1.6.0'
 }
