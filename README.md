@@ -49,7 +49,7 @@
 << Sample image >>
 
 <p align="left">
-  <title> 친구에 대한 팔로우/팔로잉에 대한 뷰 구현(RecyclerView, CardView사용) </title>
+  <title> 친구에 대한 팔로우/팔로잉에 대한 뷰 구현(RecyclerView, CardView사용, JSON통신) </title>
   <div class="photoset-grid" data-layout="13">
       <img src="https://github.com/seochangwook/Android-Source-Code-Team-Project-Sample-Code-/blob/master/Project_SampleImage/screen_5.png" width="250" height="350">
       <img src="https://github.com/seochangwook/Android-Source-Code-Team-Project-Sample-Code-/blob/master/Project_SampleImage/screen_6.jpeg" width="250" height="350">
@@ -97,6 +97,29 @@
   <div class="photoset-grid" data-layout="13">
       <img src="https://github.com/seochangwook/Android-Source-Code-Team-Project-Sample-Code-/blob/master/Project_SampleImage/screen_9.jpeg" width="250" height="350">
       <img src="https://github.com/seochangwook/Android-Source-Code-Team-Project-Sample-Code-/blob/master/Project_SampleImage/screen_10.jpeg" width="250" height="350">
+  </div>
+</p>
+
+<< Sample image >>
+
+<p align="left">
+  <title> 나의 카테고리 화면에 대한 프로토타입 설계결과 (4개의 스크린샷, 기본적인 버튼 LockingTest, 클릭 이벤트 처리, RecyclerView를 Grid로 배치 등 -> 나머지 하단 매뉴와 위의 검색버튼은 뷰의 사이즈를 고려 후 제작 가능))</title>
+  <div class="photoset-grid" data-layout="13">
+      <img src="https://github.com/seochangwook/Team-Project-Sample-Code-android-/blob/master/Project_SampleImage/screen_15.png" width="250" height="350">
+  </div>
+</p>
+
+<p align="left">
+  <div class="photoset-grid" data-layout="13">
+      <img src="https://github.com/seochangwook/Team-Project-Sample-Code-android-/blob/master/Project_SampleImage/screen_11.jpeg" width="250" height="350">
+      <img src="https://github.com/seochangwook/Team-Project-Sample-Code-android-/blob/master/Project_SampleImage/screen_12.jpeg" width="250" height="350">
+  </div>
+</p>
+
+<p align="left">
+  <div class="photoset-grid" data-layout="13">
+      <img src="https://github.com/seochangwook/Team-Project-Sample-Code-android-/blob/master/Project_SampleImage/screen_13.jpeg" width="250" height="350">
+      <img src="https://github.com/seochangwook/Team-Project-Sample-Code-android-/blob/master/Project_SampleImage/screen_14.jpeg" width="250" height="350">
   </div>
 </p>
 
