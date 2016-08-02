@@ -123,6 +123,16 @@
   </div>
 </p>
 
+<< Sample image >>
+
+<p align="left">
+  <title> 해시태그기능을 이용한 뷰 구현 (태그추가, 삭제, 선택 가능)</title>
+  <div class="photoset-grid" data-layout="13">
+     <img src="https://github.com/seochangwook/Team-Project-Sample-Code-android-/blob/master/Project_SampleImage/screen_16.jpeg" width="250" height="350">
+     <img src="https://github.com/seochangwook/Team-Project-Sample-Code-android-/blob/master/Project_SampleImage/screen_17.jpeg" width="250" height="350">
+  </div>
+</p>
+
 # Design department issues
 
 *
