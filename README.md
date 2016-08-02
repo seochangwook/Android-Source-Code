@@ -90,6 +90,16 @@
   <img src="https://github.com/seochangwook/Android-Source-Code-Team-Project-Sample-Code-/blob/master/Project_SampleImage/android_network_info_image_2.png" width="650" height="350">
 </p>
 
+<< Sample image >>
+
+<p align="left">
+  <title> 3D(입체감)효과를 준 메뉴구현. 기존 Drawables메뉴는 메인화면을 가리지만 향상된 메뉴는 가리지 않고 뷰를 좌측, 우측으로 배치하여 UI를 더 깔끔하게 해준다. </title>
+  <div class="photoset-grid" data-layout="13">
+      <img src="https://github.com/seochangwook/Android-Source-Code-Team-Project-Sample-Code-/blob/master/Project_SampleImage/screen_9.jpeg" width="250" height="350">
+      <img src="https://github.com/seochangwook/Android-Source-Code-Team-Project-Sample-Code-/blob/master/Project_SampleImage/screen_10.jpeg" width="250" height="350">
+  </div>
+</p>
+
 # Design department issues
 
 *
