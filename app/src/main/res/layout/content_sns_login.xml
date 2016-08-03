@@ -66,7 +66,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="120dp"
-            android:layout_marginTop="40dp"
+            android:layout_marginTop="20dp"
             android:text="logout google"
             android:visibility="gone" />
 
@@ -85,11 +85,12 @@
             <com.google.android.gms.common.SignInButton
                 android:id="@+id/google_sign_in_button"
                 android:layout_width="wrap_content"
-                android:layout_height="35dp"
+                android:layout_height="40dp"
                 android:layout_centerInParent="true"
-                android:layout_marginTop="5dp"
+                android:layout_marginTop="2dp"
                 android:background="@android:color/transparent"
                 android:foreground="@drawable/google_login_button_image"
+                android:paddingTop="8dp"
                 android:visibility="visible" />
 
             <com.facebook.login.widget.LoginButton
@@ -98,9 +99,16 @@
                 android:layout_height="50dp"
                 android:layout_marginBottom="10dp"
                 android:layout_marginLeft="7dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="8dp"
                 android:paddingBottom="10dp"
                 android:paddingTop="5dp" />
+
+            <com.twitter.sdk.android.core.identity.TwitterLoginButton
+                android:id="@+id/twitter_login_button"
+                android:layout_width="317dp"
+                android:layout_height="35dp"
+                android:layout_marginBottom="10dp"
+                android:layout_marginLeft="7dp" />
         </LinearLayout>
 
     </RelativeLayout>

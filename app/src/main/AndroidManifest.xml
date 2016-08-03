@@ -61,6 +61,10 @@
             android:name=".News_ViewActivity"
             android:label="@string/title_activity_news__view"
             android:theme="@style/AppTheme.NoActionBar"></activity>
+
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="b20aae2baea382d1fb25edc91d98996cb3a3f2ad" />
     </application>
 
 </manifest>

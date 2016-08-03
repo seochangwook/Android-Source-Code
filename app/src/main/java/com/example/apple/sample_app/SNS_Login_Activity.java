@@ -39,6 +39,14 @@ import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
 import com.special.ResideMenu.ResideMenu;
 import com.special.ResideMenu.ResideMenuItem;
+import com.twitter.sdk.android.Twitter;
+import com.twitter.sdk.android.core.Callback;
+import com.twitter.sdk.android.core.Result;
+import com.twitter.sdk.android.core.TwitterAuthConfig;
+import com.twitter.sdk.android.core.TwitterException;
+import com.twitter.sdk.android.core.TwitterSession;
+import com.twitter.sdk.android.core.identity.TwitterLoginButton;
+import com.twitter.sdk.android.core.models.User;
 
 import org.json.JSONObject;
 
@@ -48,8 +56,17 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+import io.fabric.sdk.android.Fabric;
+
 public class SNS_Login_Activity extends AppCompatActivity implements
         GoogleApiClient.OnConnectionFailedListener {
+
+    /**
+     * Twitter 로그인 관련
+     **/
+    // Note: Your consumer key and secret should be obfuscated in your source code before shipping.
+    private static final String TWITTER_KEY = "68QkLNjEDpFWQqi4Su0eRkOtV";
+    private static final String TWITTER_SECRET = "pC0gMw69kGAvk8AApObxe6XAjzNKPBhCj9ABuAYVDsj5cs5nuT";
     /**
      * Google 로그인 관련
      **/
@@ -58,8 +75,17 @@ public class SNS_Login_Activity extends AppCompatActivity implements
     private static final String KEY_USER_ID = "user_id";
     private static final String KEY_USER_NAME_FACEBOOK = "user_name_facebook";
     private static final String KEY_USER_PROFILE_URL = "user_profile_url";
+    private static final String KEY_USER_PROFILE_URL_TWITTER = "user_profile_url";
     private static final String KEY_USER_NAME_GOOGLE = "user_name_google";
+    private static final String KEY_USER_NAME_TWITTER = "user_name_twitter";
     private static final String KEY_SNS_CATEGORY = "sns_category";
+    TwitterSession session; //트위터 세션.//
+    TwitterLoginButton twitter_login_button;
+    String username;
+    String profileImage;
+    Twitter_ImageTask get_profile_image_task_twitter; //계정 이미지 불러오기 작업//
+    Google_ImageTask get_profile_image_task_google; //계정 이미지 불러오기 작업//
+    SignInButton sign_in_button;
     /**
      * Facebook 로그인 관련
      **/
@@ -67,13 +93,11 @@ public class SNS_Login_Activity extends AppCompatActivity implements
     String id, name, profile_link;
     ImageTask get_profile_image_task_facebook; //계정 이미지 불러오기 작업//
     String profile_img_url, user_name;
-    SignInButton sign_in_button;
     Button sign_out_button;
     ImageView profile_image;
-    Google_ImageTask get_profile_image_task_google; //계정 이미지 불러오기 작업//
     int what_sns_click; //1이면 페이스북, 2이면 구글//
-    private CallbackManager callbackManager; //세션연결 콜백관리자.//
     private GoogleApiClient mGoogleApiClient;
+    private CallbackManager callbackManager; //세션연결 콜백관리자.//
     private TextView mStatusTextView;
     private ProgressDialog mProgressDialog;
     /**
@@ -84,6 +108,10 @@ public class SNS_Login_Activity extends AppCompatActivity implements
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        /** 트위터, 페이스북에 대한 인증은 setContentView()이전에 이루어져야 한다. **/
+        TwitterAuthConfig authConfig = new TwitterAuthConfig(TWITTER_KEY, TWITTER_SECRET);
+        Fabric.with(this, new Twitter(authConfig));
 
         FacebookSdk.sdkInitialize(getApplicationContext()); //초기 facebook연동을 하기 위해서 초기화//
         AppEventsLogger.activateApp(this);
@@ -96,6 +124,7 @@ public class SNS_Login_Activity extends AppCompatActivity implements
         //disconnect_button = (Button)findViewById(R.id.disconnect_button);
         profile_image = (ImageView) findViewById(R.id.profile_imageView);
         loginbutton = (LoginButton) findViewById(R.id.facebook_login_button);
+        twitter_login_button = (TwitterLoginButton) findViewById(R.id.twitter_login_button);
 
         /** Reside Menu 구성 **/
         //리사이드 메뉴 구성//
@@ -143,6 +172,10 @@ public class SNS_Login_Activity extends AppCompatActivity implements
                     intent.putExtra(KEY_USER_PROFILE_URL, profile_img_url);
                     intent.putExtra(KEY_USER_NAME_GOOGLE, user_name);
                     intent.putExtra(KEY_SNS_CATEGORY, "2");
+                } else if (what_sns_click == 3) {
+                    intent.putExtra(KEY_USER_PROFILE_URL_TWITTER, profileImage);
+                    intent.putExtra(KEY_USER_NAME_TWITTER, username);
+                    intent.putExtra(KEY_SNS_CATEGORY, "3");
                 }
 
                 startActivity(intent);
@@ -259,6 +292,21 @@ public class SNS_Login_Activity extends AppCompatActivity implements
                 Toast.makeText(SNS_Login_Activity.this, "에러가 발생하였습니다", Toast.LENGTH_SHORT).show();
             }
         });
+
+        /** Twitter 로그인 관련 **/
+        twitter_login_button.setCallback(new Callback<TwitterSession>() {
+            @Override
+            public void success(Result<TwitterSession> result) {
+                twitter_login(result);
+
+                what_sns_click = 3;
+            }
+
+            @Override
+            public void failure(TwitterException exception) {
+                Log.d("TwitterKit", "Login with Twitter failure", exception);
+            }
+        });
     }
 
     @Override
@@ -310,6 +358,9 @@ public class SNS_Login_Activity extends AppCompatActivity implements
         Log.d("myLog", "requestCode  " + requestCode);
         Log.d("myLog", "resultCode" + resultCode);
         Log.d("myLog", "data  " + data.toString());
+
+        /** Twitter 로그인 관련 **/
+        twitter_login_button.onActivityResult(requestCode, resultCode, data);
     }
 
     private void handleSignInResult(GoogleSignInResult result) {
@@ -337,8 +388,6 @@ public class SNS_Login_Activity extends AppCompatActivity implements
         Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(mGoogleApiClient);
 
         startActivityForResult(signInIntent, RC_SIGN_IN);
-
-
     }
 
     private void signOut() //인증해제/
@@ -412,6 +461,39 @@ public class SNS_Login_Activity extends AppCompatActivity implements
 
             profile_image.setImageResource(R.drawable.facebook_people_image); //디폴트 이미지.//
         }
+    }
+
+    /**
+     * Twitter 로그인 관련
+     **/
+    public void twitter_login(Result<TwitterSession> result) {
+        session = result.data;
+
+        username = session.getUserName(); //이름 가져오기.//
+
+        Twitter.getApiClient(session).getAccountService()
+                .verifyCredentials(true, false, new Callback<User>() {
+                    @Override
+                    public void success(Result<User> userResult) {
+                        User user = userResult.data;
+
+                        //Getting the profile image url//
+                        profileImage = user.profileImageUrl.replace("_normal", "");
+
+                        Log.d("user id : ", username);
+                        Log.d("user url : ", profileImage);
+
+                        mStatusTextView.setText(username);
+
+                        get_profile_image_task_twitter = new Twitter_ImageTask(profileImage);
+                        get_profile_image_task_twitter.execute(); //스레드 작업 실행//
+                    }
+
+                    @Override
+                    public void failure(TwitterException exception) {
+
+                    }
+                });
     }
 
     @Override
@@ -519,6 +601,63 @@ public class SNS_Login_Activity extends AppCompatActivity implements
             URL_Address = "https://graph.facebook.com/";
             URL_Address = URL_Address + user_token_id + "/";
             URL_Address = URL_Address + "picture";
+        }
+
+        @Override
+        protected void onPreExecute() {
+            Log.i("image download file : ", URL_Address);
+        }
+
+        @Override
+        protected Boolean doInBackground(Void... data) {
+            //이미지 다운로드 작업 시작 및 네트워크 작업 진행//
+            try {
+                URL url = new URL(URL_Address); //연결한 URL주소 셋팅//
+
+                try {
+                    //네트워크 객체 선언.//
+                    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                    conn.connect(); //연결//
+
+                    InputStream is = conn.getInputStream(); //스트림 객체 선언//
+
+                    Log.i("image value : ", "" + is);
+
+                    bitmap = BitmapFactory.decodeStream(is);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
+
+            if (bitmap != null) {
+                isCheck = true;
+            }
+
+            return isCheck;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean image_check) //메인 UI와 통신가능//
+        {
+            if (image_check == true) {
+                profile_image.setImageBitmap(bitmap); //이미지 초기화//
+            } else if (image_check == false) {
+                profile_image.setImageResource(R.drawable.not_image);
+            }
+        }
+    }
+
+    class Twitter_ImageTask extends AsyncTask<Void, Void, Boolean> {
+        Bitmap bitmap;
+        private String URL_Address = "";
+        private boolean isCheck = false; //이미지가 처음엔 다운로드 실패했다는 가정//
+
+        //URL주소를 셋팅하는 생성자.//
+        public Twitter_ImageTask(String profile_url) {
+            URL_Address = profile_url;
         }
 
         @Override
