@@ -9,7 +9,7 @@
 <p align="left">
   <title> UI 프로토타입 기획 산출물</title>
   <div class="photoset-grid" data-layout="13">
-      <img src="https://github.com/seochangwook/Android-Source-Code-Team-Project-Sample-Code-/blob/master/Project_SampleImage/screen_1.png" width="250" height="350">
+      <img src="https://github.com/seochangwook/Team-Project-Sample-Code-android-/blob/master/Project_SampleImage/UI%20Prototype.jpeg" width="250" height="350">
   </div>
 </p>
 
