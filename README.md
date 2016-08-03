@@ -25,6 +25,8 @@
 * compile 'com.mikepenz:iconics-core:2.6.6@aar'
 * compile 'com.specyci:residemenu:1.6+' //향상된 3D메뉴 라이브러리
 * compile 'com.hkm.taglib:tag:1.6.0' // 태그관련 라이브러리
+* compile 'com.google.android.gms:play-services-auth:8.3.0'
+* compile 'com.android.support:multidex:1.0.0'
 * (새로운 라이브러리 추가 시 계속 업데이트)
 
 << Sample image >>
