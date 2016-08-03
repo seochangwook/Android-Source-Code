@@ -34,6 +34,9 @@
 * compile 'com.hkm.taglib:tag:1.6.0' // 태그관련 라이브러리
 * compile 'com.google.android.gms:play-services-auth:8.3.0' //구글 인증관련 라이브러리//
 * compile 'com.android.support:multidex:1.0.0' //dexOutOfMemory방지 라이브러리//
+* compile('com.twitter.sdk.android:twitter:1.14.1@aar') {
+        transitive = true;
+    } //트위터 관련 라이브러리//
 * (새로운 라이브러리 추가 시 계속 업데이트)
 
 << Sample image >>
