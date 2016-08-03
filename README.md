@@ -153,6 +153,14 @@
   </div>
 </p>
 
+<p align="left">
+  <title> 상세 기사 정보 보기 화면구성 </title>
+  <div class="photoset-grid" data-layout="13">
+      <img src="https://github.com/seochangwook/Team-Project-Sample-Code-android-/blob/master/Project_SampleImage/screen_22.jpeg" width="250" height="350">
+      <img src="https://github.com/seochangwook/Team-Project-Sample-Code-android-/blob/master/Project_SampleImage/screen_23.jpeg" width="250" height="350">
+  </div>
+</p>
+
 # Design department issues
 
 *
