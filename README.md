@@ -153,6 +153,8 @@
   </div>
 </p>
 
+<< Sample image >>
+
 <p align="left">
   <title> 상세 기사 정보 보기 화면구성 </title>
   <div class="photoset-grid" data-layout="13">
