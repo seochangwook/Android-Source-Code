@@ -304,6 +304,10 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         if (id == R.id.home_menu) {
             resideMenu.openMenu(ResideMenu.DIRECTION_LEFT);
+        } else if (id == R.id.google_login) {
+            Intent intent = new Intent(LoginActivity.this, SNS_Login_Activity.class);
+
+            startActivity(intent);
         }
 
         return super.onOptionsItemSelected(item);

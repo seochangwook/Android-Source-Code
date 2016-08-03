@@ -37,10 +37,16 @@ import cn.iwgang.familiarrecyclerview.FamiliarRefreshRecyclerView;
 
 public class My_Info_Activity extends AppCompatActivity {
     private static final String KEY_USER_ID = "user_id";
-    private static final String KEY_USER_NAME = "user_name";
+    private static final String KEY_USER_NAME_FACEBOOK = "user_name_facebook";
+    private static final String KEY_USER_PROFILE_URL = "user_profile_url";
+    private static final String KEY_USER_NAME_GOOGLE = "user_name_google";
+    private static final String KEY_SNS_CATEGORY = "sns_category";
+
     final int REQ_CODE_SELECT_IMAGE = 100;
-    public String user_id;
-    public String user_name;
+    public String user_id_facebook;
+    public String user_name_facebook;
+    public String user_profile_url_google;
+    public String user_name_google;
     public int my_scrapt_count;
     public int my_followoing_count;
     public int my_follower_count;
@@ -58,6 +64,8 @@ public class My_Info_Activity extends AppCompatActivity {
     ImageView sample_imageview;
     Bitmap image_bitmap; //이미지를 저장할 변수(포맷은 비트맵)//
     ImageTask get_profile_image_task; //계정 이미지 불러오기 작업//
+    Google_ImageTask get_profile_image_task_google; //계정 이미지 불러오기 작업//
+    String sns_category;
     private FamiliarRefreshRecyclerView recyclerview_refresh; //초기화 가능한 리사이클뷰.//
     private FamiliarRecyclerView recyclerview; //초기화되는 리사이클뷰에 자원을 가지고 있는 리사이클뷰.//
 
@@ -108,8 +116,12 @@ public class My_Info_Activity extends AppCompatActivity {
 
         Intent intent = getIntent();
 
-        user_id = intent.getStringExtra(KEY_USER_ID);
-        user_name = intent.getStringExtra(KEY_USER_NAME);
+        //후에 이 부분은 네트워크로 사용자 정보를 가져올 수 있다.//
+        user_id_facebook = intent.getStringExtra(KEY_USER_ID);
+        user_name_facebook = intent.getStringExtra(KEY_USER_NAME_FACEBOOK);
+        user_profile_url_google = intent.getStringExtra(KEY_USER_PROFILE_URL);
+        user_name_google = intent.getStringExtra(KEY_USER_NAME_GOOGLE);
+        sns_category = intent.getStringExtra(KEY_SNS_CATEGORY); //1이면 페이스북, 2이면 구글//
 
         //Log.d("user id : ", user_id);
         //Log.d("user name : ", user_name);
@@ -235,7 +247,11 @@ public class My_Info_Activity extends AppCompatActivity {
         /** 이 부분은 Intent의 값과 네트워크로부터 데이터를 가져온다. **/
 
         //이름 설정.//
-        user_name_text.setText(user_name);
+        if (sns_category.equals("1")) {
+            user_name_text.setText(user_name_facebook);
+        } else if (sns_category.equals("2")) {
+            user_name_text.setText(user_name_google);
+        }
 
         if (user_info_text.getText().toString().equals("*")) {
             user_info_text.setText("자기소개를 입력하세요!!");
@@ -250,12 +266,21 @@ public class My_Info_Activity extends AppCompatActivity {
         following_count_text.setText("" + my_followoing_count);
         follower_count_text.setText("" + my_follower_count);
 
-        set_user_image(user_id); //프로필 이미지 설정.//
+        if (sns_category.equals("1")) {
+            set_user_image_facebook(user_id_facebook); //프로필 이미지 설정.//
+        } else if (sns_category.equals("2")) {
+            set_user_image_google(user_profile_url_google); //프로필 이미지 설정.//
+        }
     }
 
-    public void set_user_image(String user_id) {
+    public void set_user_image_facebook(String user_id) {
         get_profile_image_task = new ImageTask(user_id);
         get_profile_image_task.execute(); //스레드 작업 실행//
+    }
+
+    public void set_user_image_google(String user_profile_url) {
+        get_profile_image_task_google = new Google_ImageTask(user_profile_url);
+        get_profile_image_task_google.execute(); //스레드 작업 실행//
     }
 
     class ImageTask extends AsyncTask<Void, Void, Boolean> {
@@ -268,6 +293,63 @@ public class My_Info_Activity extends AppCompatActivity {
             URL_Address = "https://graph.facebook.com/";
             URL_Address = URL_Address + user_token_id + "/";
             URL_Address = URL_Address + "picture";
+        }
+
+        @Override
+        protected void onPreExecute() {
+            Log.i("image download file : ", URL_Address);
+        }
+
+        @Override
+        protected Boolean doInBackground(Void... data) {
+            //이미지 다운로드 작업 시작 및 네트워크 작업 진행//
+            try {
+                URL url = new URL(URL_Address); //연결한 URL주소 셋팅//
+
+                try {
+                    //네트워크 객체 선언.//
+                    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                    conn.connect(); //연결//
+
+                    InputStream is = conn.getInputStream(); //스트림 객체 선언//
+
+                    Log.i("image value : ", "" + is);
+
+                    bitmap = BitmapFactory.decodeStream(is);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
+
+            if (bitmap != null) {
+                isCheck = true;
+            }
+
+            return isCheck;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean image_check) //메인 UI와 통신가능//
+        {
+            if (image_check == true) {
+                user_profile_image.setImageBitmap(bitmap); //이미지 초기화//
+            } else if (image_check == false) {
+                user_profile_image.setImageResource(R.drawable.not_image);
+            }
+        }
+    }
+
+    class Google_ImageTask extends AsyncTask<Void, Void, Boolean> {
+        Bitmap bitmap;
+        private String URL_Address = "";
+        private boolean isCheck = false; //이미지가 처음엔 다운로드 실패했다는 가정//
+
+        //URL주소를 셋팅하는 생성자.//
+        public Google_ImageTask(String profile_url) {
+            URL_Address = profile_url;
         }
 
         @Override

@@ -7,4 +7,18 @@
         android:orderInCategory="100"
         android:title=""
         app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/google_login"
+        android:icon="@android:drawable/ic_dialog_email"
+        android:orderInCategory="101"
+        android:title=""
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/next_button"
+        android:icon="@android:drawable/ic_menu_agenda"
+        android:orderInCategory="102"
+        android:title=""
+        app:showAsAction="ifRoom" />
 </menu>
