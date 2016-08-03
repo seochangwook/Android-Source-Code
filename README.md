@@ -153,6 +153,7 @@
   <div class="photoset-grid" data-layout="13">
       <img src="https://github.com/seochangwook/Team-Project-Sample-Code-android-/blob/master/Project_SampleImage/screen_18.jpeg" width="250" height="350">
       <img src="https://github.com/seochangwook/Team-Project-Sample-Code-android-/blob/master/Project_SampleImage/screen_19.jpeg" width="250" height="350">
+      <img src="https://github.com/seochangwook/Team-Project-Sample-Code-android-/blob/master/Project_SampleImage/screen_24.png" width="250" height="350">
   </div>
 </p>
 
@@ -167,13 +168,6 @@
 <p align="left">
   <div class="photoset-grid" data-layout="13">
       <img src="https://github.com/seochangwook/Team-Project-Sample-Code-android-/blob/master/Project_SampleImage/screen_26.jpeg" width="250" height="350">
-  </div>
-</p>
-
-<p align="left">
-  <div class="photoset-grid" data-layout="13">
-      <img src="https://github.com/seochangwook/Team-Project-Sample-Code-android-/blob/master/Project_SampleImage/screen_20.jpeg" width="250" height="350">
-      <img src="https://github.com/seochangwook/Team-Project-Sample-Code-android-/blob/master/Project_SampleImage/screen_21.jpeg" width="250" height="350">
   </div>
 </p>
 
