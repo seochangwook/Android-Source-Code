@@ -4,7 +4,14 @@
 
 * Project UI Prototype URL : https://ovenapp.io/view/TPndbnvzLfjpvM47zW2zUx3KPLqIz0Y0
 
+<< UI Prototype image >>
 
+<p align="left">
+  <title> UI 프로토타입 기획 산출물</title>
+  <div class="photoset-grid" data-layout="13">
+      <img src="https://github.com/seochangwook/Team-Project-Sample-Code-android-/blob/master/Project_SampleImage/UI%20Prototype.jpeg" width="250" height="350">
+  </div>
+</p>
 
 # Development(Android) issues
 
@@ -25,6 +32,8 @@
 * compile 'com.mikepenz:iconics-core:2.6.6@aar'
 * compile 'com.specyci:residemenu:1.6+' //향상된 3D메뉴 라이브러리
 * compile 'com.hkm.taglib:tag:1.6.0' // 태그관련 라이브러리
+* compile 'com.google.android.gms:play-services-auth:8.3.0' //구글 인증관련 라이브러리//
+* compile 'com.android.support:multidex:1.0.0' //dexOutOfMemory방지 라이브러리//
 * (새로운 라이브러리 추가 시 계속 업데이트)
 
 << Sample image >>
@@ -131,6 +140,33 @@
   <div class="photoset-grid" data-layout="13">
      <img src="https://github.com/seochangwook/Team-Project-Sample-Code-android-/blob/master/Project_SampleImage/screen_16.jpeg" width="250" height="350">
      <img src="https://github.com/seochangwook/Team-Project-Sample-Code-android-/blob/master/Project_SampleImage/screen_17.jpeg" width="250" height="350">
+  </div>
+</p>
+
+<< Sample image >>
+
+<p align="left">
+  <title> Google과 Facebook을 이용한 SNS Login연동 </title>
+  <div class="photoset-grid" data-layout="13">
+      <img src="https://github.com/seochangwook/Team-Project-Sample-Code-android-/blob/master/Project_SampleImage/screen_18.jpeg" width="250" height="350">
+      <img src="https://github.com/seochangwook/Team-Project-Sample-Code-android-/blob/master/Project_SampleImage/screen_19.jpeg" width="250" height="350">
+  </div>
+</p>
+
+<p align="left">
+  <div class="photoset-grid" data-layout="13">
+      <img src="https://github.com/seochangwook/Team-Project-Sample-Code-android-/blob/master/Project_SampleImage/screen_20.jpeg" width="250" height="350">
+      <img src="https://github.com/seochangwook/Team-Project-Sample-Code-android-/blob/master/Project_SampleImage/screen_21.jpeg" width="250" height="350">
+  </div>
+</p>
+
+<< Sample image >>
+
+<p align="left">
+  <title> 상세 기사 정보 보기 화면구성 </title>
+  <div class="photoset-grid" data-layout="13">
+      <img src="https://github.com/seochangwook/Team-Project-Sample-Code-android-/blob/master/Project_SampleImage/screen_22.jpeg" width="250" height="350">
+      <img src="https://github.com/seochangwook/Team-Project-Sample-Code-android-/blob/master/Project_SampleImage/screen_23.jpeg" width="250" height="350">
   </div>
 </p>
 
