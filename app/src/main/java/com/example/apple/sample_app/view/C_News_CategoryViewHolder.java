@@ -12,8 +12,8 @@ import com.example.apple.sample_app.R;
  * Created by apple on 2016. 7. 24..
  */
 public class C_News_CategoryViewHolder extends RecyclerView.ViewHolder {
+    public TextView c_news_title;
     ImageView c_news_icon;
-    TextView c_news_title;
 
     public C_News_CategoryViewHolder(View itemView) {
         super(itemView);

@@ -56,7 +56,11 @@
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
             android:name=".LoginActivity"
-            android:label="@string/title_activity_google__login_"></activity>
+            android:label="@string/title_activity_google__login_" />
+        <activity
+            android:name=".News_ViewActivity"
+            android:label="@string/title_activity_news__view"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>

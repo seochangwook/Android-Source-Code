@@ -23,25 +23,10 @@ public class Following_Follow_FriendActivity extends AppCompatActivity implement
     CheckBox checkbox;
     Switch switch_widget;
 
-    /**
-     * 하단 메뉴관련 버튼
-     **/
-    Button button_menu_1;
-    Button button_menu_2;
-    Button button_menu_3;
-    Button button_menu_4;
-    Button button_menu_5;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.friend_drawable); //drawer를 변경. 다른 네비게이션 뷰가 나온다.//
-
-        button_menu_1 = (Button) findViewById(R.id.button_menu_1);
-        button_menu_2 = (Button) findViewById(R.id.button_menu_2);
-        button_menu_3 = (Button) findViewById(R.id.button_menu_3);
-        button_menu_4 = (Button) findViewById(R.id.button_menu_4);
-        button_menu_5 = (Button) findViewById(R.id.button_menu_5);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -123,42 +108,6 @@ public class Following_Follow_FriendActivity extends AppCompatActivity implement
                 } else if (is_checked == false) {
                     Toast.makeText(Following_Follow_FriendActivity.this, "스위치 Off", Toast.LENGTH_SHORT).show();
                 }
-            }
-        });
-
-        /** 하단메뉴관련 이벤트 처리 **/
-        button_menu_1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(Following_Follow_FriendActivity.this, "버튼메뉴 1 클릭", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        button_menu_2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(Following_Follow_FriendActivity.this, "버튼메뉴 2 클릭", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        button_menu_3.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(Following_Follow_FriendActivity.this, "버튼메뉴 3 클릭", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        button_menu_4.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(Following_Follow_FriendActivity.this, "버튼메뉴 4 클릭", Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        button_menu_5.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(Following_Follow_FriendActivity.this, "버튼메뉴 5 클릭", Toast.LENGTH_SHORT).show();
             }
         });
     }

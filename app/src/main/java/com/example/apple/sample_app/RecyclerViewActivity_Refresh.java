@@ -436,7 +436,8 @@ public class RecyclerViewActivity_Refresh extends AppCompatActivity {
 
     public void initData() {
         //해당 데이터 초기화 부분은 네트워크(JSON, xml)로 파싱 후 가져온다.//
-        //헤더와 각 뉴스에 맞게 데이터를 초기화.//
+        //헤더(사용자가 선택한 키워드)와 각 뉴스에 맞게 데이터를 초기화.//
+        //뉴스의 번호를 넣어야 한다면 사이즈 동기화를 위해서 리스트의 순서를 넣는다.//
 
         /*Test data*/
         int news_count = 0;

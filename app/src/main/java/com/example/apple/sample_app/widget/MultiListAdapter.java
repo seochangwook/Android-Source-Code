@@ -1,6 +1,7 @@
 package com.example.apple.sample_app.widget;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -8,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.example.apple.sample_app.News_ViewActivity;
 import com.example.apple.sample_app.R;
 import com.example.apple.sample_app.data.News;
 import com.example.apple.sample_app.view.A_NewsViewHolder;
@@ -33,6 +35,17 @@ public class MultiListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
     private static final int VIEW_TYPE_B_NEWS_INFO = 2;
     private static final int VIEW_TYPE_C_NEWS_INFO = 3;
     private static final int VIEW_TYPE_D_NEWS_INFO = 4;
+    private static final String KEY_NEWS_TITLE = "news title";
+    private static final String KEY_ARTICLE_HEADLINE = "article headline";
+    private static final String KEY_ARTICLE_GOOD_COUNT = "good count";
+    private static final String KEY_ARTICLE_BAD_COUNT = "bad count";
+    //이미지는 네트워크로 받아오나 현재 요기서는 Dummy Data로 처리//
+    private static final String KEY_ARTICLE_IMAGE = "article image";
+    private static final String KEY_NEWS_CATEGORY_IMAGE = "news category image";
+    /**
+     * Data
+     **/
+    public String news_title; //뉴스 종류이름.//
     Context context; //액티비티의 자원을 받을 context정의.//
     News news; //클래스 정의.//
 
@@ -251,12 +264,15 @@ public class MultiListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
         position--; //다시 0부터 시작//
 
         //A_News의 경우//
-        if (news.a_news.size() > 0) {
+        if (news.a_news.size() > 0)
+        {
             if (position == 0) //A_News에 대한 카테고리 설정.//
             {
                 A_News_CategoryViewHolder a_news_categoryViewHolder = (A_News_CategoryViewHolder) holder;
 
                 a_news_categoryViewHolder.set_A_news_category("조선일보", R.drawable.apple_image_2);
+
+                news_title = a_news_categoryViewHolder.a_news_title.getText().toString(); //카테고리를 획득//
 
                 return;
             }
@@ -267,6 +283,7 @@ public class MultiListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             if (position < news.a_news.size()) {
                 /** 객체생성 및 데이터 초기화 **/
                 final A_NewsViewHolder a_news = (A_NewsViewHolder) holder;
+                final String article_number = ""+position;
 
                 a_news.set_A_news(news.a_news.get(position)); //해당 포지션에 위치한 배열의 값으로 셋팅.//
 
@@ -304,8 +321,22 @@ public class MultiListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
                         Log.d("headline : ", get_headline + "/" + "like count : " + like_count + "/" + "false count : " + false_count);
 
-                        Toast.makeText(context, "기사제목 : " + get_headline + "/like count : " + like_count + "/false count : " + false_count,
+                        Toast.makeText(context, "기사제목 : " + get_headline + "/like count : " + like_count + "/false count : " + false_count
+                                        + "뉴스종류 : " + news_title + "기사번호 : " + article_number,
                                 Toast.LENGTH_SHORT).show();
+
+                        //필요한 데이터를 지정 후 해당 상세기사보기 화면으로 이동.(실제 서버랑 연동되어 있을 시는 데이터베이스에 질의를 할
+                        //특정 값만 보낸다.//
+                        Intent intent = new Intent(context, News_ViewActivity.class);
+
+                        intent.putExtra(KEY_NEWS_TITLE, news_title);
+                        intent.putExtra(KEY_ARTICLE_HEADLINE, get_headline);
+                        intent.putExtra(KEY_ARTICLE_GOOD_COUNT, like_count);
+                        intent.putExtra(KEY_ARTICLE_BAD_COUNT, false_count);
+                        intent.putExtra(KEY_NEWS_CATEGORY_IMAGE, "1");
+                        intent.putExtra(KEY_ARTICLE_IMAGE, article_number + "/1");
+
+                        context.startActivity(intent);
                     }
                 });
 
@@ -323,6 +354,8 @@ public class MultiListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
                 b_news_categoryViewHolder.set_B_news_category("동아일보", R.drawable.apple_image_3);
 
+                news_title = b_news_categoryViewHolder.b_news_title.getText().toString();
+
                 return;
             }
 
@@ -331,6 +364,7 @@ public class MultiListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
             //B_News의 개수만큼 채워준다.//
             if (position < news.b_news.size()) {
                 final B_NewsViewHolder b_news = (B_NewsViewHolder) holder;
+                final String article_number = ""+position;
 
                 b_news.set_B_news(news.b_news.get(position)); //해당 포지션에 위치한 배열의 값으로 셋팅.//
 
@@ -367,8 +401,22 @@ public class MultiListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
                         Log.d("headline : ", get_headline + "/" + "like count : " + like_count + "/" + "false count : " + false_count);
 
-                        Toast.makeText(context, "기사제목 : " + get_headline + "/like count : " + like_count + "/false count : " + false_count,
+                        Toast.makeText(context, "기사제목 : " + get_headline + "/like count : " + like_count + "/false count : " + false_count
+                                        + "뉴스종류 : " + news_title + "기사번호 : " + article_number,
                                 Toast.LENGTH_SHORT).show();
+
+                        //필요한 데이터를 지정 후 해당 상세기사보기 화면으로 이동.(실제 서버랑 연동되어 있을 시는 데이터베이스에 질의를 할
+                        //특정 값만 보낸다.//
+                        Intent intent = new Intent(context, News_ViewActivity.class);
+
+                        intent.putExtra(KEY_NEWS_TITLE, news_title);
+                        intent.putExtra(KEY_ARTICLE_HEADLINE, get_headline);
+                        intent.putExtra(KEY_ARTICLE_GOOD_COUNT, like_count);
+                        intent.putExtra(KEY_ARTICLE_BAD_COUNT, false_count);
+                        intent.putExtra(KEY_NEWS_CATEGORY_IMAGE, "2");
+                        intent.putExtra(KEY_ARTICLE_IMAGE, article_number + "/2");
+
+                        context.startActivity(intent);
                     }
                 });
 
@@ -385,6 +433,8 @@ public class MultiListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
                 c_news_categoryViewHolder.set_C_news_category("매일경제", R.drawable.apple_image_4);
 
+                news_title = c_news_categoryViewHolder.c_news_title.getText().toString();
+
                 return;
             }
 
@@ -392,6 +442,7 @@ public class MultiListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
             if (position < news.c_news.size()) {
                 final C_NewsViewHolder c_news_viewHolder = (C_NewsViewHolder) holder;
+                final String article_number = ""+position;
 
                 c_news_viewHolder.set_C_news(news.c_news.get(position));
 
@@ -428,8 +479,22 @@ public class MultiListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
                         Log.d("headline : ", get_headline + "/" + "like count : " + like_count + "/" + "false count : " + false_count);
 
-                        Toast.makeText(context, "기사제목 : " + get_headline + "/like count : " + like_count + "/false count : " + false_count,
+                        Toast.makeText(context, "기사제목 : " + get_headline + "/like count : " + like_count + "/false count : " + false_count
+                                        + "뉴스종류 : " + news_title + "기사번호 : " + article_number,
                                 Toast.LENGTH_SHORT).show();
+
+                        //필요한 데이터를 지정 후 해당 상세기사보기 화면으로 이동.(실제 서버랑 연동되어 있을 시는 데이터베이스에 질의를 할
+                        //특정 값만 보낸다.//
+                        Intent intent = new Intent(context, News_ViewActivity.class);
+
+                        intent.putExtra(KEY_NEWS_TITLE, news_title);
+                        intent.putExtra(KEY_ARTICLE_HEADLINE, get_headline);
+                        intent.putExtra(KEY_ARTICLE_GOOD_COUNT, like_count);
+                        intent.putExtra(KEY_ARTICLE_BAD_COUNT, false_count);
+                        intent.putExtra(KEY_NEWS_CATEGORY_IMAGE, "3");
+                        intent.putExtra(KEY_ARTICLE_IMAGE, article_number + "/3");
+
+                        context.startActivity(intent);
                     }
                 });
 
