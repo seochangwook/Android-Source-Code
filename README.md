@@ -23,7 +23,8 @@
 * //SUB-DEPENDENCIES
 * //Android-Iconics - used to provide an easy API for icons
 * compile 'com.mikepenz:iconics-core:2.6.6@aar'
-* compile 'com.specyci:residemenu:1.6+' //향상된 3D메뉴 라이브러리리
+* compile 'com.specyci:residemenu:1.6+' //향상된 3D메뉴 라이브러리
+* compile 'com.hkm.taglib:tag:1.6.0' // 태그관련 라이브러리
 * (새로운 라이브러리 추가 시 계속 업데이트)
 
 << Sample image >>
@@ -120,6 +121,16 @@
   <div class="photoset-grid" data-layout="13">
       <img src="https://github.com/seochangwook/Team-Project-Sample-Code-android-/blob/master/Project_SampleImage/screen_13.jpeg" width="250" height="350">
       <img src="https://github.com/seochangwook/Team-Project-Sample-Code-android-/blob/master/Project_SampleImage/screen_14.jpeg" width="250" height="350">
+  </div>
+</p>
+
+<< Sample image >>
+
+<p align="left">
+  <title> 태그기능을 이용한 뷰 구현 (태그추가, 삭제, 선택 가능)</title>
+  <div class="photoset-grid" data-layout="13">
+     <img src="https://github.com/seochangwook/Team-Project-Sample-Code-android-/blob/master/Project_SampleImage/screen_16.jpeg" width="250" height="350">
+     <img src="https://github.com/seochangwook/Team-Project-Sample-Code-android-/blob/master/Project_SampleImage/screen_17.jpeg" width="250" height="350">
   </div>
 </p>
 
