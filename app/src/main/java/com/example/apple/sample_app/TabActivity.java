@@ -30,9 +30,12 @@ import com.example.apple.sample_app.view.Fragment_Discussionview;
 import com.example.apple.sample_app.view.Fragment_Keywordview;
 import com.example.apple.sample_app.view.Fragment_scraptview;
 import com.example.apple.sample_app.view.Fragment_settingview;
+import com.example.apple.sample_app.widget.BottomMenu;
 import com.mikepenz.actionitembadge.library.ActionItemBadge;
 import com.mikepenz.actionitembadge.library.utils.BadgeStyle;
 import com.mikepenz.fontawesome_typeface_library.FontAwesome;
+
+import java.util.ArrayList;
 
 public class TabActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     private static final int SAMPLE2_ID = 34535;
@@ -43,6 +46,7 @@ public class TabActivity extends AppCompatActivity implements NavigationView.OnN
     Button my_info_button;
     CheckBox checkbox;
     Switch switch_widget;
+    BottomMenu mBottomMenu;
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
     private BadgeStyle bigStyle = ActionItemBadge.BadgeStyles.DARK_GREY_LARGE.getStyle();
@@ -53,6 +57,9 @@ public class TabActivity extends AppCompatActivity implements NavigationView.OnN
         setContentView(R.layout.navigation_activity_layout);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        mBottomMenu = (BottomMenu) findViewById(R.id.bottom_menu_3);
+
+        setupBottomMenuTabs(); //하단메뉴를 생성.//
 
         setSupportActionBar(toolbar);
         // Create the adapter that will return a fragment for each of the three
@@ -147,6 +154,50 @@ public class TabActivity extends AppCompatActivity implements NavigationView.OnN
         });
 
         navigationView.setNavigationItemSelectedListener(this); //네비게이션의 이벤트 리스너 장착.//
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        setupBottomMenuClickListener();
+    }
+
+    private void setupBottomMenuClickListener() {
+        mBottomMenu.setBottomMenuClickListener(new BottomMenu.BottomMenuClickListener() {
+            @Override
+            public void onItemSelected(int position, int id, boolean triggeredOnRotation) {
+                // Do something when item is selected
+                if (position == 1) {
+                    Toast.makeText(TabActivity.this, "메뉴 2 클릭", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onItemReSelected(int position, int id) {
+                // Do something when item is re-selected
+                if (position == 0) {
+                    Toast.makeText(TabActivity.this, "메뉴 1 클릭", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
+
+    /**
+     * Bottom Menu 관련
+     **/
+    private void setupBottomMenuTabs() {
+        ArrayList<BottomMenu.BottomMenuItem> items = new ArrayList<>();
+        BottomMenu.BottomMenuItem news = new BottomMenu.BottomMenuItem(R.id.bottom_bar_1, R.drawable.ic_account_balance_black_24dp, R.color.bottom_bar_unselected, R.color.bottom_bar_selected);
+        BottomMenu.BottomMenuItem tw = new BottomMenu.BottomMenuItem(R.id.bottom_bar_2, R.drawable.ic_face_black_24dp, R.color.bottom_bar_unselected, R.color.bottom_bar_selected);
+        BottomMenu.BottomMenuItem listing = new BottomMenu.BottomMenuItem(R.id.bottom_bar_3, R.drawable.ic_subscriptions_black_24dp, R.color.bottom_bar_unselected, R.color.bottom_bar_selected);
+        BottomMenu.BottomMenuItem tv = new BottomMenu.BottomMenuItem(R.id.bottom_bar_4, R.drawable.ic_whatshot_black_24dp, R.color.bottom_bar_unselected, R.color.bottom_bar_selected);
+
+        items.add(news);
+        items.add(tw);
+        items.add(listing);
+        items.add(tv);
+
+        mBottomMenu.addItems(items);
     }
 
     @Override

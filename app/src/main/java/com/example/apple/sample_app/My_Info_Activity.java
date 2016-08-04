@@ -23,6 +23,7 @@ import android.widget.Toast;
 
 import com.example.apple.sample_app.data.My_Category;
 import com.example.apple.sample_app.view.LoadMoreView;
+import com.example.apple.sample_app.widget.BottomMenu;
 import com.example.apple.sample_app.widget.My_Category_Adapter;
 
 import java.io.FileNotFoundException;
@@ -31,6 +32,7 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
 
 import cn.iwgang.familiarrecyclerview.FamiliarRecyclerView;
 import cn.iwgang.familiarrecyclerview.FamiliarRefreshRecyclerView;
@@ -71,6 +73,7 @@ public class My_Info_Activity extends AppCompatActivity {
     Google_ImageTask get_profile_image_task_google; //계정 이미지 불러오기 작업//
     Twitter_ImageTask get_profile_image_task_twitter; //계정 이미지 불러오기 작업//
     String sns_category;
+    BottomMenu mBottomMenu;
     private FamiliarRefreshRecyclerView recyclerview_refresh; //초기화 가능한 리사이클뷰.//
     private FamiliarRecyclerView recyclerview; //초기화되는 리사이클뷰에 자원을 가지고 있는 리사이클뷰.//
 
@@ -92,6 +95,9 @@ public class My_Info_Activity extends AppCompatActivity {
         profile_edit_button = (Button) findViewById(R.id.edit_button);
         recyclerview_refresh = (FamiliarRefreshRecyclerView) findViewById(R.id.my_rv_category_list);
         enroll_category_floating_button = (FloatingActionButton) findViewById(R.id.enroll_category_button);
+        mBottomMenu = (BottomMenu) findViewById(R.id.bottom_menu_4);
+
+        setupBottomMenuTabs(); //하단메뉴를 생성.//
 
         //새로고침되어서 다시 리사이클뷰와 연동될 수 있도록 한다.//
         recyclerview = recyclerview_refresh.getFamiliarRecyclerView(); //리사이클뷰의 자원을 얻어온다.//
@@ -180,7 +186,7 @@ public class My_Info_Activity extends AppCompatActivity {
         enroll_category_floating_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                recyclerview.addFooterView(enroll_footerview);
+                recyclerview.addHeaderView(enroll_footerview);
 
                 mAdapter.notifyDataSetChanged();
             }
@@ -203,7 +209,7 @@ public class My_Info_Activity extends AppCompatActivity {
                 my_category.my_category_list.add(new_category);
                 mAdapter.set_Category(my_category);
 
-                recyclerview.removeFooterView(enroll_footerview); //다시 푸터뷰에 있는 내용을 지운다.//
+                recyclerview.removeHeaderView(enroll_footerview); //다시 푸터뷰에 있는 내용을 지운다.//
 
                 mAdapter.notifyDataSetChanged();
             }
@@ -220,6 +226,50 @@ public class My_Info_Activity extends AppCompatActivity {
         });
 
         //init_Data(); //초기 서버로 부터 카테고리의 정보를 가져오는 것.//
+    }
+
+    /**
+     * Bottom Menu 관련
+     **/
+    private void setupBottomMenuTabs() {
+        ArrayList<BottomMenu.BottomMenuItem> items = new ArrayList<>();
+        BottomMenu.BottomMenuItem news = new BottomMenu.BottomMenuItem(R.id.bottom_bar_5, R.drawable.ic_account_balance_black_24dp, R.color.bottom_bar_unselected, R.color.bottom_bar_selected);
+        BottomMenu.BottomMenuItem tw = new BottomMenu.BottomMenuItem(R.id.bottom_bar_6, R.drawable.ic_face_black_24dp, R.color.bottom_bar_unselected, R.color.bottom_bar_selected);
+        BottomMenu.BottomMenuItem listing = new BottomMenu.BottomMenuItem(R.id.bottom_bar_7, R.drawable.ic_subscriptions_black_24dp, R.color.bottom_bar_unselected, R.color.bottom_bar_selected);
+        BottomMenu.BottomMenuItem tv = new BottomMenu.BottomMenuItem(R.id.bottom_bar_8, R.drawable.ic_whatshot_black_24dp, R.color.bottom_bar_unselected, R.color.bottom_bar_selected);
+
+        items.add(news);
+        items.add(tw);
+        items.add(listing);
+        items.add(tv);
+
+        mBottomMenu.addItems(items);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        setupBottomMenuClickListener();
+    }
+
+    private void setupBottomMenuClickListener() {
+        mBottomMenu.setBottomMenuClickListener(new BottomMenu.BottomMenuClickListener() {
+            @Override
+            public void onItemSelected(int position, int id, boolean triggeredOnRotation) {
+                // Do something when item is selected
+                if (position == 1) {
+                    Toast.makeText(My_Info_Activity.this, "메뉴 2 클릭", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onItemReSelected(int position, int id) {
+                // Do something when item is re-selected
+                if (position == 0) {
+                    Toast.makeText(My_Info_Activity.this, "메뉴 1 클릭", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

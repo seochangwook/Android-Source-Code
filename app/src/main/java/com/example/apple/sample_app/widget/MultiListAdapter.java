@@ -321,9 +321,9 @@ public class MultiListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHold
 
                         Log.d("headline : ", get_headline + "/" + "like count : " + like_count + "/" + "false count : " + false_count);
 
-                        Toast.makeText(context, "기사제목 : " + get_headline + "/like count : " + like_count + "/false count : " + false_count
+                        /*Toast.makeText(context, "기사제목 : " + get_headline + "/like count : " + like_count + "/false count : " + false_count
                                         + "뉴스종류 : " + news_title + "기사번호 : " + article_number,
-                                Toast.LENGTH_SHORT).show();
+                                Toast.LENGTH_SHORT).show();*/
 
                         //필요한 데이터를 지정 후 해당 상세기사보기 화면으로 이동.(실제 서버랑 연동되어 있을 시는 데이터베이스에 질의를 할
                         //특정 값만 보낸다.//

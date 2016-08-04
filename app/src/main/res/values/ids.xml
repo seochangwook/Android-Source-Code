@@ -5,4 +5,25 @@
     <item name="bottom_bar_second" type="id" />
     <item name="bottom_bar_third" type="id" />
     <item name="bottom_bar_forth" type="id" />
+
+    <item name="bottom_bar_five" type="id" />
+    <item name="bottom_bar_six" type="id" />
+    <item name="bottom_bar_seven" type="id" />
+    <item name="bottom_bar_eight" type="id" />
+
+    <item name="bottom_bar_1" type="id" />
+    <item name="bottom_bar_2" type="id" />
+    <item name="bottom_bar_3" type="id" />
+    <item name="bottom_bar_4" type="id" />
+
+    <item name="bottom_bar_5" type="id" />
+    <item name="bottom_bar_6" type="id" />
+    <item name="bottom_bar_7" type="id" />
+    <item name="bottom_bar_8" type="id" />
+
+    <item name="bottom_bar_9" type="id" />
+    <item name="bottom_bar_10" type="id" />
+    <item name="bottom_bar_11" type="id" />
+    <item name="bottom_bar_12" type="id" />
+    <item name="bottom_bar_13" type="id" />
 </resources>

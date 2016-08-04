@@ -443,6 +443,7 @@ public class SNS_Login_Activity extends AppCompatActivity implements
             //findViewById(R.id.sign_out_and_disconnect).setVisibility(View.VISIBLE);
             loginbutton.setVisibility(View.GONE);
             sign_in_button.setVisibility(View.GONE);
+            twitter_login_button.setVisibility(View.GONE);
             sign_out_button.setVisibility(View.VISIBLE);
 
             //이미지를 로딩.//
@@ -454,6 +455,7 @@ public class SNS_Login_Activity extends AppCompatActivity implements
 
             loginbutton.setVisibility(View.VISIBLE);
             sign_in_button.setVisibility(View.VISIBLE);
+            twitter_login_button.setVisibility(View.VISIBLE);
             sign_out_button.setVisibility(View.GONE);
 
             //findViewById(R.id.sign_in_button).setVisibility(View.VISIBLE);

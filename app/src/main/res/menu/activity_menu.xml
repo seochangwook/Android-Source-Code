@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <!--액션바에 레이아웃(클래스) 추가-->
+    <item
+        android:id="@+id/menu_item_1"
+        android:icon="@android:drawable/ic_search_category_default"
+        android:orderInCategory="100"
+        android:title="Add"
+        app:actionViewClass="android.support.v7.widget.SearchView"
+        app:showAsAction="ifRoom|collapseActionView" />
+
+    <item
+        android:id="@+id/menu_item_2"
+        android:icon="@android:drawable/ic_input_get"
+        android:orderInCategory="100"
+        android:title="Get"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/menu_sub"
+        android:icon="@android:drawable/ic_input_delete"
+        android:orderInCategory="102"
+        android:title="sub"
+        app:showAsAction="never">
+
+        <menu>
+            <item
+                android:id="@+id/submenu_item_1"
+                android:icon="@android:drawable/ic_dialog_email"
+                android:orderInCategory="100"
+                android:title="Sub item 1"
+                app:showAsAction="never" />
+
+            <item
+                android:id="@+id/submenu_item_2"
+                android:icon="@android:drawable/ic_dialog_info"
+                android:orderInCategory="101"
+                android:title="Sub item 2"
+                app:showAsAction="never" />
+        </menu>
+    </item>
+
+    <item
+        android:id="@+id/menu_check"
+        android:checkable="true"
+        android:orderInCategory="120"
+        android:title="check"
+        app:showAsAction="never" />
+
+    <group
+        android:checkableBehavior="single"
+        android:orderInCategory="130">
+
+        <item
+            android:id="@+id/menu_check_1"
+            android:orderInCategory="131"
+            android:title="Check 1"
+            app:showAsAction="never" />
+
+        <item
+            android:id="@+id/menu_check_2"
+            android:orderInCategory="132"
+            android:title="Check 2"
+            app:showAsAction="never" />
+
+        <item
+            android:id="@+id/menu_check_3"
+            android:orderInCategory="133"
+            android:title="Check 3"
+            app:showAsAction="never" />
+    </group>
+</menu>
