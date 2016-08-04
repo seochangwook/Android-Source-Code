@@ -6,4 +6,5 @@
     <dimen name="appbar_padding_top">8dp</dimen>
     <dimen name="nav_header_vertical_spacing">10dp</dimen>
     <dimen name="nav_header_height">240dp</dimen>
+    <dimen name="bottom_bar_height">48dp</dimen>
 </resources>

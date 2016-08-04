@@ -289,6 +289,8 @@ public class Scrapt_MultiListAdapter extends RecyclerView.Adapter<RecyclerView.V
                             String headline_str = ((A_NewsViewHolder) holder).headline_text.getText().toString();
 
                             Toast.makeText(context, "기사제목 : " + headline_str + " 스크랩", Toast.LENGTH_SHORT).show();
+
+                            //스크랩 배열에 add(), remove()를 클릭여부에 따라 처리한다.//
                         }
                     }
                 });

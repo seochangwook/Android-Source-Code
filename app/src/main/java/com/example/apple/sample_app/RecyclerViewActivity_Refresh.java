@@ -6,16 +6,15 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.view.ActionMode;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -29,11 +28,13 @@ import com.example.apple.sample_app.data.C_News;
 import com.example.apple.sample_app.data.D_News;
 import com.example.apple.sample_app.data.News;
 import com.example.apple.sample_app.view.LoadMoreView;
+import com.example.apple.sample_app.widget.BottomMenu;
 import com.example.apple.sample_app.widget.MultiListAdapter;
 import com.example.apple.sample_app.widget.Scrapt_MultiListAdapter;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import cn.iwgang.familiarrecyclerview.FamiliarRecyclerView;
 import cn.iwgang.familiarrecyclerview.FamiliarRefreshRecyclerView;
@@ -57,10 +58,22 @@ public class RecyclerViewActivity_Refresh extends AppCompatActivity {
     RadioButton d_news_button;
     RadioGroup group;
     Button enroll_button;
-    FloatingActionButton info_1_button;
+    Button up_scroll_button;
     int select_number; //0->조선일보, 1->동아일보, 2->매일경제, 3->한국일보//
     Bitmap image_bitmap; //이미지를 저장할 변수(포맷은 비트맵)//
     News news;
+    /**
+     * Touch Event관련
+     **/
+    float startYPosition = 0; //기본적으로 스크롤은 Y축을 기준으로 계산.//
+    float endYPosition = 0;
+    boolean firstDragFlag = true;
+    boolean motionFlag = true;
+    boolean dragFlag = false; //현재 터치가 드래그인지 먼저 확인//
+    /**
+     * Bottom Menu 관련
+     **/
+    BottomMenu mBottomMenu;
     private FamiliarRefreshRecyclerView recyclerview_refresh; //초기화 가능한 리사이클뷰.//
     private FamiliarRecyclerView recyclerview; //초기화되는 리사이클뷰에 자원을 가지고 있는 리사이클뷰.//
     private boolean isVertical = true;
@@ -69,6 +82,8 @@ public class RecyclerViewActivity_Refresh extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recyclerview_refresh);
+
+        up_scroll_button = (Button) findViewById(R.id.up_scroll_button);
 
         header_view = getLayoutInflater().inflate(R.layout.header_view, null, false);
         footer_view = getLayoutInflater().inflate(R.layout.footer_view, null, false);
@@ -90,7 +105,9 @@ public class RecyclerViewActivity_Refresh extends AppCompatActivity {
         d_news_button = (RadioButton) header_view.findViewById(R.id.select_dnews_button);
         enroll_button = (Button) header_view.findViewById(R.id.enroll_button);
         group = (RadioGroup) header_view.findViewById(R.id.radiogroup);
-        info_1_button = (FloatingActionButton) findViewById(R.id.info_button_1);
+        mBottomMenu = (BottomMenu) findViewById(R.id.bottom_menu);
+
+        setupBottomMenuTabs(); //하단메뉴를 생성.//
 
         news = new News();
 
@@ -204,14 +221,14 @@ public class RecyclerViewActivity_Refresh extends AppCompatActivity {
             }
         });
 
-        info_1_button.setOnClickListener(new View.OnClickListener() {
+        /*info_1_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Snackbar.make(view,
                         "원하시는 기사에 버튼을 누르면 스크랩 목록에 추가됩니다.!!" + "\n",
                         Snackbar.LENGTH_SHORT).setAction("Action", null).show();
 
-                /** 현재의 어댑터를 스크랩가능한 어댑터로 변경 **/
+
                 recyclerview.setAdapter(smAdapter); //리사이클뷰에 스크랩 어댑터 장착//
 
                 smAdapter = null;
@@ -224,7 +241,7 @@ public class RecyclerViewActivity_Refresh extends AppCompatActivity {
 
                 scrapted_initData(); //데이터 셋 초기화//
 
-                /** 현재 Menu의 모양을 스크랩 전용으로 변경 **/
+                // 현재 Menu의 모양을 스크랩 전용으로 변경 //
                 startSupportActionMode(new ActionMode.Callback() {
                     @Override
                     public boolean onCreateActionMode(ActionMode mode, Menu menu) {
@@ -260,7 +277,6 @@ public class RecyclerViewActivity_Refresh extends AppCompatActivity {
 
                             case R.id.enroll_scrapt: //스크랩 버튼을 눌렀을 경우.//
                             {
-                                /** 선택된 정보를 저장 **/
                                 enroll_my_news_data();
 
                                 mAdapter = null; //다시 어댑터를 장착하기 위해서 우선 null로 초기화.//
@@ -296,10 +312,85 @@ public class RecyclerViewActivity_Refresh extends AppCompatActivity {
                     }
                 });
             }
+        });*/
+
+        up_scroll_button.setOnClickListener(new View.OnClickListener() //스크롤 버튼 액션 처리//
+        {
+            @Override
+            public void onClick(View view) {
+                recyclerview.smoothScrollToPosition(0); //0번째 포지션이면 리스트뷰의 최상단으로 위치.//
+
+                mBottomMenu.setVisibility(View.VISIBLE); //하단메뉴를 다시 보이기//
+                getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+            }
         });
+
+        //RecyclerView 터치이벤트 처리(스크롤 관련)//
+        recyclerview.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) //터치 이벤트 리스너//
+            {
+                switch (event.getAction()) {
+                    //현재 발생한 모션이벤트를 감지 후 액션에 따른 분기//
+                    case MotionEvent.ACTION_MOVE: //터치 한 후 움직이고 있는 경우.//
+                    {
+                        dragFlag = true;
+
+                        //사용자는 보통 한 번 터치 후 내리거나 올리는 작업을 하기에 반복작업을 피하기 위해서 true/false로 한번만 되도록 구현.//
+                        if (firstDragFlag) //첫번째 움직임을 가지고 판단하기 위해서//
+                        {
+                            startYPosition = event.getY(); //Y축을 얻어온다.//
+                            firstDragFlag = false; //두번째 MOVE가 실행되지 않도록 설정.//
+                        }
+
+                        break;
+                    }
+
+                    case MotionEvent.ACTION_UP: {
+                        endYPosition = event.getY();
+                        firstDragFlag = true;
+
+                        if (dragFlag) {
+                            // 시작Y가 끝 Y보다 크다면 터치가 아래서 위로 이루어졌다는 것이고, 스크롤은 아래로내려갔다는 뜻이다.
+                            if ((startYPosition > endYPosition) && (startYPosition - endYPosition) > 10) {
+                                Log.d("scroll event : ", "scroll down");
+
+                                mBottomMenu.setVisibility(View.GONE); //하단메뉴를 숨기기//
+                                getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+                            }
+
+                            //시작 Y가 끝 보다 작다면 터치가 위에서 아래로 이러우졌다는 것이고, 스크롤이 올라갔다는 뜻이다.
+                            else if ((startYPosition < endYPosition) && (endYPosition - startYPosition) > 10) {
+                                Log.d("scroll event : ", "scroll up");
+
+                                mBottomMenu.setVisibility(View.VISIBLE); //하단메뉴를 다시 보이기//
+                                getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+                            }
+                        }
+
+                        //다시 Y축에 대한 위치를 초기화.//
+                        startYPosition = 0.0f;
+                        endYPosition = 0.0f;
+                        motionFlag = false;
+
+                        break;
+                    }
+                }
+
+                return false;
+            }
+        });
+
+
 
         /** Initialize Data **/
         initData(); //데이터 셋 초기화//
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        setupBottomMenuClickListener();
     }
 
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -329,6 +420,44 @@ public class RecyclerViewActivity_Refresh extends AppCompatActivity {
                 }
             }
         }
+    }
+
+    /**
+     * Bottom Menu 관련
+     **/
+    private void setupBottomMenuTabs() {
+        ArrayList<BottomMenu.BottomMenuItem> items = new ArrayList<>();
+        BottomMenu.BottomMenuItem news = new BottomMenu.BottomMenuItem(R.id.bottom_bar_first, R.drawable.ic_account_balance_black_24dp, R.color.bottom_bar_unselected, R.color.bottom_bar_selected);
+        BottomMenu.BottomMenuItem tw = new BottomMenu.BottomMenuItem(R.id.bottom_bar_second, R.drawable.ic_face_black_24dp, R.color.bottom_bar_unselected, R.color.bottom_bar_selected);
+        BottomMenu.BottomMenuItem listing = new BottomMenu.BottomMenuItem(R.id.bottom_bar_third, R.drawable.ic_subscriptions_black_24dp, R.color.bottom_bar_unselected, R.color.bottom_bar_selected);
+        BottomMenu.BottomMenuItem tv = new BottomMenu.BottomMenuItem(R.id.bottom_bar_forth, R.drawable.ic_whatshot_black_24dp, R.color.bottom_bar_unselected, R.color.bottom_bar_selected);
+
+        items.add(news);
+        items.add(tw);
+        items.add(listing);
+        items.add(tv);
+
+        mBottomMenu.addItems(items);
+    }
+
+    private void setupBottomMenuClickListener() {
+        mBottomMenu.setBottomMenuClickListener(new BottomMenu.BottomMenuClickListener() {
+            @Override
+            public void onItemSelected(int position, int id, boolean triggeredOnRotation) {
+                // Do something when item is selected
+                if (position == 1) {
+                    Toast.makeText(RecyclerViewActivity_Refresh.this, "메뉴 2 클릭", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onItemReSelected(int position, int id) {
+                // Do something when item is re-selected
+                if (position == 0) {
+                    Toast.makeText(RecyclerViewActivity_Refresh.this, "메뉴 1 클릭", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
     }
 
     //액션바를 정의//

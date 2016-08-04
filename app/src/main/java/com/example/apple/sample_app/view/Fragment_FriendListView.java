@@ -134,17 +134,25 @@ public class Fragment_FriendListView extends Fragment {
                 String uri = strings[0];
 
                 BufferedReader br = null; //버퍼라는 개념을 적용하여 입출력을 빠르게 한다.//
+                HttpURLConnection urlConnection = null;
+                URL url;
 
                 try {
                     //정석의 네트워크 작업.HttpURLConnection방법 사용.//
-                    URL url = new URL(uri); //URL 설정.//
-                    HttpURLConnection conn = (HttpURLConnection) url.openConnection(); //연결.//
+                    /** 전송방식은 GET 사용 **/
+                    url = new URL(uri); //URL 설정.//
+
+                    urlConnection = (HttpURLConnection) url.openConnection(); //연결을 준비.//
+
+                    //연결모드를 설정.//
+                    urlConnection.setDoInput(true); //전송모드로 설정.//
+
+                    //실제 연결이 이루어진다.//
+                    br = new BufferedReader(new InputStreamReader(urlConnection.getInputStream())); //버퍼를 씌워서 데이터를
+                    //가져온다. POST로 전송시 getOutputStream() / OutputStream사용.//
+
+                    String json; //전달받을 문자열을 가질 문자열 객체.//
                     StringBuilder sb = new StringBuilder();
-
-                    br = new BufferedReader(new InputStreamReader(conn.getInputStream())); //버퍼를 씌워서 데이터를
-                    //가져온다.//
-
-                    String json;
 
                     //라인수만큼 String에 저장.//
                     while ((json = br.readLine()) != null) {
@@ -153,7 +161,11 @@ public class Fragment_FriendListView extends Fragment {
 
                     return sb.toString().trim(); //공백을 제거하고 반환.//
                 } catch (Exception exp) {
+                    exp.printStackTrace();
+
                     return null;
+                } finally {
+                    urlConnection.disconnect();
                 }
             }
 
