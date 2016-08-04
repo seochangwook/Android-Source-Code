@@ -184,7 +184,7 @@
 << Sample image >>
 
 <p align="left">
-  <title> 스크롤 처리에 따른 화면구성 </title>
+  <title> 스크롤 처리에 따른 화면구성(하단 네비게이션 메뉴 구현) </title>
   <div class="photoset-grid" data-layout="13">
       <img src="https://github.com/seochangwook/Team-Project-Sample-Code-android-/blob/master/Project_SampleImage/screen_27.jpeg" width="250" height="350">
       <img src="https://github.com/seochangwook/Team-Project-Sample-Code-android-/blob/master/Project_SampleImage/screen_28.jpeg" width="250" height="350">
