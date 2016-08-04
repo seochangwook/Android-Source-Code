@@ -34,6 +34,9 @@
 * compile 'com.hkm.taglib:tag:1.6.0' // 태그관련 라이브러리
 * compile 'com.google.android.gms:play-services-auth:8.3.0' //구글 인증관련 라이브러리//
 * compile 'com.android.support:multidex:1.0.0' //dexOutOfMemory방지 라이브러리//
+* compile('com.twitter.sdk.android:twitter:1.14.1@aar') {
+        transitive = true;
+    } //트위터 관련 라이브러리//
 * (새로운 라이브러리 추가 시 계속 업데이트)
 
 << Sample image >>
@@ -146,10 +149,11 @@
 << Sample image >>
 
 <p align="left">
-  <title> Google과 Facebook을 이용한 SNS Login연동 </title>
+  <title> Google과 Facebook, Twitter(Fabric)을 이용한 SNS Login연동 </title>
   <div class="photoset-grid" data-layout="13">
       <img src="https://github.com/seochangwook/Team-Project-Sample-Code-android-/blob/master/Project_SampleImage/screen_18.jpeg" width="250" height="350">
       <img src="https://github.com/seochangwook/Team-Project-Sample-Code-android-/blob/master/Project_SampleImage/screen_19.jpeg" width="250" height="350">
+      <img src="https://github.com/seochangwook/Team-Project-Sample-Code-android-/blob/master/Project_SampleImage/screen_24.png" width="250" height="350">
   </div>
 </p>
 
@@ -157,6 +161,13 @@
   <div class="photoset-grid" data-layout="13">
       <img src="https://github.com/seochangwook/Team-Project-Sample-Code-android-/blob/master/Project_SampleImage/screen_20.jpeg" width="250" height="350">
       <img src="https://github.com/seochangwook/Team-Project-Sample-Code-android-/blob/master/Project_SampleImage/screen_21.jpeg" width="250" height="350">
+      <img src="https://github.com/seochangwook/Team-Project-Sample-Code-android-/blob/master/Project_SampleImage/screen_25.jpeg" width="250" height="350">
+  </div>
+</p>
+
+<p align="left">
+  <div class="photoset-grid" data-layout="13">
+      <img src="https://github.com/seochangwook/Team-Project-Sample-Code-android-/blob/master/Project_SampleImage/screen_26.jpeg" width="250" height="350">
   </div>
 </p>
 
