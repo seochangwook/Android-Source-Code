@@ -191,6 +191,8 @@
   </div>
 </p>
 
+<< Sample image >>
+
 <p align="left">
   <title> 메뉴부분 검색뷰로 전환 기능 </title>
   <div class="photoset-grid" data-layout="13">
