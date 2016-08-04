@@ -191,6 +191,14 @@
   </div>
 </p>
 
+<p align="left">
+  <title> 메뉴부분 검색뷰로 전환 기능 </title>
+  <div class="photoset-grid" data-layout="13">
+      <img src="https://github.com/seochangwook/Team-Project-Sample-Code-android-/blob/master/Project_SampleImage/screen_29.jpeg" width="250" height="350">
+      <img src="https://github.com/seochangwook/Team-Project-Sample-Code-android-/blob/master/Project_SampleImage/screen_30.jpeg" width="250" height="350">
+  </div>
+</p>
+
 # Design department issues
 
 *
