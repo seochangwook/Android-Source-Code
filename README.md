@@ -215,4 +215,4 @@
 
 # Design department issues
 
-*
+* UI 시나리오 뉴스잉 기획안 파일 저장
