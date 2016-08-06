@@ -106,7 +106,7 @@
 </p>
 
 <p align="left">
-  <img src="https://github.com/seochangwook/Team-Project-Sample-Code-android-/blob/master/Project_SampleImage/network_info_image_1.png.png" width="650" height="350">
+  <img src="https://github.com/seochangwook/Team-Project-Sample-Code-android-/blob/master/Project_SampleImage/network_info_image_1.png" width="650" height="350">
 </p>
 
 << Sample image >>
