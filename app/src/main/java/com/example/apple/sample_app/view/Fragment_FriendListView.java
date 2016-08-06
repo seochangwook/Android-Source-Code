@@ -145,21 +145,32 @@ public class Fragment_FriendListView extends Fragment {
                     urlConnection = (HttpURLConnection) url.openConnection(); //연결을 준비.//
 
                     //연결모드를 설정.//
-                    urlConnection.setDoInput(true); //전송모드로 설정.//
+                    urlConnection.setDoInput(true); //수신모드로 설정.//
+                    urlConnection.setDoOutput(false); //전송모드는 끔.//
+                    urlConnection.setConnectTimeout(10000); //Timeout(IOException)시간 설정.//
 
-                    //실제 연결이 이루어진다.//
-                    br = new BufferedReader(new InputStreamReader(urlConnection.getInputStream())); //버퍼를 씌워서 데이터를
-                    //가져온다. POST로 전송시 getOutputStream() / OutputStream사용.//
+                    int responseCode = urlConnection.getResponseCode(); //서버로 부터 응답코드를 받는다.//
 
-                    String json; //전달받을 문자열을 가질 문자열 객체.//
-                    StringBuilder sb = new StringBuilder();
+                    Log.d("request code : ", "" + responseCode);
 
-                    //라인수만큼 String에 저장.//
-                    while ((json = br.readLine()) != null) {
-                        sb.append(json + "\n");
+                    if (responseCode == HttpURLConnection.HTTP_OK) //정상적으로 연결이 되었을 경우.숫자로도 가능.//
+                    {
+                        //실제 연결이 이루어진다.String을 전송받는 것이니 BufferedReader로 선언.//
+                        br = new BufferedReader(new InputStreamReader(urlConnection.getInputStream())); //버퍼를 씌워서 데이터를
+                        //가져온다. POST로 전송시 getOutputStream() / OutputStream사용.//
+
+                        String json; //전달받을 문자열을 가질 문자열 객체.//
+                        StringBuilder sb = new StringBuilder();
+
+                        //라인수만큼 String에 저장.//
+                        while ((json = br.readLine()) != null) {
+                            sb.append(json + "\n");
+                        }
+
+                        return sb.toString().trim(); //공백을 제거하고 반환.//
                     }
 
-                    return sb.toString().trim(); //공백을 제거하고 반환.//
+                    return null;
                 } catch (Exception exp) {
                     exp.printStackTrace();
 

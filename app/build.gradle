@@ -41,27 +41,21 @@ dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
     //페이스북 관련 오픈소스//
-
     //리사이클 뷰를 리스트뷰처럼 사용할 수 있는 라이브러리 오픈소스//
-
     //카드뷰를 사용하기 위한 라이브러리//
-
     //이미지 동그랗게 자르기//
-
     //Metrial Design사용//
-
     //TapBarMenu 관련 라이브러리.//
-
     //액션배지달기.//
-
     //SUB-DEPENDENCIES
-
     //Android-Iconics - used to provide an easy API for icons
-
     //액션배지 관련 아이콘//
-
     //추가적인 디자인//
-    compile 'com.mikepenz:iconics-core:2.6.6@aar'
+    //향상된 3D메뉴 라이브러리
+    compile('com.twitter.sdk.android:twitter:1.14.1@aar') {
+        transitive = true;
+    }
+    compile 'com.mikepenz:iconics-core:2.7.1@aar'
     compile 'com.android.support:appcompat-v7:23.4.0'
     compile 'com.android.support:support-v4:23.4.0'
     compile 'com.facebook.android:facebook-android-sdk:4.8.2'
@@ -73,16 +67,13 @@ dependencies {
     compile 'com.android.support:design:23.4.0'
     compile 'com.github.michaldrabik:tapbarmenu:1.0.5'
     compile 'com.mikepenz:actionitembadge:3.2.6@aar'
-    compile 'com.mikepenz:iconics-core:2.7.1@aar'
     compile 'com.mikepenz:google-material-typeface:2.2.0.2.original@aar'
     compile 'com.mikepenz:material-design-iconic-typeface:2.2.0.2@aar'
     compile 'com.mikepenz:fontawesome-typeface:4.6.0.2@aar'
-    compile 'com.specyci:residemenu:1.6+'
-    //향상된 3D메뉴 라이브러리
     compile 'com.hkm.taglib:tag:1.6.0'
     compile 'com.google.android.gms:play-services-auth:8.3.0'
     compile 'com.android.support:multidex:1.0.0'
-    compile('com.twitter.sdk.android:twitter:1.14.1@aar') {
-        transitive = true;
-    }
+    compile 'com.specyci:residemenu:1.6+'
+    compile 'com.google.code.gson:gson:2.7' //자동화 json파싱 라이브러리.//
+    compile 'com.squareup.picasso:picasso:2.3.3' //피카소 라이브러리//
 }

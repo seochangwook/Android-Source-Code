@@ -290,6 +290,10 @@ public class TabActivity extends AppCompatActivity implements NavigationView.OnN
         {
             Toast.makeText(TabActivity.this, "click my info", Toast.LENGTH_SHORT).show();
 
+            Intent intent = new Intent(TabActivity.this, Full_News_Activity.class);
+
+            startActivity(intent);
+
             return true;
         }
 

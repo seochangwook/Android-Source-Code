@@ -34,4 +34,5 @@
     <string name="signed_out">signed_out</string>
     <string name="signed_in_fmt">LoginTest</string>
     <string name="title_activity_news__view">News_ViewActivity</string>
+    <string name="title_activity_full__news_">Full_News_Activity</string>
 </resources>
