@@ -14,13 +14,34 @@
     <cn.iwgang.familiarrecyclerview.FamiliarRefreshRecyclerView
         android:id="@+id/rv_full_list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="300dp"
         android:scrollbars="vertical"
         app:frv_dividerHeight="0.5dp"
         app:frv_emptyView="@id/tv_full_nesw_empty"
         app:frv_isEmptyViewKeepShowHeadOrFooter="true"
         app:frv_layoutManager="linear"
         app:frv_layoutManagerOrientation="vertical" />
+
+
+    <TextView
+        android:id="@+id/tv_full_category_empty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Empty Category 'Please Enroll Category'"
+        android:visibility="gone" />
+
+    <cn.iwgang.familiarrecyclerview.FamiliarRefreshRecyclerView
+        android:id="@+id/rv_category_list"
+        android:layout_width="match_parent"
+        android:layout_height="170dp"
+        android:layout_marginTop="350dp"
+        android:scrollbars="vertical"
+        app:frv_dividerHeight="0.5dp"
+        app:frv_emptyView="@id/tv_full_category_empty"
+        app:frv_isEmptyViewKeepShowHeadOrFooter="true"
+        app:frv_layoutManager="linear"
+        app:frv_layoutManagerOrientation="horizontal" />
 
 </FrameLayout>
 

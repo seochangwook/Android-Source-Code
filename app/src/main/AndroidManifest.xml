@@ -70,6 +70,7 @@
             android:name=".Full_News_Activity"
             android:label="@string/title_activity_full__news_"
             android:theme="@style/AppTheme.NoActionBar"></activity>
+
     </application>
 
 </manifest>

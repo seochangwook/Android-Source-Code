@@ -14,9 +14,13 @@ import android.view.ViewGroup;
 
 import com.example.apple.sample_app.JSON_Data.Product;
 import com.example.apple.sample_app.JSON_Data.TStoreResult;
+import com.example.apple.sample_app.JSON_Data.TStore_Category;
+import com.example.apple.sample_app.JSON_Data.TStore_CategoryResult;
 import com.example.apple.sample_app.R;
+import com.example.apple.sample_app.data.Category_News;
 import com.example.apple.sample_app.data.Full_A_News;
 import com.example.apple.sample_app.data.Full_News;
+import com.example.apple.sample_app.widget.Category_News_Adapter;
 import com.example.apple.sample_app.widget.Full_News_Adapter;
 import com.google.gson.Gson;
 
@@ -44,10 +48,16 @@ public class Fragment_Full_News extends Fragment {
     private static final String SORT_ACCURACY = "R";
     private static final String SORT_LATEST = "L";
     private static final String SORT_DOWNLOAD = "D";
+    private static final String TSTORE_CATEGORY_URL = "http://apis.skplanetx.com/11st/common/categories/?count=%s&page=1&sortCode=%s&option=&version=1";
+    private static final String SORT_ACCURACY_CATEGORY = "CP";
     Full_News_Adapter mAdapter; //어댑터 정의.//
+    Category_News_Adapter category_news_adapter;
     Full_News full_news;
+    Category_News category_news;
     private FamiliarRefreshRecyclerView recyclerview_refresh; //초기화 가능한 리사이클뷰.//
+    private FamiliarRefreshRecyclerView category_recyclerview_refresh;
     private FamiliarRecyclerView recyclerview; //초기화되는 리사이클뷰에 자원을 가지고 있는 리사이클뷰.//
+    private FamiliarRecyclerView category_recyclerview;
     private ProgressDialog pDialog; //직관적인 다이얼로그 사용(현재 진행률 보기)//
 
     public Fragment_Full_News() {
@@ -62,12 +72,21 @@ public class Fragment_Full_News extends Fragment {
         View view = inflater.inflate(R.layout.fragment_fragment_full_news, container, false);
 
         recyclerview_refresh = (FamiliarRefreshRecyclerView) view.findViewById(R.id.rv_full_list);
+        category_recyclerview_refresh = (FamiliarRefreshRecyclerView) view.findViewById(R.id.rv_category_list);
 
         recyclerview_refresh.setLoadMoreView(new LoadMoreView(getActivity())); //로딩화면을 보여주는 뷰 정의.//
         recyclerview_refresh.setColorSchemeColors(0xFFFF5000, Color.RED, Color.YELLOW, Color.GREEN);
         recyclerview_refresh.setLoadMoreEnabled(true);
 
+        category_recyclerview_refresh.setLoadMoreView(new LoadMoreView(getActivity())); //로딩화면을 보여주는 뷰 정의.//
+        category_recyclerview_refresh.setColorSchemeColors(0xFFFF5000, Color.RED, Color.YELLOW, Color.GREEN);
+        category_recyclerview_refresh.setLoadMoreEnabled(true);
+
         //새로고침되어서 다시 리사이클뷰와 연동될 수 있도록 한다.//
+        category_recyclerview = category_recyclerview_refresh.getFamiliarRecyclerView(); //리사이클뷰의 자원을 얻어온다.//
+        category_recyclerview.setItemAnimator(new DefaultItemAnimator());
+        category_recyclerview.setHasFixedSize(true);
+
         recyclerview = recyclerview_refresh.getFamiliarRecyclerView(); //리사이클뷰의 자원을 얻어온다.//
         recyclerview.setItemAnimator(new DefaultItemAnimator());
         recyclerview.setHasFixedSize(true);
@@ -77,9 +96,12 @@ public class Fragment_Full_News extends Fragment {
         pDialog.setCancelable(false);
 
         mAdapter = new Full_News_Adapter(getActivity()); //액티비티의 자원을 넘긴다.//
+        category_news_adapter = new Category_News_Adapter(getActivity());
         full_news = new Full_News();
+        category_news = new Category_News();
 
         recyclerview.setAdapter(mAdapter); //어댑터 적용.//
+        category_recyclerview.setAdapter(category_news_adapter);
 
         /** Data refresh **/
         //사용자가 위에서 새로고침 할 경우//
@@ -116,7 +138,43 @@ public class Fragment_Full_News extends Fragment {
             }
         });
 
+        /** Data refresh **/
+        //사용자가 위에서 새로고침 할 경우//
+        category_recyclerview_refresh.setOnPullRefreshListener(new FamiliarRefreshRecyclerView.OnPullRefreshListener() {
+            @Override
+            public void onPullRefresh() {
+                new android.os.Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        Log.i("EVENT :", "당겨서 새로고침 중...");
+
+                        category_recyclerview_refresh.pullRefreshComplete();
+
+                        category_news_adapter.notifyDataSetChanged();
+                    }
+                }, 1000);
+            }
+        });
+
+        //사용자가 아래쪽에서 새로고침//
+        category_recyclerview_refresh.setOnLoadMoreListener(new FamiliarRefreshRecyclerView.OnLoadMoreListener() {
+            @Override
+            public void onLoadMore() {
+                new android.os.Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        Log.i("EVENT :", "새로고침 완료");
+
+                        category_recyclerview_refresh.loadMoreComplete();
+
+                        category_news_adapter.notifyDataSetChanged();
+                    }
+                }, 1000);
+            }
+        });
+
         get_Data(); //최초 네트워크로 부터 데이터를 로드.//
+        get_category_news_Date();
 
         //init_Data();
 
@@ -258,4 +316,86 @@ public class Fragment_Full_News extends Fragment {
         mAdapter.set_Full_News(full_news);
         mAdapter.set_Full_News_count(news_count+1);
     }*/
+
+    public void get_category_news_Date() {
+        class TSTore_CategoryTask extends AsyncTask<String, Void, TStore_CategoryResult> {
+            @Override
+            protected TStore_CategoryResult doInBackground(String... datas) {
+                String page_count = datas[0];
+                String sort_option = datas[1];
+
+                try {
+                    String urlText = String.format(TSTORE_CATEGORY_URL, URLEncoder.encode(page_count, "utf-8"),
+                            URLEncoder.encode(sort_option, "utf-8"));
+
+                    URL url = new URL(urlText);
+
+                    HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+
+                    urlConnection.setRequestProperty("Accept", "application/json");
+                    urlConnection.setRequestProperty("appKey", "c92b74ce-0a01-30ff-986a-ab012d738cc4");
+
+                    int code = urlConnection.getResponseCode();
+
+                    if (code == HttpURLConnection.HTTP_OK) {
+                        InputStream is = urlConnection.getInputStream();
+                        BufferedReader br = new BufferedReader(new InputStreamReader(is));
+
+                        Gson gson = new Gson();
+
+                        TStore_CategoryResult result = gson.fromJson(br, TStore_CategoryResult.class);
+
+                        return result;
+                    }
+                } catch (UnsupportedEncodingException e) {
+                    e.printStackTrace();
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                return null;
+            }
+
+            @Override
+            protected void onPostExecute(TStore_CategoryResult result) {
+                super.onPostExecute(result);
+
+                //우리가 원하는 것은 Product배열과 배열의 사이즈를 넘기면 된다.//
+                set_Data(result.get_Categoryresponse().get_tstore_children().get_tstore_category(), result.get_Categoryresponse().get_tstore_children().Category.length);
+
+            }
+        }
+
+        TSTore_CategoryTask g = new TSTore_CategoryTask();
+
+        //데이터를 받아온다.(네트워크 작업이므로 AsyncTask<>를 사용.)//
+        g.execute("20", SORT_ACCURACY_CATEGORY); //매필할 키워드값를 넘겨준다.//
+    }
+
+    public void set_Data(TStore_Category[] category, int category_array_size) {
+        //현재 넘어온 것은 배열에 대한 참조값이고 실제 배열을 이용할려면 Product List를 구현.//
+        List<TStore_Category> items = new ArrayList<>();
+
+        //배열을 모두 push한다.(Array.asList()사용)//
+        items.addAll(Arrays.asList(category));
+
+        //만들어진 배열을 가지고 기존 데이터 초기화 작업 시작.//
+        for (int i = 0; i < category_array_size; i++) {
+            Log.d("item name : ", "" + items.get(i).get_CategoryName() + "/item image : " + items.get(i).get_Category_Image());
+        }
+
+        for (int i = 0; i < category_array_size; i++) {
+            Category_News input_category_news = new Category_News();
+
+            input_category_news.set_category_imaegUrl(items.get(i).get_Category_Image());
+            input_category_news.set_category_name(items.get(i).get_CategoryName());
+            input_category_news.set_category_code(items.get(i).get_CategoryCode());
+
+            category_news.category_news_array.add(input_category_news);
+
+            category_news_adapter.set_Category_News(category_news);
+        }
+    }
 }
