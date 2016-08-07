@@ -105,6 +105,10 @@
   <img src="https://github.com/seochangwook/Android-Source-Code-Team-Project-Sample-Code-/blob/master/Project_SampleImage/android_network_info_image_2.png" width="650" height="350">
 </p>
 
+<p align="left">
+  <img src="https://github.com/seochangwook/Team-Project-Sample-Code-android-/blob/master/Project_SampleImage/network_info_image_1.png" width="650" height="350">
+</p>
+
 << Sample image >>
 
 <p align="left">
@@ -203,6 +207,16 @@
   </div>
 </p>
 
+<< Sample image >>
+
+<p align="left">
+  <title> JSON Parsing과 Picaso를 이용한 RecyclerListView처리 </title>
+  <div class="photoset-grid" data-layout="13">
+      <img src="https://github.com/seochangwook/Team-Project-Sample-Code-android-/blob/master/Project_SampleImage/screen_31.jpeg" width="250" height="350">
+      <img src="https://github.com/seochangwook/Team-Project-Sample-Code-android-/blob/master/Project_SampleImage/screen_32.jpeg" width="250" height="350">
+  </div>
+</p>
+
 # Design department issues
 
-*
+* UI 시나리오 뉴스잉 기획안 파일 저장
