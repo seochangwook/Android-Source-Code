@@ -220,9 +220,10 @@
 << Sample image >>
 
 <p align="left">
-  <title> 하나의 액티비티에 리사이클뷰 2개 배치 </title>
+  <title> 하나의 액티비티에 리사이클뷰 2개 배치(Pcaso Library의 Transformation적용) </title>
   <div class="photoset-grid" data-layout="13">
       <img src="https://github.com/seochangwook/Team-Project-Sample-Code-android-/blob/master/Project_SampleImage/screen_33.jpeg" width="250" height="350">
+      <img src="https://github.com/seochangwook/Team-Project-Sample-Code-android-/blob/master/Project_SampleImage/screen_34.jpeg" width="250" height="350">
   </div>
 </p>
 
