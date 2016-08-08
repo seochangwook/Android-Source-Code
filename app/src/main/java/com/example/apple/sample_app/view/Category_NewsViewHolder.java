@@ -1,6 +1,7 @@
 package com.example.apple.sample_app.view;
 
 import android.content.Context;
+import android.graphics.PointF;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
@@ -9,6 +10,9 @@ import android.widget.TextView;
 import com.example.apple.sample_app.R;
 import com.example.apple.sample_app.data.Category_News;
 import com.squareup.picasso.Picasso;
+
+import jp.wasabeef.picasso.transformations.CropCircleTransformation;
+import jp.wasabeef.picasso.transformations.gpu.SwirlFilterTransformation;
 
 /**
  * Created by apple on 2016. 8. 7..
@@ -40,6 +44,8 @@ public class Category_NewsViewHolder extends RecyclerView.ViewHolder {
         //Picaso는 기본적으로 glide과 유사하고 BitmapHunter가 백그라운드로 이미지 작업을 하고 캐시기능과 이미지 후처리등 다양한 방법이 존재.//
         Picasso.with(context)
                 .load(category_image_url)
+                .transform(new CropCircleTransformation()) //Picaso라이브러리의 Transform적용.//
+                .transform(new SwirlFilterTransformation(context, 0.5f, 1.0f, new PointF(0.5f, 0.5f)))
                 .into(category_imageview); //into로 보낼 위젯 선택.//
     }
 }

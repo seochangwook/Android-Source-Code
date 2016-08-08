@@ -10,6 +10,8 @@ import com.example.apple.sample_app.R;
 import com.example.apple.sample_app.data.Full_A_News;
 import com.squareup.picasso.Picasso;
 
+import jp.wasabeef.picasso.transformations.CropCircleTransformation;
+
 /**
  * Created by apple on 2016. 8. 5..
  */
@@ -51,6 +53,7 @@ public class Full_A_NewsViewHolder extends RecyclerView.ViewHolder {
         //Picaso는 기본적으로 glide과 유사하고 BitmapHunter가 백그라운드로 이미지 작업을 하고 캐시기능과 이미지 후처리등 다양한 방법이 존재.//
         Picasso.with(context)
                 .load(item_image_url_str)
+                .transform(new CropCircleTransformation())
                 .into(item_thumbnail_imageview); //into로 보낼 위젯 선택.//
     }
 }

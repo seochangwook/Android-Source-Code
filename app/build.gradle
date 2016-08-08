@@ -76,4 +76,7 @@ dependencies {
     compile 'com.specyci:residemenu:1.6+'
     compile 'com.google.code.gson:gson:2.7' //자동화 json파싱 라이브러리.//
     compile 'com.squareup.picasso:picasso:2.3.3' //피카소 라이브러리//
+    compile 'jp.wasabeef:picasso-transformations:2.1.0' //피카소의 변형.//
+    // If you want to use the GPU Filters
+    compile 'jp.co.cyberagent.android.gpuimage:gpuimage-library:1.4.1'
 }
