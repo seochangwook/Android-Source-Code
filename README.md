@@ -41,6 +41,7 @@
 * compile 'com.squareup.picasso:picasso:2.3.3' //피카소 라이브러리//
 * compile 'jp.wasabeef:picasso-transformations:2.1.0' //피카소의 변형.//
 * compile 'jp.co.cyberagent.android.gpuimage:gpuimage-library:1.4.1'
+* compile 'com.squareup.okhttp3:okhttp:3.4.1' //okHttp라이브러리.//
 * (새로운 라이브러리 추가 시 계속 업데이트)
 
 << Sample image >>
@@ -226,6 +227,15 @@
   <div class="photoset-grid" data-layout="13">
       <img src="https://github.com/seochangwook/Team-Project-Sample-Code-android-/blob/master/Project_SampleImage/screen_33.jpeg" width="250" height="350">
       <img src="https://github.com/seochangwook/Team-Project-Sample-Code-android-/blob/master/Project_SampleImage/screen_34.jpeg" width="250" height="350">
+  </div>
+</p>
+
+<< Sample image >>
+
+<p align="left">
+  <title> ScrollView와 RecyclerView (OkHttp3사용) </title>
+  <div class="photoset-grid" data-layout="13">
+      <img src="https://github.com/seochangwook/Team-Project-Sample-Code-android-/blob/master/Project_SampleImage/screen_35.jpeg" width="250" height="350">
   </div>
 </p>
 
