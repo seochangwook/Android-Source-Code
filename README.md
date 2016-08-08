@@ -39,6 +39,8 @@
     } //트위터 관련 라이브러리//
 * compile 'com.google.code.gson:gson:2.7' //자동화 json파싱 라이브러리.//
 * compile 'com.squareup.picasso:picasso:2.3.3' //피카소 라이브러리//
+* compile 'jp.wasabeef:picasso-transformations:2.1.0' //피카소의 변형.//
+* compile 'jp.co.cyberagent.android.gpuimage:gpuimage-library:1.4.1'
 * (새로운 라이브러리 추가 시 계속 업데이트)
 
 << Sample image >>
