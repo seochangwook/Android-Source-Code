@@ -43,6 +43,7 @@
 * compile 'jp.co.cyberagent.android.gpuimage:gpuimage-library:1.4.1'
 * compile 'com.squareup.okhttp3:okhttp:3.4.1' //okHttp라이브러리.//
 * compile 'com.github.franmontiel:PersistentCookieJar:v0.9.3' //OkHttp쿠키관련 라이브러리.//
+* compile 'com.github.bumptech.glide:glide:3.7.0' //Glide 라이브러리.//
 * (새로운 라이브러리 추가 시 계속 업데이트)
 
 << Sample image >>
