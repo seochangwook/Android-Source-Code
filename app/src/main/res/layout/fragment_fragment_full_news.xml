@@ -2,7 +2,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/scrollview"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:fillViewport="true">
 
     <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -61,7 +61,7 @@
         <cn.iwgang.familiarrecyclerview.FamiliarRefreshRecyclerView
             android:id="@+id/rv_game_news_list"
             android:layout_width="match_parent"
-            android:layout_height="170dp"
+            android:layout_height="250dp"
             android:layout_marginTop="450dp"
             android:scrollbars="vertical"
             app:frv_dividerHeight="0.5dp"

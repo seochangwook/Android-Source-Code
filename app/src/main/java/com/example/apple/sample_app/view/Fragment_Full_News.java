@@ -27,9 +27,14 @@ import com.example.apple.sample_app.data.Game_News;
 import com.example.apple.sample_app.widget.Category_News_Adapter;
 import com.example.apple.sample_app.widget.Full_News_Adapter;
 import com.example.apple.sample_app.widget.Game_News_Adapter;
+import com.franmontiel.persistentcookiejar.ClearableCookieJar;
+import com.franmontiel.persistentcookiejar.PersistentCookieJar;
+import com.franmontiel.persistentcookiejar.cache.SetCookieCache;
+import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersistor;
 import com.google.gson.Gson;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -41,9 +46,11 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import cn.iwgang.familiarrecyclerview.FamiliarRecyclerView;
 import cn.iwgang.familiarrecyclerview.FamiliarRefreshRecyclerView;
+import okhttp3.Cache;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.OkHttpClient;
@@ -108,7 +115,6 @@ public class Fragment_Full_News extends Fragment {
             }
         }
     };
-
 
     public Fragment_Full_News() {
         // Required empty public constructor
@@ -417,11 +423,6 @@ public class Fragment_Full_News extends Fragment {
         }
     }
 
-    private void showpDialog() {
-        if (!pDialog.isShowing())
-            pDialog.show();
-    }
-
     //데이터 전체를 받아오고 리사이클뷰에 뿌려줄 각각의 배열로 저장한다//
 
     /*public void init_Data()
@@ -447,6 +448,11 @@ public class Fragment_Full_News extends Fragment {
         mAdapter.set_Full_News(full_news);
         mAdapter.set_Full_News_count(news_count+1);
     }*/
+
+    private void showpDialog() {
+        if (!pDialog.isShowing())
+            pDialog.show();
+    }
 
     private void hidepDialog() {
         if (pDialog.isShowing())
@@ -500,7 +506,6 @@ public class Fragment_Full_News extends Fragment {
 
                 //우리가 원하는 것은 Product배열과 배열의 사이즈를 넘기면 된다.//
                 set_Data(result.get_Categoryresponse().get_tstore_children().get_tstore_category(), result.get_Categoryresponse().get_tstore_children().Category.length);
-
             }
         }
 
@@ -538,9 +543,37 @@ public class Fragment_Full_News extends Fragment {
     public void get_game_news_Data() throws UnsupportedEncodingException, MalformedURLException {
         OkHttpClient client = new OkHttpClient(); //OkHttp 매커니즘 적용.//
 
+        OkHttpClient.Builder builder = new OkHttpClient.Builder();
+        //Context context = null;
+
+        //쿠키 생성.(앱을 제거 시 캐시도 삭제)//
+        ClearableCookieJar cookieJar =
+                new PersistentCookieJar(new SetCookieCache(), new SharedPrefsCookiePersistor(getActivity()));
+        builder.cookieJar(cookieJar);
+
+        File cacheDir = new File(getActivity().getCacheDir(), "network"); //캐시 디렉터리 생성.//
+
+        if (!cacheDir.exists()) {
+            cacheDir.mkdir();
+        }
+
+        //캐시를 만들지 않으면 성능상의 문제가 발생.//
+        Cache cache = new Cache(cacheDir, 10 * 1024 * 1024); //캐시사이즈 설정.//
+        builder.cache(cache);
+
+        //타임아웃 지정.//
+        builder.connectTimeout(30, TimeUnit.SECONDS);
+        builder.readTimeout(10, TimeUnit.SECONDS);
+        builder.writeTimeout(10, TimeUnit.SECONDS);
+
+        //클라이언트 객체에 저장.//
+        client = builder.build();
+
         String page_count = "10";
         String keyword = "GAME";
 
+        //HttpUrl을 가지고도 만들 수 있다.//
+        //addQueryParamter는 순서 상관없지만 format은 상관있다.//
         String urlText = String.format(TSTORE_URL_REQUEST_2, URLEncoder.encode(page_count, "utf-8")
                 , URLEncoder.encode(SORT_LATEST_2, "utf-8"), URLEncoder.encode(keyword, "utf-8"));
 
@@ -553,7 +586,10 @@ public class Fragment_Full_News extends Fragment {
                 .url(url)
                 .build();
 
-        client.newCall(request).enqueue(callbackAfterGettingMessage); //콜백메소드 등록.//
+        client.newCall(request).enqueue(callbackAfterGettingMessage); //콜백메소드 등록.비동기일 경우 enqueue
+        //동기일 경우 execute()//
+
+        //만약 네트워크 접속이 제대로 이루어지지 않으면 OkHttp자체에서 다시 retry를 시도.//
     }
 
     public void set_game_news_Data(Product[] product, int product_array_size) {

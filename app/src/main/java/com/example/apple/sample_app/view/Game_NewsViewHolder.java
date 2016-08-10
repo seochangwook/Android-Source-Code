@@ -6,11 +6,9 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.apple.sample_app.R;
 import com.example.apple.sample_app.data.Game_News;
-import com.squareup.picasso.Picasso;
-
-import jp.wasabeef.picasso.transformations.CropCircleTransformation;
 
 /**
  * Created by apple on 2016. 8. 8..
@@ -40,9 +38,8 @@ public class Game_NewsViewHolder extends RecyclerView.ViewHolder {
 
         //피카소를 이용해서 이미지 로딩.//
         //Picaso는 기본적으로 glide과 유사하고 BitmapHunter가 백그라운드로 이미지 작업을 하고 캐시기능과 이미지 후처리등 다양한 방법이 존재.//
-        Picasso.with(context)
+        Glide.with(context)
                 .load(thumbnailUrl_str)
-                .transform(new CropCircleTransformation())
                 .into(thumbnail_imageview); //into로 보낼 위젯 선택.//
 
         game_name_text.setText(game_news.get_name());

@@ -14,7 +14,6 @@ import android.util.Base64;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -33,8 +32,6 @@ import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.facebook.share.model.ShareLinkContent;
 import com.facebook.share.widget.ShareDialog;
-import com.special.ResideMenu.ResideMenu;
-import com.special.ResideMenu.ResideMenuItem;
 
 import org.json.JSONObject;
 
@@ -45,6 +42,9 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+
+//import com.special.ResideMenu.ResideMenu;
+//import com.special.ResideMenu.ResideMenuItem;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
     private static final String PERMISSION = "publish_actions";
@@ -64,7 +64,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     Button next_button;
     String id, name, profile_link, gender, birthday;
     ImageTask get_profile_image_task; //계정 이미지 불러오기 작업//
-    private ResideMenu resideMenu;
+    //private ResideMenu resideMenu;
     private CallbackManager callbackManager; //세션연결 콜백관리자.//
 
     @Override
@@ -185,7 +185,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         /** Reside Menu 구성 **/
         //리사이드 메뉴 구성//
-        resideMenu = new ResideMenu(this); //액티비티에 겹쳐서 뿌려지므로 액티비티의 자원을 얻는다.//
+        /*resideMenu = new ResideMenu(this); //액티비티에 겹쳐서 뿌려지므로 액티비티의 자원을 얻는다.//
         resideMenu.setBackground(R.drawable.menu_background);
         resideMenu.attachToActivity(this);
         resideMenu.setScaleValue(0.5f);
@@ -242,7 +242,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             public void onClick(View view) {
                 Toast.makeText(LoginActivity.this, "설정 화면으로 이동", Toast.LENGTH_SHORT).show();
             }
-        });
+        });*/
     }
 
     @Override
@@ -274,13 +274,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     public void set_user_image(String user_id) {
         get_profile_image_task = new ImageTask(user_id);
-        get_profile_image_task.execute(); //스레드 작업 실행//
+        //get_profile_image_task.execute(); //스레드 작업 실행//
     }
 
-    @Override
+    /*@Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
-        return resideMenu.dispatchTouchEvent(ev); //모션이벤트 등록//
-    }
+        //return resideMenu.dispatchTouchEvent(ev); //모션이벤트 등록//
+    }*/
 
     @Override
     public void onClick(View view) {
@@ -303,7 +303,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         int id = item.getItemId();
 
         if (id == R.id.home_menu) {
-            resideMenu.openMenu(ResideMenu.DIRECTION_LEFT);
+            //resideMenu.openMenu(ResideMenu.DIRECTION_LEFT);
         } else if (id == R.id.google_login) {
             Intent intent = new Intent(LoginActivity.this, SNS_Login_Activity.class);
 

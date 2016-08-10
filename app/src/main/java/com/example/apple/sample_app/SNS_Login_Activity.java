@@ -10,7 +10,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -37,8 +36,6 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.OptionalPendingResult;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
-import com.special.ResideMenu.ResideMenu;
-import com.special.ResideMenu.ResideMenuItem;
 import com.twitter.sdk.android.Twitter;
 import com.twitter.sdk.android.core.Callback;
 import com.twitter.sdk.android.core.Result;
@@ -103,7 +100,7 @@ public class SNS_Login_Activity extends AppCompatActivity implements
     /**
      * 메뉴 관련
      **/
-    private ResideMenu resideMenu;
+    //private ResideMenu resideMenu;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -128,7 +125,7 @@ public class SNS_Login_Activity extends AppCompatActivity implements
 
         /** Reside Menu 구성 **/
         //리사이드 메뉴 구성//
-        resideMenu = new ResideMenu(this); //액티비티에 겹쳐서 뿌려지므로 액티비티의 자원을 얻는다.//
+        /*resideMenu = new ResideMenu(this); //액티비티에 겹쳐서 뿌려지므로 액티비티의 자원을 얻는다.//
         resideMenu.setBackground(R.drawable.menu_background);
         resideMenu.attachToActivity(this);
         resideMenu.setScaleValue(0.5f);
@@ -196,7 +193,7 @@ public class SNS_Login_Activity extends AppCompatActivity implements
             public void onClick(View view) {
                 Toast.makeText(SNS_Login_Activity.this, "설정 화면으로 이동", Toast.LENGTH_SHORT).show();
             }
-        });
+        });*/
 
         /** Google 로그인 과정 **/
         //[START configure_signin]
@@ -309,10 +306,10 @@ public class SNS_Login_Activity extends AppCompatActivity implements
         });
     }
 
-    @Override
+    /*@Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
-        return resideMenu.dispatchTouchEvent(ev); //모션이벤트 등록//
-    }
+        //return resideMenu.dispatchTouchEvent(ev); //모션이벤트 등록//
+    }*/
 
     /**
      * Google 로그인 캐쉬연결(자동)
@@ -514,13 +511,17 @@ public class SNS_Login_Activity extends AppCompatActivity implements
         int id = item.getItemId();
 
         if (id == R.id.home_menu) {
-            resideMenu.openMenu(ResideMenu.DIRECTION_LEFT);
+            //resideMenu.openMenu(ResideMenu.DIRECTION_LEFT);
         } else if (id == R.id.google_login) {
             Intent intent = new Intent(SNS_Login_Activity.this, LoginActivity.class);
 
             startActivity(intent);
         } else if (id == R.id.next_button) {
             Intent intent = new Intent(SNS_Login_Activity.this, RecyclerViewActivity_Refresh.class);
+
+            startActivity(intent);
+        } else if (id == R.id.login_move) {
+            Intent intent = new Intent(SNS_Login_Activity.this, SampleLoginActivity.class);
 
             startActivity(intent);
         }

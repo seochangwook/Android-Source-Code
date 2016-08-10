@@ -55,6 +55,13 @@ dependencies {
     compile('com.twitter.sdk.android:twitter:1.14.1@aar') {
         transitive = true;
     }
+    //자동화 json파싱 라이브러리.//
+    //피카소 라이브러리//
+    //피카소의 변형.//
+    // If you want to use the GPU Filters
+    //okHttp라이브러리.//
+    //쿠키관련 라이브러리.//
+    //Glide 라이브러리.//
     compile 'com.mikepenz:iconics-core:2.7.1@aar'
     compile 'com.android.support:appcompat-v7:23.4.0'
     compile 'com.android.support:support-v4:23.4.0'
@@ -69,15 +76,16 @@ dependencies {
     compile 'com.mikepenz:actionitembadge:3.2.6@aar'
     compile 'com.mikepenz:google-material-typeface:2.2.0.2.original@aar'
     compile 'com.mikepenz:material-design-iconic-typeface:2.2.0.2@aar'
+    compile 'com.specyci:residemenu:1.6+'
     compile 'com.mikepenz:fontawesome-typeface:4.6.0.2@aar'
     compile 'com.hkm.taglib:tag:1.6.0'
     compile 'com.google.android.gms:play-services-auth:8.3.0'
     compile 'com.android.support:multidex:1.0.0'
-    compile 'com.specyci:residemenu:1.6+'
-    compile 'com.google.code.gson:gson:2.7' //자동화 json파싱 라이브러리.//
-    compile 'com.squareup.picasso:picasso:2.3.3' //피카소 라이브러리//
-    compile 'jp.wasabeef:picasso-transformations:2.1.0' //피카소의 변형.//
-    // If you want to use the GPU Filters
+    compile 'com.google.code.gson:gson:2.7'
+    compile 'com.squareup.picasso:picasso:2.3.3'
+    compile 'jp.wasabeef:picasso-transformations:2.1.0'
     compile 'jp.co.cyberagent.android.gpuimage:gpuimage-library:1.4.1'
-    compile 'com.squareup.okhttp3:okhttp:3.4.1' //okHttp라이브러리.//
+    compile 'com.squareup.okhttp3:okhttp:3.4.1'
+    compile 'com.github.franmontiel:PersistentCookieJar:v0.9.3'
+    compile 'com.github.bumptech.glide:glide:3.7.0'
 }
