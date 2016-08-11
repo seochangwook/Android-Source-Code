@@ -2,7 +2,9 @@ package com.example.apple.sample_app;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -16,17 +18,12 @@ import android.widget.Toast;
 import com.example.apple.sample_app.JSON_Data.RequestCode.SignInRequestCode;
 import com.example.apple.sample_app.JSON_Data.RequestFail.SignInRequestFail;
 import com.example.apple.sample_app.JSON_Data.RequestSuccess.SignInRequest;
-import com.franmontiel.persistentcookiejar.ClearableCookieJar;
-import com.franmontiel.persistentcookiejar.PersistentCookieJar;
-import com.franmontiel.persistentcookiejar.cache.SetCookieCache;
-import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersistor;
+import com.example.apple.sample_app.NetworkManage.NetworkManager;
+import com.example.apple.sample_app.data.PropertyManager;
 import com.google.gson.Gson;
 
-import java.io.File;
 import java.io.IOException;
-import java.util.concurrent.TimeUnit;
 
-import okhttp3.Cache;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.FormBody;
@@ -45,7 +42,9 @@ public class SampleLoginActivity extends AppCompatActivity {
     String user_email;
     String user_password;
     String user_registerid = "1234";
-
+    NetworkManager manager;
+    SharedPreferences mPrefs; //공유 프래퍼런스 정의.//
+    SharedPreferences.Editor mEditor; //프래퍼런스 에디터 정의//
     private ProgressDialog pDialog;
 
     @Override
@@ -125,6 +124,7 @@ public class SampleLoginActivity extends AppCompatActivity {
 
                         //필요한 값을 셋팅. 기본적으로 콜백 메소드 안에서는 UI스레드의 작업 불가.//
                         set_Data(sign_request_info);
+
                     } else if (response_code == 2) //유저등록에 실패한 경우.//
                     {
                         SignInRequestFail request_fail_info = gson.fromJson(response_data, SignInRequestFail.class);
@@ -152,33 +152,10 @@ public class SampleLoginActivity extends AppCompatActivity {
                 //로그인 관련 네트워크 설정.//
                 //POST 방식 네트워크를 구성 (OkHttp3 설정 -> URL 설정 -> RequestBody 정의 -> Request 설정 -> Callback구현)//
                 /** OkHttp3 설정 (Cache, Cookie, etc) **/
-                OkHttpClient client = new OkHttpClient(); //OkHttp 매커니즘 적용.//
+                /** OkHttp3 설정 (Cache, Cookie, etc) **/
+                manager = NetworkManager.getInstance(); //SingleTone디자인 패턴으로 해야지 해당 쿠키가 하나만 나온다.//
 
-                OkHttpClient.Builder builder_client = new OkHttpClient.Builder();
-                //Context context = null;
-
-                //쿠키 생성.(앱을 제거 시 캐시도 삭제)//
-                ClearableCookieJar cookieJar =
-                        new PersistentCookieJar(new SetCookieCache(), new SharedPrefsCookiePersistor(SampleLoginActivity.this));
-                builder_client.cookieJar(cookieJar);
-
-                File cacheDir = new File(getCacheDir(), "network"); //캐시 디렉터리 생성.//
-
-                if (!cacheDir.exists()) {
-                    cacheDir.mkdir();
-                }
-
-                //캐시를 만들지 않으면 성능상의 문제가 발생.//
-                Cache cache = new Cache(cacheDir, 10 * 1024 * 1024); //캐시사이즈 설정.//
-                builder_client.cache(cache);
-
-                //타임아웃 지정.//
-                builder_client.connectTimeout(30, TimeUnit.SECONDS);
-                builder_client.readTimeout(10, TimeUnit.SECONDS);
-                builder_client.writeTimeout(10, TimeUnit.SECONDS);
-
-                //클라이언트 객체에 저장.//
-                client = builder_client.build();
+                OkHttpClient client = manager.getClient();
 
                 /** URL 설정 **/
                 HttpUrl.Builder builder = new HttpUrl.Builder();
@@ -205,6 +182,17 @@ public class SampleLoginActivity extends AppCompatActivity {
                 client.newCall(request).enqueue(requestsignincallback);
             }
         });
+
+        //프래퍼런스를 셋팅.//
+        mPrefs = PreferenceManager.getDefaultSharedPreferences(this);
+        mEditor = mPrefs.edit();
+
+        //정보 가져오기//
+        String user_email = PropertyManager.getInstance().getEmail();
+        String user_password = PropertyManager.getInstance().getPassword();
+
+        input_email_edit.setText(user_email);
+        input_password_edit.setText(user_password);
     }
 
     public void set_Data(final SignInRequest sign_request_info) {
@@ -212,9 +200,33 @@ public class SampleLoginActivity extends AppCompatActivity {
             public void run() {
                 String user_name = sign_request_info.getResult().getUserName();
 
+                //공유 프래퍼런스에 저장.//
+                //프래퍼런스를 셋팅.//
+                mPrefs = PreferenceManager.getDefaultSharedPreferences(SampleLoginActivity.this);
+                mEditor = mPrefs.edit();
+
+                String user_email = sign_request_info.getResult().getEmail();
+                String user_password = input_password_edit.getText().toString();
+                String user_id = "" + sign_request_info.getResult().getId();
+
+                //프래퍼런스에 등록//
+                PropertyManager.getInstance().setEmail(user_email);
+                PropertyManager.getInstance().setPassword(user_password);
+                PropertyManager.getInstance().setRegisterid(user_registerid);
+
                 Toast.makeText(SampleLoginActivity.this, user_name + "로그인 성공", Toast.LENGTH_SHORT).show();
 
                 hidepDialog();
+
+                finish();
+
+                Intent intent = new Intent(SampleLoginActivity.this, MainActivity.class);
+
+                intent.putExtra("KEY_USER_EMAIL", user_email);
+                intent.putExtra("KEY_USER_NAME", user_name);
+                intent.putExtra("KEY_USER_ID", user_id);
+
+                startActivity(intent);
             }
         });
     }

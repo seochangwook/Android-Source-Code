@@ -15,10 +15,10 @@ import android.view.ViewGroup;
 import android.widget.ScrollView;
 import android.widget.Toast;
 
-import com.example.apple.sample_app.JSON_Data.Product;
-import com.example.apple.sample_app.JSON_Data.TStoreResult;
-import com.example.apple.sample_app.JSON_Data.TStore_Category;
-import com.example.apple.sample_app.JSON_Data.TStore_CategoryResult;
+import com.example.apple.sample_app.JSON_Data.RequestSuccess.Product;
+import com.example.apple.sample_app.JSON_Data.RequestSuccess.TStoreResult;
+import com.example.apple.sample_app.JSON_Data.RequestSuccess.TStore_Category;
+import com.example.apple.sample_app.JSON_Data.RequestSuccess.TStore_CategoryResult;
 import com.example.apple.sample_app.R;
 import com.example.apple.sample_app.data.Category_News;
 import com.example.apple.sample_app.data.Full_A_News;
@@ -595,7 +595,7 @@ public class Fragment_Full_News extends Fragment {
     public void set_game_news_Data(Product[] product, int product_array_size) {
         List<Product> items = new ArrayList<>();
 
-        items.addAll(Arrays.asList(product));
+        items.addAll(Arrays.asList(product)); //배열에 현재 획득한 값을 전달.//
 
         for (int i = 0; i < product_array_size; i++) {
             Log.d("game name : ", items.get(i).getName() + "/thumbnailUrl : " + items.get(i).getThumbnailUrl());

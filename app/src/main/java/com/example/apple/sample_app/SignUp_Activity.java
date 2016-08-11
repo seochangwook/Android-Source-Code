@@ -1,7 +1,10 @@
 package com.example.apple.sample_app;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -15,17 +18,12 @@ import android.widget.Toast;
 import com.example.apple.sample_app.JSON_Data.RequestCode.SignUpRequestCode;
 import com.example.apple.sample_app.JSON_Data.RequestFail.SignUpRequestFail;
 import com.example.apple.sample_app.JSON_Data.RequestSuccess.SignUpRequest;
-import com.franmontiel.persistentcookiejar.ClearableCookieJar;
-import com.franmontiel.persistentcookiejar.PersistentCookieJar;
-import com.franmontiel.persistentcookiejar.cache.SetCookieCache;
-import com.franmontiel.persistentcookiejar.persistence.SharedPrefsCookiePersistor;
+import com.example.apple.sample_app.NetworkManage.NetworkManager;
+import com.example.apple.sample_app.data.PropertyManager;
 import com.google.gson.Gson;
 
-import java.io.File;
 import java.io.IOException;
-import java.util.concurrent.TimeUnit;
 
-import okhttp3.Cache;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.FormBody;
@@ -43,7 +41,9 @@ public class SignUp_Activity extends AppCompatActivity {
     EditText user_email_edit;
 
     Button enroll_button;
-
+    NetworkManager manager;
+    SharedPreferences mPrefs; //공유 프래퍼런스 정의.//
+    SharedPreferences.Editor mEditor; //프래퍼런스 에디터 정의//
     private ProgressDialog pDialog;
     private Callback requestsignupcallback = new Callback() {
         @Override
@@ -85,6 +85,7 @@ public class SignUp_Activity extends AppCompatActivity {
 
                 //필요한 값을 셋팅. 기본적으로 콜백 메소드 안에서는 UI스레드의 작업 불가.//
                 set_Data(sign_request_info);
+
             } else if (response_code == 2) //유저등록에 실패한 경우.//
             {
                 SignUpRequestFail request_fail_info = gson.fromJson(response_data, SignUpRequestFail.class);
@@ -145,33 +146,9 @@ public class SignUp_Activity extends AppCompatActivity {
 
         //POST 방식 네트워크를 구성 (OkHttp3 설정 -> URL 설정 -> RequestBody 정의 -> Request 설정 -> Callback구현)//
         /** OkHttp3 설정 (Cache, Cookie, etc) **/
-        OkHttpClient client = new OkHttpClient(); //OkHttp 매커니즘 적용.//
+        manager = NetworkManager.getInstance();
 
-        OkHttpClient.Builder builder_client = new OkHttpClient.Builder();
-        //Context context = null;
-
-        //쿠키 생성.(앱을 제거 시 캐시도 삭제)//
-        ClearableCookieJar cookieJar =
-                new PersistentCookieJar(new SetCookieCache(), new SharedPrefsCookiePersistor(this));
-        builder_client.cookieJar(cookieJar);
-
-        File cacheDir = new File(getCacheDir(), "network"); //캐시 디렉터리 생성.//
-
-        if (!cacheDir.exists()) {
-            cacheDir.mkdir();
-        }
-
-        //캐시를 만들지 않으면 성능상의 문제가 발생.//
-        Cache cache = new Cache(cacheDir, 10 * 1024 * 1024); //캐시사이즈 설정.//
-        builder_client.cache(cache);
-
-        //타임아웃 지정.//
-        builder_client.connectTimeout(30, TimeUnit.SECONDS);
-        builder_client.readTimeout(10, TimeUnit.SECONDS);
-        builder_client.writeTimeout(10, TimeUnit.SECONDS);
-
-        //클라이언트 객체에 저장.//
-        client = builder_client.build();
+        OkHttpClient client = manager.getClient();
 
         /** URL 설정 **/
         HttpUrl.Builder builder = new HttpUrl.Builder();
@@ -199,14 +176,36 @@ public class SignUp_Activity extends AppCompatActivity {
         client.newCall(request).enqueue(requestsignupcallback);
     }
 
-    public void set_Data(SignUpRequest signuprequest) {
+    public void set_Data(final SignUpRequest signuprequest) {
         runOnUiThread(new Runnable() {
             public void run() {
                 Toast.makeText(SignUp_Activity.this, "등록되었습니다.", Toast.LENGTH_SHORT).show();
 
+                String user_email = user_email_edit.getText().toString();
+                String user_password = user_password_edit.getText().toString();
+                String user_name = signuprequest.getResult().getUserName();
+                String user_id = "" + signuprequest.getResult().getId();
+
+                //프래퍼런스를 셋팅.//
+                mPrefs = PreferenceManager.getDefaultSharedPreferences(SignUp_Activity.this);
+                mEditor = mPrefs.edit();
+
+                //프래퍼런스에 등록//
+                PropertyManager.getInstance().setEmail(user_email);
+                PropertyManager.getInstance().setPassword(user_password);
+                PropertyManager.getInstance().setRegisterid(user_registerid);
+
                 hidepDialog();
 
                 finish();
+
+                Intent intent = new Intent(SignUp_Activity.this, MainActivity.class);
+
+                intent.putExtra("KEY_USER_EMAIL", user_email);
+                intent.putExtra("KEY_USER_NAME", user_name);
+                intent.putExtra("KEY_USER_ID", user_id);
+
+                startActivity(intent);
             }
         });
     }

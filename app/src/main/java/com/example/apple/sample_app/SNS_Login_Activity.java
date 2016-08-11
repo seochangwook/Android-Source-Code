@@ -521,7 +521,7 @@ public class SNS_Login_Activity extends AppCompatActivity implements
 
             startActivity(intent);
         } else if (id == R.id.login_move) {
-            Intent intent = new Intent(SNS_Login_Activity.this, SampleLoginActivity.class);
+            Intent intent = new Intent(SNS_Login_Activity.this, SplashActivity.class);
 
             startActivity(intent);
         }
