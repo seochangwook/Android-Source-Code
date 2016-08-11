@@ -122,6 +122,14 @@
   <img src="https://github.com/seochangwook/Team-Project-Sample-Code-android-/blob/master/Project_SampleImage/network_info_image_3.png" width="650" height="350">
 </p>
 
+<p align="left">
+  <img src="https://github.com/seochangwook/Team-Project-Sample-Code-android-/blob/master/Project_SampleImage/network_info_image_4.png" width="650" height="350">
+</p>
+
+<p align="left">
+  <img src="https://github.com/seochangwook/Team-Project-Sample-Code-android-/blob/master/Project_SampleImage/network_info_image_5.png" width="650" height="350">
+</p>
+
 << Sample image >>
 
 <p align="left">
