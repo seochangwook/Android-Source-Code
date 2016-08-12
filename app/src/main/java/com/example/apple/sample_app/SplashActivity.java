@@ -82,7 +82,7 @@ public class SplashActivity extends AppCompatActivity {
                         mHandler.postDelayed(new Runnable() {
                             @Override
                             public void run() {
-                                Intent intent = new Intent(SplashActivity.this, MainActivity.class);
+                                Intent intent = new Intent(SplashActivity.this, MainTabActivity.class);
 
                                 intent.putExtra("KEY_USER_EMAIL", user_email);
                                 intent.putExtra("KEY_USER_NAME", user_name);

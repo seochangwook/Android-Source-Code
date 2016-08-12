@@ -62,6 +62,7 @@ dependencies {
     //okHttp라이브러리.//
     //쿠키관련 라이브러리.//
     //Glide 라이브러리.//
+    //compile 'com.specyci:residemenu:1.6.+'
     compile 'com.mikepenz:iconics-core:2.7.1@aar'
     compile 'com.android.support:appcompat-v7:23.4.0'
     compile 'com.android.support:support-v4:23.4.0'
@@ -76,7 +77,6 @@ dependencies {
     compile 'com.mikepenz:actionitembadge:3.2.6@aar'
     compile 'com.mikepenz:google-material-typeface:2.2.0.2.original@aar'
     compile 'com.mikepenz:material-design-iconic-typeface:2.2.0.2@aar'
-    compile 'com.specyci:residemenu:1.6+'
     compile 'com.mikepenz:fontawesome-typeface:4.6.0.2@aar'
     compile 'com.hkm.taglib:tag:1.6.0'
     compile 'com.google.android.gms:play-services-auth:8.3.0'

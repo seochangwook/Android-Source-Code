@@ -220,7 +220,7 @@ public class SampleLoginActivity extends AppCompatActivity {
 
                 finish();
 
-                Intent intent = new Intent(SampleLoginActivity.this, MainActivity.class);
+                Intent intent = new Intent(SampleLoginActivity.this, MainTabActivity.class);
 
                 intent.putExtra("KEY_USER_EMAIL", user_email);
                 intent.putExtra("KEY_USER_NAME", user_name);

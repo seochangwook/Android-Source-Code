@@ -199,7 +199,7 @@ public class SignUp_Activity extends AppCompatActivity {
 
                 finish();
 
-                Intent intent = new Intent(SignUp_Activity.this, MainActivity.class);
+                Intent intent = new Intent(SignUp_Activity.this, MainTabActivity.class);
 
                 intent.putExtra("KEY_USER_EMAIL", user_email);
                 intent.putExtra("KEY_USER_NAME", user_name);
