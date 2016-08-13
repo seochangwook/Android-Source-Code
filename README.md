@@ -280,6 +280,22 @@
   </div>
 </p>
 
+<< Sample image >>
+
+<p align="left">
+  <title> 서버로 이미지 업로드 및 다운로드 구현 - (issue존재, Okhttp의 307에러는 해결) </title>
+  <div class="photoset-grid" data-layout="13">
+      <img src="https://github.com/seochangwook/Team-Project-Sample-Code-android-/blob/master/Project_SampleImage/screen_41.jpeg" width="250" height="350">
+      <img src="https://github.com/seochangwook/Team-Project-Sample-Code-android-/blob/master/Project_SampleImage/screen_42.jpeg" width="250" height="350">
+  </div>
+</p>
+
+<p align="left">
+  <div class="photoset-grid" data-layout="13">
+      <img src="https://github.com/seochangwook/Team-Project-Sample-Code-android-/blob/master/Project_SampleImage/screen_43.jpeg" width="250" height="350">
+  </div>
+</p>
+
 # Design department issues
 
 * UI 시나리오 뉴스잉 기획안 파일 저장
