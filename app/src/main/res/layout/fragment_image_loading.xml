@@ -3,10 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.apple.sample_app.view.Fragment_friend_list">
+    tools:context="com.example.apple.sample_app.view.Fragment_ImageLoading">
 
+    <!-- TODO: Update blank fragment layout -->
     <TextView
-        android:id="@+id/tv_empty_friend_list"
+        android:id="@+id/empty_imagelist"
         android:layout_width="match_parent"
         android:layout_height="300dp"
         android:background="#EEAADD"
@@ -15,13 +16,12 @@
         android:visibility="gone" />
 
     <cn.iwgang.familiarrecyclerview.FamiliarRefreshRecyclerView
-        android:id="@+id/rv_fri_list"
+        android:id="@+id/image_recyclerview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:scrollbars="vertical"
-        android:tag="listview_recycler"
         app:frv_dividerHeight="0.5dp"
-        app:frv_emptyView="@id/tv_empty_friend_list"
+        app:frv_emptyView="@id/empty_imagelist"
         app:frv_isEmptyViewKeepShowHeadOrFooter="true"
         app:frv_layoutManager="linear"
         app:frv_layoutManagerOrientation="vertical" />

@@ -47,7 +47,7 @@ public class Fragment_Chatting_List extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_chatting_list, container, false);
 
-        listView = (ListView) view.findViewById(R.id.listView);
+        listView = (ListView) view.findViewById(R.id.chatlist_listView);
 
         listView.setAdapter(mAdapter);
 

@@ -22,6 +22,7 @@ import android.widget.Toast;
 import com.example.apple.sample_app.JSON_Data.RequestCode.LogoutRequestCode;
 import com.example.apple.sample_app.NetworkManage.NetworkManager;
 import com.example.apple.sample_app.view.Fragment_Chatting_List;
+import com.example.apple.sample_app.view.Fragment_ImageLoading;
 import com.example.apple.sample_app.view.Fragment_friend_list;
 import com.google.gson.Gson;
 
@@ -265,6 +266,12 @@ public class MainTabActivity extends AppCompatActivity {
 
                     return chatting_list;
                 }
+
+                case 2: {
+                    Fragment_ImageLoading imageload = new Fragment_ImageLoading();
+
+                    return imageload;
+                }
             }
 
             return null;
@@ -273,7 +280,7 @@ public class MainTabActivity extends AppCompatActivity {
         @Override
         public int getCount() {
             // Show 3 total pages.
-            return 2;
+            return 3;
         }
 
         @Override
@@ -283,6 +290,8 @@ public class MainTabActivity extends AppCompatActivity {
                     return "친구목록";
                 case 1:
                     return "채팅목록";
+                case 2:
+                    return "My Gallery";
             }
             return null;
         }

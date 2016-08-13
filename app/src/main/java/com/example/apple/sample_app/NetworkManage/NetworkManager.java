@@ -28,6 +28,8 @@ public class NetworkManager {
         ClearableCookieJar cookieJar =
                 new PersistentCookieJar(new SetCookieCache(), new SharedPrefsCookiePersistor(context));
         builder.cookieJar(cookieJar);
+        builder.followRedirects(true);
+        builder.addInterceptor(new RedirectInterceptor());
 
         File cacheDir = new File(context.getCacheDir(), "network");
         if (!cacheDir.exists()) {
@@ -39,6 +41,7 @@ public class NetworkManager {
         builder.connectTimeout(30, TimeUnit.SECONDS);
         builder.readTimeout(10, TimeUnit.SECONDS);
         builder.writeTimeout(10, TimeUnit.SECONDS);
+        //307에러를 해결하기 위해서 okhttp interceptor등록//
 
         client = builder.build();
     }

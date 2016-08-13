@@ -9,19 +9,20 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
-import com.example.apple.sample_app.ChatActivity;
-import com.example.apple.sample_app.JSON_Data.RequestCode.UserListRequestCode;
-import com.example.apple.sample_app.JSON_Data.RequestSuccess.UserListRequest;
-import com.example.apple.sample_app.JSON_Data.RequestSuccess.UserListRequestResult;
+import com.example.apple.sample_app.ContentAddActivity;
+import com.example.apple.sample_app.JSON_Data.RequestCode.ContentsRequestCode;
+import com.example.apple.sample_app.JSON_Data.RequestSuccess.ContentsRequest;
+import com.example.apple.sample_app.JSON_Data.RequestSuccess.ContentsRequestResult;
 import com.example.apple.sample_app.NetworkManage.NetworkManager;
 import com.example.apple.sample_app.R;
-import com.example.apple.sample_app.data.Chat_Friend;
-import com.example.apple.sample_app.data.User;
-import com.example.apple.sample_app.widget.Chat_FriendListAdapter;
+import com.example.apple.sample_app.data.ImageData;
+import com.example.apple.sample_app.widget.ImageSetAdapter;
 import com.google.gson.Gson;
 
 import java.io.IOException;
@@ -41,14 +42,14 @@ import okhttp3.Response;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class Fragment_friend_list extends Fragment {
-    Chat_Friend chat_friend;
-    Chat_FriendListAdapter mAdapter;
+public class Fragment_ImageLoading extends Fragment {
+    ImageSetAdapter mAdapter;
+    ImageData imageData;
     NetworkManager manager; //네트워크 매니저 생성.//
     private FamiliarRefreshRecyclerView recyclerview_refresh; //초기화 가능한 리사이클뷰.//
     private FamiliarRecyclerView recyclerview; //초기화되는 리사이클뷰에 자원을 가지고 있는 리사이클뷰.//
     private ProgressDialog pDialog; //직관적인 다이얼로그 사용(현재 진행률 보기)//
-    private Callback requestfriendlistcallback = new Callback() {
+    private Callback requestcontenslistcallback = new Callback() {
         @Override
         public void onFailure(Call call, IOException e) //접속 실패의 경우.//
         {
@@ -62,64 +63,61 @@ public class Fragment_friend_list extends Fragment {
 
             Gson gson = new Gson();
 
-            UserListRequestCode result_code = gson.fromJson(response_data, UserListRequestCode.class);
+            ContentsRequestCode contents_result = gson.fromJson(response_data, ContentsRequestCode.class);
 
-            int request_code = result_code.get_request_code();
+            int result_code = contents_result.get_request_code();
 
-            if (request_code == 1) {
-                Log.d("Message : ", response_data);
-
-                //배열을 만들어 파싱된 결과를 받아옴.//
-                UserListRequest request_userlist = gson.fromJson(response_data, UserListRequest.class);
-
-                set_UserList_Data(request_userlist.getResult(), request_userlist.getResult().length);
+            if (result_code == 2) {
+                Log.d("Message : ", "Network ERROR");
 
                 getActivity().runOnUiThread(new Runnable() {
                     public void run() {
                         hidepDialog();
                     }
                 });
-            } else if (request_code == 2) {
-                Log.d("Message : ", "네트워크 에러");
+            } else if (result_code == 1) {
+                Log.d("Message : ", "" + response_data);
 
-                getActivity().runOnUiThread(new Runnable() {
-                    public void run() {
-                        hidepDialog();
-                    }
-                });
+                ContentsRequest contentsRequest = gson.fromJson(response_data, ContentsRequest.class);
+
+                set_Data(contentsRequest.getResult(), contentsRequest.getResult().length);
             }
         }
     };
 
-    public Fragment_friend_list() {
-        // Required empty publdic constructor
+
+    public Fragment_ImageLoading() {
+        // Required empty public constructor
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_friend_list, container, false);
+        View view = inflater.inflate(R.layout.fragment_image_loading, container, false);
 
-        recyclerview_refresh = (FamiliarRefreshRecyclerView) view.findViewById(R.id.rv_fri_list);
+        setHasOptionsMenu(true); //해당 화면으로 진입 시 메뉴를 보이게 한다(서로 다른 메뉴를 보일 경우 필요)//
+
+        recyclerview_refresh = (FamiliarRefreshRecyclerView) view.findViewById(R.id.image_recyclerview);
 
         recyclerview_refresh.setLoadMoreView(new LoadMoreView(getActivity())); //로딩화면을 보여주는 뷰 정의.//
         recyclerview_refresh.setColorSchemeColors(0xFFFF5000, Color.RED, Color.YELLOW, Color.GREEN);
         recyclerview_refresh.setLoadMoreEnabled(true);
 
+        //새로고침되어서 다시 리사이클뷰와 연동될 수 있도록 한다.//
         recyclerview = recyclerview_refresh.getFamiliarRecyclerView(); //리사이클뷰의 자원을 얻어온다.//
         recyclerview.setItemAnimator(new DefaultItemAnimator());
         recyclerview.setHasFixedSize(true);
+
+        //어댑터 정의.//
+        mAdapter = new ImageSetAdapter(getActivity());
+        imageData = new ImageData();
 
         pDialog = new ProgressDialog(getActivity());
         pDialog.setMessage("Please wait...");
         pDialog.setCancelable(false);
 
-        chat_friend = new Chat_Friend();
-        mAdapter = new Chat_FriendListAdapter(getActivity());
-
-        //어댑터 장착.//
-        recyclerview.setAdapter(mAdapter); //어댑터 적용.//
+        recyclerview.setAdapter(mAdapter);
 
         /** Data refresh **/
         //사용자가 위에서 새로고침 할 경우//
@@ -156,36 +154,10 @@ public class Fragment_friend_list extends Fragment {
             }
         });
 
-        recyclerview.setOnItemClickListener(new FamiliarRecyclerView.OnItemClickListener() {
-            @Override
-            public void onItemClick(FamiliarRecyclerView familiarRecyclerView, View view, int position) {
-                String username = chat_friend.chat_friend_list.get(position).get_username();
-                String useremail = chat_friend.chat_friend_list.get(position).get_useremail();
-                String userid = chat_friend.chat_friend_list.get(position).get_userid();
-
-                Toast.makeText(getActivity(), "이름:" + username + "/메일:" + useremail + "/아이디;" + userid, Toast.LENGTH_SHORT).show();
-
-                //객체를 전달하기 위해서 설정.//
-                User user = new User();
-
-                user.setEmail(useremail);
-                user.setId(Long.parseLong(userid));
-                user.setUserName(username);
-
-                Intent intent = new Intent(getActivity(), ChatActivity.class);
-
-                intent.putExtra(ChatActivity.EXTRA_USER, user); //객체를 전달.//
-
-                startActivity(intent);
-            }
-        });
-
-        get_FriendList_Data(); //친구목록을 불러온다.//
-
         return view;
     }
 
-    public void get_FriendList_Data() {
+    public void get_Image_Data() {
         showpDialog();
 
         /** Network 설정 **/
@@ -199,7 +171,7 @@ public class Fragment_friend_list extends Fragment {
 
         builder.scheme("https"); //스킴정의(Http / Https)
         builder.host("my-project-1-1470720309181.appspot.com"); //host정의.//
-        builder.addPathSegment("friendlist"); //path지정.//
+        builder.addPathSegment("contents"); //path지정.//
 
         /** Request 설정 **/
         Request request = new Request.Builder()
@@ -208,33 +180,45 @@ public class Fragment_friend_list extends Fragment {
                 .build();
 
         /** 비동기 방식(enqueue)으로 Callback 구현 **/
-        client.newCall(request).enqueue(requestfriendlistcallback);
+        client.newCall(request).enqueue(requestcontenslistcallback);
     }
 
-    public void set_UserList_Data(final UserListRequestResult request_result[], final int request_result_size) {
+    public void set_Data(final ContentsRequestResult result_request[], final int result_request_size) {
         getActivity().runOnUiThread(new Runnable() {
             public void run() {
-                List<UserListRequestResult> items = new ArrayList<>();
+                List<ContentsRequestResult> items = new ArrayList<>();
 
-                items.addAll(Arrays.asList(request_result));
+                items.addAll(Arrays.asList(result_request));
 
-                for (int i = 0; i < request_result_size; i++) {
-                    Log.d("friend : ", "name : " + items.get(i).getUserName() + "/ email : " + items.get(i).getEmail());
+                for (int i = 0; i < result_request_size; i++) {
+                    Log.d("Data : ", "content name : " + items.get(i).getContent() + "/file path : " + items.get(i).getImageUrl());
                 }
 
-                for (int i = 0; i < request_result_size; i++) {
-                    Chat_Friend input_chat_friend = new Chat_Friend();
+                for (int i = 0; i < result_request_size; i++) {
+                    ImageData input_image = new ImageData();
 
-                    input_chat_friend.set_useremail(items.get(i).getEmail());
-                    input_chat_friend.set_username(items.get(i).getUserName());
-                    input_chat_friend.set_userid("" + items.get(i).getId());
+                    input_image.set_image_content(items.get(i).getContent());
+                    input_image.set_image_Url(items.get(i).getImageUrl());
 
-                    chat_friend.chat_friend_list.add(input_chat_friend);
+                    imageData.imagelist.add(input_image);
 
-                    mAdapter.set_Chat_FriendList(chat_friend);
+                    mAdapter.set_image_data(imageData);
                 }
+
+                getActivity().runOnUiThread(new Runnable() {
+                    public void run() {
+                        hidepDialog();
+                    }
+                });
             }
         });
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        get_Image_Data();
     }
 
     private void showpDialog() {
@@ -245,5 +229,35 @@ public class Fragment_friend_list extends Fragment {
     private void hidepDialog() {
         if (pDialog.isShowing())
             pDialog.dismiss();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        // destroy all menu and re-call onCreateOptionsMenu
+        getActivity().invalidateOptionsMenu();
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        //메뉴의 생성은 MenuInflater이용//
+        super.onCreateOptionsMenu(menu, inflater);
+
+        inflater.inflate(R.menu.image_tab_menu, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item)  //메뉴의 선택.//
+    {
+        switch (item.getItemId()) {
+            case R.id.add_image: {
+                Intent intent = new Intent(getContext(), ContentAddActivity.class);
+                startActivity(intent);
+
+                break;
+            }
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }
