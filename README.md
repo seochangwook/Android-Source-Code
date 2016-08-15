@@ -296,6 +296,14 @@
   </div>
 </p>
 
+<p align="left">
+  <title> # issue name : ViewPager간 이동 시 RecyclerView same id 문제</title>
+  <title># issue solution : android.R.id.list라는 안드로이드 시스템에서 정의된 id를 사용하여 Pager이동 시 동적으로 변하는 id에 대응) </title>
+  <div class="photoset-grid" data-layout="13">
+      <img src="https://github.com/seochangwook/Team-Project-Sample-Code-android-/blob/master/Project_SampleImage/screen_41.jpeg" width="250" height="350">
+  </div>
+</p>
+
 # Design department issues
 
 * UI 시나리오 뉴스잉 기획안 파일 저장
