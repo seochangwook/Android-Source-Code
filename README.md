@@ -283,7 +283,7 @@
 << Sample image >>
 
 <p align="left">
-  <title> 서버로 이미지 업로드 및 다운로드 구현 - (issue존재, Okhttp의 307에러는 해결) </title>
+  <title> 서버로 이미지 업로드 및 다운로드 구현 - (issue존재 -> 해결, Okhttp의 307에러는 해결) </title>
   <div class="photoset-grid" data-layout="13">
       <img src="https://github.com/seochangwook/Team-Project-Sample-Code-android-/blob/master/Project_SampleImage/screen_41.jpeg" width="250" height="350">
       <img src="https://github.com/seochangwook/Team-Project-Sample-Code-android-/blob/master/Project_SampleImage/screen_42.jpeg" width="250" height="350">
@@ -297,8 +297,8 @@
 </p>
 
 <p align="left">
-  <title> # issue name : ViewPager간 이동 시 RecyclerView same id 문제</title>
-  <title># issue solution : android.R.id.list라는 안드로이드 시스템에서 정의된 id를 사용하여 Pager이동 시 동적으로 변하는 id에 대응) </title>
+  <title> # issue name : ViewPager간 이동 시 RecyclerView same id 문제(id충돌)</title>
+  <title> # issue solution : android.R.id.list라는 안드로이드 시스템에서 정의된 id를 사용하여 Pager이동 시 동적으로 변하는 id에 대응) </title>
   <div class="photoset-grid" data-layout="13">
       <img src="https://github.com/seochangwook/Team-Project-Sample-Code-android-/blob/master/Project_SampleImage/issue_solution_image_1.png" width="450" height="350">
   </div>
