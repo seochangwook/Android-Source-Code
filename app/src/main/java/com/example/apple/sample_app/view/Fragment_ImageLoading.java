@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.util.Log;
@@ -44,6 +45,7 @@ import okhttp3.Response;
  */
 public class Fragment_ImageLoading extends Fragment {
     ImageSetAdapter mAdapter;
+
     ImageData imageData;
     NetworkManager manager; //네트워크 매니저 생성.//
     private FamiliarRefreshRecyclerView recyclerview_refresh; //초기화 가능한 리사이클뷰.//
@@ -91,14 +93,28 @@ public class Fragment_ImageLoading extends Fragment {
     }
 
     @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        pDialog = new ProgressDialog(getActivity());
+        pDialog.setMessage("Please wait...");
+        pDialog.setCancelable(false);
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_image_loading, container, false);
 
+        view.setId(R.id.image_layout_fragment);
+
         setHasOptionsMenu(true); //해당 화면으로 진입 시 메뉴를 보이게 한다(서로 다른 메뉴를 보일 경우 필요)//
 
         recyclerview_refresh = (FamiliarRefreshRecyclerView) view.findViewById(R.id.image_recyclerview);
+        recyclerview_refresh.setId(android.R.id.list);
+
+        Log.d("Fragment ImageLoading : ", "onCreateView Call, id : " + recyclerview_refresh.getId());
 
         recyclerview_refresh.setLoadMoreView(new LoadMoreView(getActivity())); //로딩화면을 보여주는 뷰 정의.//
         recyclerview_refresh.setColorSchemeColors(0xFFFF5000, Color.RED, Color.YELLOW, Color.GREEN);
@@ -113,13 +129,8 @@ public class Fragment_ImageLoading extends Fragment {
         mAdapter = new ImageSetAdapter(getActivity());
         imageData = new ImageData();
 
-        pDialog = new ProgressDialog(getActivity());
-        pDialog.setMessage("Please wait...");
-        pDialog.setCancelable(false);
-
         recyclerview.setAdapter(mAdapter);
 
-        /** Data refresh **/
         //사용자가 위에서 새로고침 할 경우//
         recyclerview_refresh.setOnPullRefreshListener(new FamiliarRefreshRecyclerView.OnPullRefreshListener() {
             @Override
@@ -153,6 +164,8 @@ public class Fragment_ImageLoading extends Fragment {
                 }, 1000);
             }
         });
+
+        get_Image_Data();
 
         return view;
     }
@@ -214,14 +227,7 @@ public class Fragment_ImageLoading extends Fragment {
         });
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-
-        get_Image_Data();
-    }
-
-    private void showpDialog() {
+    void showpDialog() {
         if (!pDialog.isShowing())
             pDialog.show();
     }
@@ -229,13 +235,6 @@ public class Fragment_ImageLoading extends Fragment {
     private void hidepDialog() {
         if (pDialog.isShowing())
             pDialog.dismiss();
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        // destroy all menu and re-call onCreateOptionsMenu
-        getActivity().invalidateOptionsMenu();
     }
 
     @Override

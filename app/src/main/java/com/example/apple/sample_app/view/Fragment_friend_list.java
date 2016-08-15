@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.util.Log;
@@ -96,12 +97,27 @@ public class Fragment_friend_list extends Fragment {
     }
 
     @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        pDialog = new ProgressDialog(getActivity());
+        pDialog.setMessage("Please wait...");
+        pDialog.setCancelable(false);
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_friend_list, container, false);
+        view.setId(R.id.friend_fragment_view);
 
-        recyclerview_refresh = (FamiliarRefreshRecyclerView) view.findViewById(R.id.rv_fri_list);
+        recyclerview_refresh = (FamiliarRefreshRecyclerView) view.findViewById(R.id.friend_listview);
+        recyclerview_refresh.setId(R.id.friend_listview);
+
+        recyclerview_refresh.setId(android.R.id.list); //android.R을 이용하여 시스템의 리스트 id를 확보(동적으로 변하는
+        //id를 유지하기 위해서 사용)//
+
+        Log.d("Fragment friend list : ", "onCreateView Call, id : " + recyclerview_refresh.getId());
 
         recyclerview_refresh.setLoadMoreView(new LoadMoreView(getActivity())); //로딩화면을 보여주는 뷰 정의.//
         recyclerview_refresh.setColorSchemeColors(0xFFFF5000, Color.RED, Color.YELLOW, Color.GREEN);
@@ -111,17 +127,13 @@ public class Fragment_friend_list extends Fragment {
         recyclerview.setItemAnimator(new DefaultItemAnimator());
         recyclerview.setHasFixedSize(true);
 
-        pDialog = new ProgressDialog(getActivity());
-        pDialog.setMessage("Please wait...");
-        pDialog.setCancelable(false);
-
         chat_friend = new Chat_Friend();
         mAdapter = new Chat_FriendListAdapter(getActivity());
 
         //어댑터 장착.//
         recyclerview.setAdapter(mAdapter); //어댑터 적용.//
 
-        /** Data refresh **/
+
         //사용자가 위에서 새로고침 할 경우//
         recyclerview_refresh.setOnPullRefreshListener(new FamiliarRefreshRecyclerView.OnPullRefreshListener() {
             @Override
@@ -132,6 +144,8 @@ public class Fragment_friend_list extends Fragment {
                         Log.i("EVENT :", "당겨서 새로고침 중...");
 
                         recyclerview_refresh.pullRefreshComplete();
+
+                        get_FriendList_Data(); //친구목록을 불러온다.//
 
                         mAdapter.notifyDataSetChanged();
                     }
@@ -149,6 +163,8 @@ public class Fragment_friend_list extends Fragment {
                         Log.i("EVENT :", "새로고침 완료");
 
                         recyclerview_refresh.loadMoreComplete();
+
+                        get_FriendList_Data(); //친구목록을 불러온다.//
 
                         mAdapter.notifyDataSetChanged();
                     }

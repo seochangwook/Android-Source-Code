@@ -78,6 +78,8 @@ public class ContentAddActivity extends AppCompatActivity {
                 runOnUiThread(new Runnable() {
                     public void run() {
                         hidepDialog();
+
+                        finish();
                     }
                 });
             } else if (result == 2) {
@@ -176,8 +178,6 @@ public class ContentAddActivity extends AppCompatActivity {
 
         /** 비동기 방식(enqueue)으로 Callback 구현 **/
         client.newCall(request).enqueue(requestimageuploadlistcallback);
-
-        finish();
     }
 
     @Override

@@ -1,5 +1,6 @@
 package com.example.apple.sample_app.view;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -26,6 +27,8 @@ public class Fragment_Chatting_List extends Fragment {
 
     SimpleCursorAdapter mAdapter;
 
+    private ProgressDialog pDialog; //직관적인 다이얼로그 사용(현재 진행률 보기)//
+
     public Fragment_Chatting_List() {
         // Required empty publdic constructor
     }
@@ -39,6 +42,10 @@ public class Fragment_Chatting_List extends Fragment {
 
         //어댑터를 SQLite와 동기화 할 수 있는 SimpleCursorAdapter를 사용.//
         mAdapter = new SimpleCursorAdapter(getContext(), R.layout.view_chat_user, null, from, to, 0);
+
+        pDialog = new ProgressDialog(getActivity());
+        pDialog.setMessage("Please wait...");
+        pDialog.setCancelable(false);
     }
 
     @Override
@@ -48,7 +55,6 @@ public class Fragment_Chatting_List extends Fragment {
         View view = inflater.inflate(R.layout.fragment_chatting_list, container, false);
 
         listView = (ListView) view.findViewById(R.id.chatlist_listView);
-
         listView.setAdapter(mAdapter);
 
         //다시 채팅방으로 이동.User객체를 넘겨야 하기에 직렬화 이용)//
@@ -94,5 +100,15 @@ public class Fragment_Chatting_List extends Fragment {
         super.onStop();
 
         mAdapter.changeCursor(null); //null로 해주어야지 액티비티 종료 시 자원이 적절하게 해제된다.//
+    }
+
+    private void showpDialog() {
+        if (!pDialog.isShowing())
+            pDialog.show();
+    }
+
+    private void hidepDialog() {
+        if (pDialog.isShowing())
+            pDialog.dismiss();
     }
 }

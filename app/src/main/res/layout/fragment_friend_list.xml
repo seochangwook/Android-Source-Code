@@ -1,12 +1,13 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/friend_fragment_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.apple.sample_app.view.Fragment_friend_list">
 
     <TextView
-        android:id="@+id/tv_empty_friend_list"
+        android:id="@+id/friend_list_empty"
         android:layout_width="match_parent"
         android:layout_height="300dp"
         android:background="#EEAADD"
@@ -15,15 +16,14 @@
         android:visibility="gone" />
 
     <cn.iwgang.familiarrecyclerview.FamiliarRefreshRecyclerView
-        android:id="@+id/rv_fri_list"
+        android:id="@+id/friend_listview"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:scrollbars="vertical"
-        android:tag="listview_recycler"
+        android:tag="friendrecycler"
         app:frv_dividerHeight="0.5dp"
-        app:frv_emptyView="@id/tv_empty_friend_list"
+        app:frv_emptyView="@+id/friend_list_empty"
         app:frv_isEmptyViewKeepShowHeadOrFooter="true"
         app:frv_layoutManager="linear"
         app:frv_layoutManagerOrientation="vertical" />
-
 </FrameLayout>
