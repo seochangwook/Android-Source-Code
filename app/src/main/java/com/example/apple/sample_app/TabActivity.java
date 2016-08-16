@@ -26,11 +26,11 @@ import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.apple.sample_app.view.Fragment_Discussionview;
-import com.example.apple.sample_app.view.Fragment_Keywordview;
-import com.example.apple.sample_app.view.Fragment_scraptview;
-import com.example.apple.sample_app.view.Fragment_settingview;
-import com.example.apple.sample_app.widget.BottomMenu;
+import com.example.apple.sample_app.view.view_fragment.Fragment_Discussionview;
+import com.example.apple.sample_app.view.view_fragment.Fragment_Keywordview;
+import com.example.apple.sample_app.view.view_fragment.Fragment_scraptview;
+import com.example.apple.sample_app.view.view_fragment.Fragment_settingview;
+import com.example.apple.sample_app.widget.MenuWidget.BottomMenu;
 import com.mikepenz.actionitembadge.library.ActionItemBadge;
 import com.mikepenz.actionitembadge.library.utils.BadgeStyle;
 import com.mikepenz.fontawesome_typeface_library.FontAwesome;

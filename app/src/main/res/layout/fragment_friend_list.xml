@@ -4,7 +4,7 @@
     android:id="@+id/friend_fragment_view"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.apple.sample_app.view.Fragment_friend_list">
+    tools:context=".view.view_fragment.Fragment_friend_list">
 
     <TextView
         android:id="@+id/friend_list_empty"

@@ -23,7 +23,7 @@
 
     <include layout="@layout/content_my_info_" />
 
-    <com.example.apple.sample_app.widget.BottomMenu
+    <com.example.apple.sample_app.widget.MenuWidget.BottomMenu
         android:id="@+id/bottom_menu_4"
         android:layout_width="match_parent"
         android:layout_height="@dimen/bottom_bar_height"

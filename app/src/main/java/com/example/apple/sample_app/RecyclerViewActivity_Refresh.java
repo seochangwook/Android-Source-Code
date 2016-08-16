@@ -22,15 +22,15 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
-import com.example.apple.sample_app.data.A_News;
-import com.example.apple.sample_app.data.B_News;
-import com.example.apple.sample_app.data.C_News;
-import com.example.apple.sample_app.data.D_News;
-import com.example.apple.sample_app.data.News;
+import com.example.apple.sample_app.data.View_Data.A_News;
+import com.example.apple.sample_app.data.View_Data.B_News;
+import com.example.apple.sample_app.data.View_Data.C_News;
+import com.example.apple.sample_app.data.View_Data.D_News;
+import com.example.apple.sample_app.data.View_Data.News;
 import com.example.apple.sample_app.view.LoadMoreView;
-import com.example.apple.sample_app.widget.BottomMenu;
-import com.example.apple.sample_app.widget.MultiListAdapter;
-import com.example.apple.sample_app.widget.Scrapt_MultiListAdapter;
+import com.example.apple.sample_app.widget.Adapter.MultiListAdapter;
+import com.example.apple.sample_app.widget.Adapter.Scrapt_MultiListAdapter;
+import com.example.apple.sample_app.widget.MenuWidget.BottomMenu;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;

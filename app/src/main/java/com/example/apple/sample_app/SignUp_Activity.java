@@ -19,7 +19,7 @@ import com.example.apple.sample_app.JSON_Data.RequestCode.SignUpRequestCode;
 import com.example.apple.sample_app.JSON_Data.RequestFail.SignUpRequestFail;
 import com.example.apple.sample_app.JSON_Data.RequestSuccess.SignUpRequest;
 import com.example.apple.sample_app.NetworkManage.NetworkManager;
-import com.example.apple.sample_app.data.PropertyManager;
+import com.example.apple.sample_app.data.Manager_Data.PropertyManager;
 import com.google.gson.Gson;
 
 import java.io.IOException;

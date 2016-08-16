@@ -13,9 +13,9 @@ import android.widget.EditText;
 import android.widget.RadioGroup;
 
 import com.example.apple.sample_app.DataBase.DBManager;
-import com.example.apple.sample_app.data.ChatContract;
-import com.example.apple.sample_app.data.User;
-import com.example.apple.sample_app.widget.ChatAdapter;
+import com.example.apple.sample_app.data.DB_Data.ChatContract;
+import com.example.apple.sample_app.data.Trans_Data.User;
+import com.example.apple.sample_app.widget.Adapter.ChatAdapter;
 
 public class ChatActivity extends AppCompatActivity {
     public static final String EXTRA_USER = "user";

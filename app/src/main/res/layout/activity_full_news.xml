@@ -23,7 +23,7 @@
 
     <fragment
         android:id="@+id/fragment_full_news_fragment"
-        android:name="com.example.apple.sample_app.view.Fragment_Full_News"
+        android:name="com.example.apple.sample_app.view.view_fragment.Fragment_Full_News"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="60dp"

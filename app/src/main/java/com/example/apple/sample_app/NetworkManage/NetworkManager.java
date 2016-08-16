@@ -2,7 +2,7 @@ package com.example.apple.sample_app.NetworkManage;
 
 import android.content.Context;
 
-import com.example.apple.sample_app.data.MyApplication;
+import com.example.apple.sample_app.data.Manager_Data.MyApplication;
 import com.franmontiel.persistentcookiejar.ClearableCookieJar;
 import com.franmontiel.persistentcookiejar.PersistentCookieJar;
 import com.franmontiel.persistentcookiejar.cache.SetCookieCache;

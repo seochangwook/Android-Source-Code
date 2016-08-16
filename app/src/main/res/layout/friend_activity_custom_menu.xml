@@ -5,7 +5,7 @@
 
     <fragment
         android:id="@+id/fragment"
-        android:name="com.example.apple.sample_app.view.Fragment_FriendListView"
+        android:name="com.example.apple.sample_app.view.view_fragment.Fragment_FriendListView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_weight="1" />

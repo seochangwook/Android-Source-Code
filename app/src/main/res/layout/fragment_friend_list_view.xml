@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.apple.sample_app.view.Fragment_FriendListView">
+    tools:context=".view.view_fragment.Fragment_FriendListView">
 
     <TextView
         android:id="@+id/tv_friend_empty"

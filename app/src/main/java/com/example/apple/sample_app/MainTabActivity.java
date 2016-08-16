@@ -21,9 +21,9 @@ import android.widget.Toast;
 
 import com.example.apple.sample_app.JSON_Data.RequestCode.LogoutRequestCode;
 import com.example.apple.sample_app.NetworkManage.NetworkManager;
-import com.example.apple.sample_app.view.Fragment_Chatting_List;
-import com.example.apple.sample_app.view.Fragment_ImageLoading;
-import com.example.apple.sample_app.view.Fragment_friend_list;
+import com.example.apple.sample_app.view.view_fragment.Fragment_Chatting_List;
+import com.example.apple.sample_app.view.view_fragment.Fragment_ImageLoading;
+import com.example.apple.sample_app.view.view_fragment.Fragment_friend_list;
 import com.google.gson.Gson;
 
 import java.io.IOException;

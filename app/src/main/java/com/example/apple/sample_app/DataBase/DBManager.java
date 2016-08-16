@@ -6,9 +6,9 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import com.example.apple.sample_app.data.ChatContract;
-import com.example.apple.sample_app.data.MyApplication;
-import com.example.apple.sample_app.data.User;
+import com.example.apple.sample_app.data.DB_Data.ChatContract;
+import com.example.apple.sample_app.data.Manager_Data.MyApplication;
+import com.example.apple.sample_app.data.Trans_Data.User;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -21,10 +21,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.apple.sample_app.data.My_Category;
+import com.example.apple.sample_app.data.View_Data.My_Category;
 import com.example.apple.sample_app.view.LoadMoreView;
-import com.example.apple.sample_app.widget.BottomMenu;
-import com.example.apple.sample_app.widget.My_Category_Adapter;
+import com.example.apple.sample_app.widget.Adapter.My_Category_Adapter;
+import com.example.apple.sample_app.widget.MenuWidget.BottomMenu;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;

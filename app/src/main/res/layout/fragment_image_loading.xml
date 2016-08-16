@@ -4,7 +4,7 @@
     android:id="@+id/image_layout_fragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.apple.sample_app.view.Fragment_ImageLoading">
+    tools:context=".view.view_fragment.Fragment_ImageLoading">
 
     <!-- TODO: Update blank fragment layout -->
     <TextView

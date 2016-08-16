@@ -12,12 +12,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
-import com.example.apple.sample_app.data.A_News;
-import com.example.apple.sample_app.data.B_News;
-import com.example.apple.sample_app.data.C_News;
-import com.example.apple.sample_app.data.News;
-import com.example.apple.sample_app.view.HeaderAndFooterViewUtil;
-import com.example.apple.sample_app.widget.MultiListAdapter;
+import com.example.apple.sample_app.data.View_Data.A_News;
+import com.example.apple.sample_app.data.View_Data.B_News;
+import com.example.apple.sample_app.data.View_Data.C_News;
+import com.example.apple.sample_app.data.View_Data.News;
+import com.example.apple.sample_app.view.view_list.HeaderAndFooterViewUtil;
+import com.example.apple.sample_app.widget.Adapter.MultiListAdapter;
 
 import cn.iwgang.familiarrecyclerview.FamiliarRecyclerView;
 import cn.iwgang.familiarrecyclerview.FamiliarRecyclerViewOnScrollListener;

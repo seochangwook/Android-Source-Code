@@ -17,7 +17,7 @@ import android.widget.ImageView;
 import android.widget.Switch;
 import android.widget.Toast;
 
-import com.example.apple.sample_app.widget.BottomMenu;
+import com.example.apple.sample_app.widget.MenuWidget.BottomMenu;
 
 import java.util.ArrayList;
 
