@@ -283,7 +283,7 @@
 << Sample image >>
 
 <p align="left">
-  <title> 서버로 이미지 업로드 및 다운로드 구현 - (issue존재, Okhttp의 307에러는 해결) </title>
+  <title> 서버로 이미지 업로드 및 다운로드 구현 - (issue존재 -> 해결, Okhttp의 307에러는 해결) </title>
   <div class="photoset-grid" data-layout="13">
       <img src="https://github.com/seochangwook/Team-Project-Sample-Code-android-/blob/master/Project_SampleImage/screen_41.jpeg" width="250" height="350">
       <img src="https://github.com/seochangwook/Team-Project-Sample-Code-android-/blob/master/Project_SampleImage/screen_42.jpeg" width="250" height="350">
@@ -294,6 +294,19 @@
   <div class="photoset-grid" data-layout="13">
       <img src="https://github.com/seochangwook/Team-Project-Sample-Code-android-/blob/master/Project_SampleImage/screen_43.jpeg" width="250" height="350">
   </div>
+</p>
+
+<p align="left">
+  <title> # issue name : ViewPager간 이동 시 RecyclerView same id 문제(id충돌)</title>
+  <title> # issue solution : android.R.id.list라는 안드로이드 시스템에서 정의된 id를 사용하여 Pager이동 시 동적으로 변하는 id에 대응 </title>
+  <div class="photoset-grid" data-layout="13">
+      <img src="https://github.com/seochangwook/Team-Project-Sample-Code-android-/blob/master/Project_SampleImage/issue_solution_image_1.png" width="450" height="350">
+  </div>
+</p>
+
+<p align="left">
+  <title>android:id="@+id/list" : 해당 어플리케이션에서 ID를 패키지 명 없이 새로 만들어서 사용. 사용방법은 R.id.list로 사용.</title>
+  <title>android:id="@android:id/list" : 해당 어플리케이션에서 ID를 패키지 명을 추가하여 새로 만들어서 사용. 사용방법은 android.R.id.list로 사용. android라는 패키지는 이미 안드로이드가 사용하고 있고, android.R.id.list는 이미 등록되어 있어서 기존에 등록된 (android.jar에 포함된) ID를 사용</title>
 </p>
 
 # Design department issues
