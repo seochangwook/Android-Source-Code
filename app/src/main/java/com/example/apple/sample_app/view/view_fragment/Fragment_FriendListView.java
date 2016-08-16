@@ -7,11 +7,17 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.apple.sample_app.R;
 import com.example.apple.sample_app.data.View_Data.Friend;
@@ -67,6 +73,9 @@ public class Fragment_FriendListView extends Fragment {
         pDialog = new ProgressDialog(getActivity());
         pDialog.setMessage("Please wait...");
         pDialog.setCancelable(false);
+
+        //프래그먼트 시 해당 옵션 설정을 해준다.//
+        setHasOptionsMenu(true); //해당 화면으로 진입 시 메뉴를 보이게 한다(서로 다른 메뉴를 보일 경우 필요)//
 
         recyclerview = recyclerview_refresh.getFamiliarRecyclerView(); //리사이클뷰의 자원을 얻어온다.//
 
@@ -280,5 +289,39 @@ public class Fragment_FriendListView extends Fragment {
     private void hidepDialog() {
         if (pDialog.isShowing())
             pDialog.dismiss();
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+
+        inflater.inflate(R.menu.activity_menu, menu);
+
+        MenuItem item = menu.findItem(R.id.menu_item_1); //Collapse로 정의된 메뉴 아이템 확보.//
+
+        //서치뷰를 정의.//
+        SearchView view = (SearchView) MenuItemCompat.getActionView(item); //액션바의 형식을 변경한다.//
+
+        view.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                Toast.makeText(getActivity(), "query : " + query, Toast.LENGTH_SHORT).show();
+
+                //검색관련 알고리즘 작성.//
+
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        return super.onOptionsItemSelected(item);
     }
 }
