@@ -317,6 +317,16 @@
   <title>android:id="@android:id/list" : 해당 어플리케이션에서 ID를 패키지 명을 추가하여 새로 만들어서 사용. 사용방법은 android.R.id.list로 사용. android라는 패키지는 이미 안드로이드가 사용하고 있고, android.R.id.list는 이미 등록되어 있어서 기존에 등록된 (android.jar에 포함된) ID를 사용</title>
 </p>
 
+<< Sample image >>
+
+<p align="left">
+  <title> PopupWindow화면에 다양한 위젯배치(ExpandableListView 포함) </title>
+  <div class="photoset-grid" data-layout="13">
+      <img src="https://github.com/seochangwook/Team-Project-Sample-Code-android-/blob/master/Project_SampleImage/screen_44.jpeg" width="250" height="350">
+      <img src="https://github.com/seochangwook/Team-Project-Sample-Code-android-/blob/master/Project_SampleImage/screen_45.jpeg" width="250" height="350">
+  </div>
+</p>
+
 # Design department issues
 
 * UI 시나리오 뉴스잉 기획안 파일 저장
