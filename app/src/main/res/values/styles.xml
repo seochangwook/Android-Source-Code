@@ -37,4 +37,9 @@
         <item name="android:windowExitAnimation">@animator/popup_topout</item>
     </style>
 
+    <style name="PopupAnimationBottom" mce_bogus="1" parent="android:Animation">
+        <item name="android:windowEnterAnimation">@animator/popup_bottom_up</item>
+        <item name="android:windowExitAnimation">@animator/popup_bottom_down</item>
+    </style>
+
 </resources>

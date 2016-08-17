@@ -16,6 +16,8 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.KeyEvent;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CompoundButton;
@@ -50,7 +52,7 @@ public class ImageViewer extends AppCompatActivity {
     Button top_popup_menu_button;
     Button left_popup_menu_button;
     Button right_popup_menu_button;
-    Button dropdown_popup_menu_button;
+    Button center_popup_menu_button;
 
     ExpandableListView expandablelistview;
     MyGroupAdapter mAdapter;
@@ -66,6 +68,7 @@ public class ImageViewer extends AppCompatActivity {
     String child_name[];
     int child_image_id[];
     File uploadFile = null; //이미지도 하나의 파일이기에 파일로 만든다.//
+    int menu_select_count = 0;
     private ProgressDialog pDialog; //직관적인 다이얼로그 사용(현재 진행률 보기)//
 
     @Override
@@ -79,7 +82,7 @@ public class ImageViewer extends AppCompatActivity {
         top_popup_menu_button = (Button) findViewById(R.id.top_popup_button);
         left_popup_menu_button = (Button) findViewById(R.id.left_popup_button);
         right_popup_menu_button = (Button) findViewById(R.id.right_popup_button);
-        dropdown_popup_menu_button = (Button) findViewById(R.id.dropdown_popup_button);
+        center_popup_menu_button = (Button) findViewById(R.id.dropdown_popup_button);
 
         pDialog = new ProgressDialog(this);
         pDialog.setMessage("Please wait...");
@@ -155,8 +158,8 @@ public class ImageViewer extends AppCompatActivity {
             }
         });
 
-        //팝업화면 설정.(bottom으로 설정)//
-        mPopup = new PopupWindow(popupView, ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.WRAP_CONTENT, true);
+        //팝업화면 설정.//
+        mPopup = new PopupWindow(popupView, ActionBar.LayoutParams.WRAP_CONTENT, ActionBar.LayoutParams.WRAP_CONTENT, true);
         mPopup.setTouchable(true);
         mPopup.setOutsideTouchable(true);
         mPopup.setBackgroundDrawable(new BitmapDrawable(getResources(), (Bitmap) null));
@@ -164,6 +167,29 @@ public class ImageViewer extends AppCompatActivity {
 
         mPopup.getContentView().setFocusableInTouchMode(true);
         mPopup.getContentView().setFocusable(true);
+
+        //두번째 팝업 설정.//
+        //팝업화면 설정.//
+        mPopup_1 = new PopupWindow(popupView, ActionBar.LayoutParams.WRAP_CONTENT, ActionBar.LayoutParams.WRAP_CONTENT, true);
+        mPopup_1.setTouchable(true);
+        mPopup_1.setOutsideTouchable(true);
+        mPopup_1.setBackgroundDrawable(new BitmapDrawable(getResources(), (Bitmap) null));
+        mPopup_1.setAnimationStyle(R.style.PopupAnimationTop); //애니메이션 등록.//
+
+        mPopup_1.getContentView().setFocusableInTouchMode(true);
+        mPopup_1.getContentView().setFocusable(true);
+
+        //세번째 팝업 설정.//
+        //팝업화면 설정.//
+        mPopup_2 = new PopupWindow(popupView, ActionBar.LayoutParams.WRAP_CONTENT, ActionBar.LayoutParams.WRAP_CONTENT, true);
+        mPopup_2.setTouchable(true);
+        mPopup_2.setOutsideTouchable(true);
+        mPopup_2.setBackgroundDrawable(new BitmapDrawable(getResources(), (Bitmap) null));
+        mPopup_2.setAnimationStyle(R.style.PopupAnimationBottom); //애니메이션 등록.//
+
+        mPopup_2.getContentView().setFocusableInTouchMode(true);
+        mPopup_2.getContentView().setFocusable(true);
+
         //키 이벤트 등록//
         mPopup.getContentView().setOnKeyListener(new View.OnKeyListener() {
             @Override
@@ -180,10 +206,56 @@ public class ImageViewer extends AppCompatActivity {
             }
         });
 
+        //키 이벤트 등록//
+        mPopup_1.getContentView().setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (keyCode == KeyEvent.KEYCODE_MENU && event.getRepeatCount() == 0
+                        && event.getAction() == KeyEvent.ACTION_DOWN) {
+                    if (mPopup_1 != null && mPopup_1.isShowing()) {
+                        mPopup_1.dismiss();
+                    }
+                    return true;
+                }
+
+                return false;
+            }
+        });
+
+        //키 이벤트 등록//
+        mPopup_2.getContentView().setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (keyCode == KeyEvent.KEYCODE_MENU && event.getRepeatCount() == 0
+                        && event.getAction() == KeyEvent.ACTION_DOWN) {
+                    if (mPopup_2 != null && mPopup_2.isShowing()) {
+                        mPopup_2.dismiss();
+                    }
+                    return true;
+                }
+
+                return false;
+            }
+        });
+
         bottom_popup_menu_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mPopup.showAtLocation(findViewById(R.id.bottom_popup_button), Gravity.BOTTOM, 0, 0);
+                mPopup_1.showAtLocation(findViewById(R.id.bottom_popup_button), Gravity.CENTER, 0, 0);
+            }
+        });
+
+        center_popup_menu_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mPopup.showAtLocation(findViewById(R.id.dropdown_popup_button), Gravity.CENTER, 0, 0);
+            }
+        });
+
+        top_popup_menu_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                mPopup_2.showAtLocation(findViewById(R.id.top_popup_button), Gravity.CENTER, 0, 0);
             }
         });
 
@@ -252,6 +324,40 @@ public class ImageViewer extends AppCompatActivity {
                 mAdapter.set_List_Data(groupname, childname, child_image);
             }
         }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.friend_menu, menu);
+
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        if (id == R.id.friend_menu_1) {
+            if (menu_select_count == 0) {
+                mPopup_1.showAtLocation(findViewById(R.id.bottom_popup_button), Gravity.CENTER, 0, 0);
+
+                menu_select_count++;
+            } else if (menu_select_count == 1) {
+                mPopup.showAtLocation(findViewById(R.id.dropdown_popup_button), Gravity.CENTER, 0, 0);
+
+                menu_select_count++;
+            } else if (menu_select_count == 2) {
+                mPopup_2.showAtLocation(findViewById(R.id.top_popup_button), Gravity.CENTER, 0, 0);
+
+                menu_select_count = 0;
+            }
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     void showpDialog() {
