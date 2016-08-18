@@ -98,7 +98,12 @@
         <activity
             android:name=".ImageViewer"
             android:label="@string/title_activity_image_viewer"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".dialog.Keyword_dialog_activity"
+            android:theme="@android:style/Theme.DeviceDefault.Light.Dialog.NoActionBar">
+
+        </activity>
     </application>
 
 </manifest>

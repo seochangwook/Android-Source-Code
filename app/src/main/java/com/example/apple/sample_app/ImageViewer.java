@@ -8,17 +8,15 @@ import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Gravity;
-import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.ExpandableListView;
@@ -30,16 +28,21 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.apple.sample_app.data.Trans_Data.Image_Trans;
+import com.example.apple.sample_app.dialog.Keyword_dialog_activity;
 import com.example.apple.sample_app.widget.Adapter.MyGroupAdapter;
 import com.squareup.picasso.Picasso;
 
 import java.io.File;
 
+import jp.wasabeef.blurry.Blurry;
 import jp.wasabeef.picasso.transformations.CropCircleTransformation;
 
 public class ImageViewer extends AppCompatActivity {
     public static final String EXTRA_IMAGE = "image";
     private static final int RC_SINGLE_IMAGE = 2;
+    private static final int RC_KEYWORD_CODE = 100; //정상응답을 받을 경우//
+    private static final String RC_KEYWORD_KEY = "keyword";
+
     ImageView imageview;
     TextView image_name_text;
     String image_url;
@@ -48,17 +51,11 @@ public class ImageViewer extends AppCompatActivity {
     /**
      * Popup Menu Button
      **/
-    Button bottom_popup_menu_button;
-    Button top_popup_menu_button;
-    Button left_popup_menu_button;
-    Button right_popup_menu_button;
-    Button center_popup_menu_button;
-
     ExpandableListView expandablelistview;
     MyGroupAdapter mAdapter;
     Switch category_switch;
     String path = null;
-    PopupWindow mPopup, mPopup_1, mPopup_2, mPopup_3, mPopup_4, mPopup_5;
+    PopupWindow mPopup_2;
     /**
      * Popup Item
      **/
@@ -69,7 +66,10 @@ public class ImageViewer extends AppCompatActivity {
     int child_image_id[];
     File uploadFile = null; //이미지도 하나의 파일이기에 파일로 만든다.//
     int menu_select_count = 0;
+    int menu_option = 0;
+    Menu menu;
     private ProgressDialog pDialog; //직관적인 다이얼로그 사용(현재 진행률 보기)//
+    private boolean blurred = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,28 +78,12 @@ public class ImageViewer extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        bottom_popup_menu_button = (Button) findViewById(R.id.bottom_popup_button);
-        top_popup_menu_button = (Button) findViewById(R.id.top_popup_button);
-        left_popup_menu_button = (Button) findViewById(R.id.left_popup_button);
-        right_popup_menu_button = (Button) findViewById(R.id.right_popup_button);
-        center_popup_menu_button = (Button) findViewById(R.id.dropdown_popup_button);
-
         pDialog = new ProgressDialog(this);
         pDialog.setMessage("Please wait...");
         pDialog.setCancelable(false);
 
         imageview = (ImageView) findViewById(R.id.image_data_view);
         image_name_text = (TextView) findViewById(R.id.image_data_content);
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
 
         //넘어온 객체의 정보는 강제 캐스팅을 이용하여 설정.//
         image_trans = (Image_Trans) getIntent().getSerializableExtra(EXTRA_IMAGE); //직렬화 정보를 가져온다.//
@@ -134,6 +118,7 @@ public class ImageViewer extends AppCompatActivity {
                 }
             }
         });
+
         //리스트뷰 이벤트 처리.//
         expandablelistview.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
             @Override
@@ -159,28 +144,6 @@ public class ImageViewer extends AppCompatActivity {
         });
 
         //팝업화면 설정.//
-        mPopup = new PopupWindow(popupView, ActionBar.LayoutParams.WRAP_CONTENT, ActionBar.LayoutParams.WRAP_CONTENT, true);
-        mPopup.setTouchable(true);
-        mPopup.setOutsideTouchable(true);
-        mPopup.setBackgroundDrawable(new BitmapDrawable(getResources(), (Bitmap) null));
-        mPopup.setAnimationStyle(R.style.PopupAnimation); //애니메이션 등록.//
-
-        mPopup.getContentView().setFocusableInTouchMode(true);
-        mPopup.getContentView().setFocusable(true);
-
-        //두번째 팝업 설정.//
-        //팝업화면 설정.//
-        mPopup_1 = new PopupWindow(popupView, ActionBar.LayoutParams.WRAP_CONTENT, ActionBar.LayoutParams.WRAP_CONTENT, true);
-        mPopup_1.setTouchable(true);
-        mPopup_1.setOutsideTouchable(true);
-        mPopup_1.setBackgroundDrawable(new BitmapDrawable(getResources(), (Bitmap) null));
-        mPopup_1.setAnimationStyle(R.style.PopupAnimationTop); //애니메이션 등록.//
-
-        mPopup_1.getContentView().setFocusableInTouchMode(true);
-        mPopup_1.getContentView().setFocusable(true);
-
-        //세번째 팝업 설정.//
-        //팝업화면 설정.//
         mPopup_2 = new PopupWindow(popupView, ActionBar.LayoutParams.WRAP_CONTENT, ActionBar.LayoutParams.WRAP_CONTENT, true);
         mPopup_2.setTouchable(true);
         mPopup_2.setOutsideTouchable(true);
@@ -190,72 +153,11 @@ public class ImageViewer extends AppCompatActivity {
         mPopup_2.getContentView().setFocusableInTouchMode(true);
         mPopup_2.getContentView().setFocusable(true);
 
-        //키 이벤트 등록//
-        mPopup.getContentView().setOnKeyListener(new View.OnKeyListener() {
+        //팝업창 사라지는 이벤트 등록//
+        mPopup_2.setOnDismissListener(new PopupWindow.OnDismissListener() {
             @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if (keyCode == KeyEvent.KEYCODE_MENU && event.getRepeatCount() == 0
-                        && event.getAction() == KeyEvent.ACTION_DOWN) {
-                    if (mPopup != null && mPopup.isShowing()) {
-                        mPopup.dismiss();
-                    }
-                    return true;
-                }
-
-                return false;
-            }
-        });
-
-        //키 이벤트 등록//
-        mPopup_1.getContentView().setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if (keyCode == KeyEvent.KEYCODE_MENU && event.getRepeatCount() == 0
-                        && event.getAction() == KeyEvent.ACTION_DOWN) {
-                    if (mPopup_1 != null && mPopup_1.isShowing()) {
-                        mPopup_1.dismiss();
-                    }
-                    return true;
-                }
-
-                return false;
-            }
-        });
-
-        //키 이벤트 등록//
-        mPopup_2.getContentView().setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                if (keyCode == KeyEvent.KEYCODE_MENU && event.getRepeatCount() == 0
-                        && event.getAction() == KeyEvent.ACTION_DOWN) {
-                    if (mPopup_2 != null && mPopup_2.isShowing()) {
-                        mPopup_2.dismiss();
-                    }
-                    return true;
-                }
-
-                return false;
-            }
-        });
-
-        bottom_popup_menu_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mPopup_1.showAtLocation(findViewById(R.id.bottom_popup_button), Gravity.CENTER, 0, 0);
-            }
-        });
-
-        center_popup_menu_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mPopup.showAtLocation(findViewById(R.id.dropdown_popup_button), Gravity.CENTER, 0, 0);
-            }
-        });
-
-        top_popup_menu_button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mPopup_2.showAtLocation(findViewById(R.id.top_popup_button), Gravity.CENTER, 0, 0);
+            public void onDismiss() {
+                Blurry.delete((ViewGroup) findViewById(R.id.container_layout)); //블로 효과 제거.//
             }
         });
 
@@ -290,6 +192,14 @@ public class ImageViewer extends AppCompatActivity {
                             .load(uploadFile)
                             .into(previce_imageview); //into로 보낼 위젯 선택.//
                 }
+            }
+        } else if (requestCode == RC_KEYWORD_CODE) {
+            if (resultCode == RESULT_OK) {
+                String select_keyword = data.getStringExtra("keyword");
+
+                Toast.makeText(getApplicationContext(), "" + select_keyword + "로 이동", Toast.LENGTH_SHORT).show();
+
+                //리사이클뷰의 스크롤을 키워드명을 기준으로 이동.//
             }
         }
     }
@@ -328,6 +238,7 @@ public class ImageViewer extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        this.menu = menu;
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.friend_menu, menu);
 
@@ -342,19 +253,18 @@ public class ImageViewer extends AppCompatActivity {
         int id = item.getItemId();
 
         if (id == R.id.friend_menu_1) {
-            if (menu_select_count == 0) {
-                mPopup_1.showAtLocation(findViewById(R.id.bottom_popup_button), Gravity.CENTER, 0, 0);
+            Blurry.with(ImageViewer.this)
+                    .radius(25)
+                    .sampling(2)
+                    .async()
+                    .animate(500)
+                    .onto((ViewGroup) findViewById(R.id.container_layout));
 
-                menu_select_count++;
-            } else if (menu_select_count == 1) {
-                mPopup.showAtLocation(findViewById(R.id.dropdown_popup_button), Gravity.CENTER, 0, 0);
+            mPopup_2.showAtLocation(findViewById(R.id.top_popup_button), Gravity.BOTTOM, 0, 0);
+        } else if (id == R.id.friend_menu_2) {
+            Intent intent = new Intent(ImageViewer.this, Keyword_dialog_activity.class);
 
-                menu_select_count++;
-            } else if (menu_select_count == 2) {
-                mPopup_2.showAtLocation(findViewById(R.id.top_popup_button), Gravity.CENTER, 0, 0);
-
-                menu_select_count = 0;
-            }
+            startActivityForResult(intent, RC_KEYWORD_CODE);
         }
 
         return super.onOptionsItemSelected(item);

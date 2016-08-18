@@ -7,4 +7,10 @@
         android:orderInCategory="100"
         android:title=""
         app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/friend_menu_2"
+        android:orderInCategory="101"
+        android:title="Keyword"
+        app:showAsAction="always" />
 </menu>

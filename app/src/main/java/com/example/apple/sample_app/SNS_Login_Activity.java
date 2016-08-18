@@ -12,10 +12,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
@@ -93,14 +95,16 @@ public class SNS_Login_Activity extends AppCompatActivity implements
     Button sign_out_button;
     ImageView profile_image;
     int what_sns_click; //1이면 페이스북, 2이면 구글//
-    private GoogleApiClient mGoogleApiClient;
-    private CallbackManager callbackManager; //세션연결 콜백관리자.//
-    private TextView mStatusTextView;
-    private ProgressDialog mProgressDialog;
     /**
      * 메뉴 관련
      **/
     //private ResideMenu resideMenu;
+
+    EditText token_edit;
+    private GoogleApiClient mGoogleApiClient;
+    private CallbackManager callbackManager; //세션연결 콜백관리자.//
+    private TextView mStatusTextView;
+    private ProgressDialog mProgressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -244,6 +248,16 @@ public class SNS_Login_Activity extends AppCompatActivity implements
             //Volley방식으로 JSON파싱//
             @Override
             public void onSuccess(LoginResult loginResult) {
+                //Access Token값을 가져온다.//
+                AccessToken accessToken = AccessToken.getCurrentAccessToken();
+
+                String token = accessToken.getToken();
+                String user_id = accessToken.getUserId();
+
+                //해당 토큰값을 서버로 전송한다.//
+
+                Toast.makeText(SNS_Login_Activity.this, "Token : " + token + "/ user id : " + user_id, Toast.LENGTH_SHORT).show();
+
                 final GraphRequest request = GraphRequest.newMeRequest(
                         loginResult.getAccessToken(),
                         new GraphRequest.GraphJSONObjectCallback() {

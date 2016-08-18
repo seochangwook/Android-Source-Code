@@ -234,6 +234,7 @@ public class MainTabActivity extends AppCompatActivity {
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
      * one of the sections/tabs/pages.
      */
+    //뷰 페이저에 해당 어댑터를 등록. 어댑터에는 각 뷰의 페이지에 들어갈 프래그먼트들을 정의.//
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
         public SectionsPagerAdapter(FragmentManager fm) {
