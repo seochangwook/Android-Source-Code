@@ -338,6 +338,15 @@
   </div>
 </p>
 
+<< Sample image >>
+
+<p align="left">
+  <title> EditText에 이미지 넣기 </title>
+  <div class="photoset-grid" data-layout="13">
+      <img src="https://github.com/seochangwook/Team-Project-Sample-Code-android-/blob/master/Project_SampleImage/screen_48.jpeg" width="250" height="350">
+  </div>
+</p>
+
 # Design department issues
 
 * UI 시나리오 뉴스잉 기획안 파일 저장
