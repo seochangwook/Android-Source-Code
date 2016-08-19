@@ -31,7 +31,6 @@
 * //Android-Iconics - used to provide an easy API for icons
 * compile 'com.mikepenz:iconics-core:2.6.6@aar'
 * compile 'com.specyci:residemenu:1.6+' //향상된 3D메뉴 라이브러리
-* compile 'com.hkm.taglib:tag:1.6.0' // 태그관련 라이브러리
 * compile 'com.google.android.gms:play-services-auth:8.3.0' //구글 인증관련 라이브러리//
 * compile 'com.android.support:multidex:1.0.0' //dexOutOfMemory방지 라이브러리//
 * compile('com.twitter.sdk.android:twitter:1.14.1@aar') {
@@ -45,6 +44,8 @@
 * compile 'com.github.franmontiel:PersistentCookieJar:v0.9.3' //OkHttp쿠키관련 라이브러리.//
 * compile 'com.github.bumptech.glide:glide:3.7.0' //Glide 라이브러리.//
 * compile 'jp.wasabeef:blurry:2.0.2'
+* compile 'com.github.mabbas007:TagsEditText:v1.0' //해시태그 관련 라이브러리
+* compile 'me.gujun.android.taggroup:library:1.4@aar' //해시태그 관련 라이브러리
 * (새로운 라이브러리 추가 시 계속 업데이트)
 
 << Sample image >>
@@ -335,6 +336,25 @@
   <div class="photoset-grid" data-layout="13">
       <img src="https://github.com/seochangwook/Team-Project-Sample-Code-android-/blob/master/Project_SampleImage/screen_46.jpeg" width="250" height="350">
       <img src="https://github.com/seochangwook/Team-Project-Sample-Code-android-/blob/master/Project_SampleImage/screen_47.jpeg" width="250" height="350">
+  </div>
+</p>
+
+<< Sample image >>
+
+<p align="left">
+  <title> EditText에 이미지 넣기 </title>
+  <div class="photoset-grid" data-layout="13">
+      <img src="https://github.com/seochangwook/Team-Project-Sample-Code-android-/blob/master/Project_SampleImage/screen_48.jpeg" width="250" height="350">
+  </div>
+</p>
+
+<< Sample image >>
+
+<p align="left">
+  <title> 향상된 HashTag기능 </title>
+  <div class="photoset-grid" data-layout="13">
+      <img src="https://github.com/seochangwook/Team-Project-Sample-Code-android-/blob/master/Project_SampleImage/screen_49.jpeg" width="250" height="350">
+      <img src="https://github.com/seochangwook/Team-Project-Sample-Code-android-/blob/master/Project_SampleImage/screen_50.jpeg" width="250" height="350">
   </div>
 </p>
 
