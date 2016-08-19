@@ -45,7 +45,7 @@
 * compile 'com.github.bumptech.glide:glide:3.7.0' //Glide 라이브러리.//
 * compile 'jp.wasabeef:blurry:2.0.2'
 * compile 'com.github.mabbas007:TagsEditText:v1.0' //해시태그 관련 라이브러리
-* compile 'me.gujun.android.taggroup:library:1.4@aar'
+* compile 'me.gujun.android.taggroup:library:1.4@aar' //해시태그 관련 라이브러리
 * (새로운 라이브러리 추가 시 계속 업데이트)
 
 << Sample image >>
