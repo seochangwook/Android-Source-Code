@@ -52,6 +52,13 @@
             app:siBorderColor="@color/colorPrimaryDark"
             app:siBorderWidth="3dp" />
 
+        <Button
+            android:id="@+id/facebook_login_button_custom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="facebook_login" />
+
     </LinearLayout>
 
 

@@ -2,11 +2,15 @@ package com.example.apple.sample_app;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
+import android.content.pm.Signature;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Base64;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -18,6 +22,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.facebook.AccessToken;
+import com.facebook.AccessTokenTracker;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
@@ -26,6 +31,9 @@ import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
 import com.facebook.Profile;
 import com.facebook.appevents.AppEventsLogger;
+import com.facebook.login.DefaultAudience;
+import com.facebook.login.LoginBehavior;
+import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.auth.api.Auth;
@@ -54,6 +62,9 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.Arrays;
 
 import io.fabric.sdk.android.Fabric;
 
@@ -91,10 +102,15 @@ public class SNS_Login_Activity extends AppCompatActivity implements
     LoginButton loginbutton; //페이스북 로그인 버튼//
     String id, name, profile_link;
     ImageTask get_profile_image_task_facebook; //계정 이미지 불러오기 작업//
-    String profile_img_url, user_name;
+    String profile_img_url, user_name, user_email;
     Button sign_out_button;
     ImageView profile_image;
     int what_sns_click; //1이면 페이스북, 2이면 구글//
+
+    //버튼 커스텀//
+    LoginManager mLoginManager;
+    Button facebook_login_button;
+    AccessTokenTracker tracker; //로그인 정보 추적//
     /**
      * 메뉴 관련
      **/
@@ -126,6 +142,9 @@ public class SNS_Login_Activity extends AppCompatActivity implements
         profile_image = (ImageView) findViewById(R.id.profile_imageView);
         loginbutton = (LoginButton) findViewById(R.id.facebook_login_button);
         twitter_login_button = (TwitterLoginButton) findViewById(R.id.twitter_login_button);
+        facebook_login_button = (Button) findViewById(R.id.facebook_login_button_custom);
+
+        mLoginManager = LoginManager.getInstance();
 
         /** Reside Menu 구성 **/
         //리사이드 메뉴 구성//
@@ -242,8 +261,11 @@ public class SNS_Login_Activity extends AppCompatActivity implements
         });*/
 
         /** Facebook 로그인 과정 **/
-        callbackManager = CallbackManager.Factory.create();
 
+        printKeyHash();
+
+        callbackManager = CallbackManager.Factory.create(); //onActivityResult설정.//
+        //loginbutton.setFragment("fragment name"); //프래그먼트 시 적용.//
         loginbutton.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
             //Volley방식으로 JSON파싱//
             @Override
@@ -273,7 +295,11 @@ public class SNS_Login_Activity extends AppCompatActivity implements
                                     name = object.optString("name");//페이스북 이름
                                     profile_link = "" + profile.getLinkUri(); //프로파일을 이용해서 사용자주소 링크를 가져온다.//
 
-                                    mStatusTextView.setText(name);
+                                    if (name == null) {
+                                        mStatusTextView.setText("null");
+                                    } else {
+                                        mStatusTextView.setText(name);
+                                    }
 
                                     what_sns_click = 1;
 
@@ -303,6 +329,20 @@ public class SNS_Login_Activity extends AppCompatActivity implements
                 Toast.makeText(SNS_Login_Activity.this, "에러가 발생하였습니다", Toast.LENGTH_SHORT).show();
             }
         });
+
+        facebook_login_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (isLogin()) {
+                    logoutFacebook();
+                } else {
+                    loginFacebook();
+                }
+
+            }
+        });
+
+        setButtonLabel(); //버튼의 글씨변경.//
 
         /** Twitter 로그인 관련 **/
         twitter_login_button.setCallback(new Callback<TwitterSession>() {
@@ -349,6 +389,26 @@ public class SNS_Login_Activity extends AppCompatActivity implements
                 }
             });
         }
+
+        /** Facebook AccessTokenTracker 관련 **/
+        if (tracker == null) {
+            tracker = new AccessTokenTracker() {
+                @Override
+                protected void onCurrentAccessTokenChanged(AccessToken oldAccessToken, AccessToken currentAccessToken) {
+                    setButtonLabel();
+                }
+            };
+        } else {
+            tracker.startTracking(); //추적을 시작.//
+        }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        //트래킹 종료.//
+        tracker.stopTracking();
     }
 
     //인증에 대한 결과를 받는다.//
@@ -364,7 +424,8 @@ public class SNS_Login_Activity extends AppCompatActivity implements
         }
 
         /** Facebook 로그인 관련 **/
-        callbackManager.onActivityResult(requestCode, resultCode, data);
+        //등록이 되어있어야지 정상적으로 onSuccess에서 정보를 받아온다.//
+        callbackManager.onActivityResult(requestCode, resultCode, data); //
 
         Log.d("myLog", "requestCode  " + requestCode);
         Log.d("myLog", "resultCode" + resultCode);
@@ -549,6 +610,125 @@ public class SNS_Login_Activity extends AppCompatActivity implements
     public void set_user_image(String user_id) {
         get_profile_image_task_facebook = new ImageTask(user_id);
         get_profile_image_task_facebook.execute(); //스레드 작업 실행//
+    }
+
+    private void printKeyHash() {
+        // Add code to print out the key hash
+        try {
+            PackageInfo info = getPackageManager().getPackageInfo("com.example.apple.sample_app", PackageManager.GET_SIGNATURES);
+            for (Signature signature : info.signatures) {
+                MessageDigest md = MessageDigest.getInstance("SHA");
+                md.update(signature.toByteArray());
+                Log.d("KeyHash:", Base64.encodeToString(md.digest(), Base64.DEFAULT));
+            }
+        } catch (PackageManager.NameNotFoundException e) {
+            Log.e("KeyHash:", e.toString());
+        } catch (NoSuchAlgorithmException e) {
+            Log.e("KeyHash:", e.toString());
+        }
+    }
+
+    /**
+     * Facebook 관련 CustomLogin
+     **/
+
+    private void logoutFacebook() {
+        mLoginManager.logOut(); //로그아웃.//
+
+        profile_image.setImageResource(R.drawable.facebook_people_image);
+    }
+
+    private void loginFacebook() {
+        mLoginManager.setDefaultAudience(DefaultAudience.FRIENDS);
+        mLoginManager.setLoginBehavior(LoginBehavior.NATIVE_WITH_FALLBACK);
+
+        //콜백등록.//
+        mLoginManager.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+            @Override
+            public void onSuccess(LoginResult loginResult) {
+                //Access Token값을 가져온다.//
+                AccessToken accessToken = AccessToken.getCurrentAccessToken();
+
+                String token = accessToken.getToken();
+
+                Log.d("token : ", token);
+
+                String user_id = accessToken.getUserId();
+
+                //해당 토큰값을 서버로 전송한다.//
+
+                Toast.makeText(SNS_Login_Activity.this, "Token : " + token + "/ user id : " + user_id, Toast.LENGTH_SHORT).show();
+
+                final GraphRequest request = GraphRequest.newMeRequest(
+                        accessToken,
+                        new GraphRequest.GraphJSONObjectCallback() {
+                            //GraphAPI로 부터 데이터가 정상적으로 온 경우.//
+                            @Override
+                            public void onCompleted(JSONObject object, GraphResponse response) {
+                                // Application code
+                                try {
+                                    Profile profile = Profile.getCurrentProfile(); //현재의 프로필 정보를 받아온다.//
+
+                                    //사용자 인증정보를 가져온다. 기본적인 JSON정보와 Profile을 이용.//
+                                    //Exception방지로 opt로 불러온다.//
+                                    id = object.optString("id");//페이스북 아이디값
+                                    name = object.optString("name");//페이스북 이름
+                                    profile_link = "" + profile.getLinkUri(); //프로파일을 이용해서 사용자주소 링크를 가져온다.//
+                                    user_email = object.optString("email");
+
+                                    Log.d("user email : ", user_email);
+
+                                    if (name == null) {
+                                        mStatusTextView.setText("null");
+                                    } else {
+                                        mStatusTextView.setText(name);
+                                    }
+
+                                    what_sns_click = 1;
+
+                                    //id를 넘겨 이미지의 토큰값으로 활용//
+                                    set_user_image(id);
+
+                                } catch (FacebookException e) {
+                                    Toast.makeText(SNS_Login_Activity.this, "사용자 정보를 불러올 수 없습니다", Toast.LENGTH_SHORT).show();
+                                }
+
+                                // new joinTask().execute(); //자신의 서버에서 로그인 처리를 해줍니다//
+                            }
+                        });
+                Bundle parameters = new Bundle();
+                parameters.putString("fields", "id,name,email,gender, birthday");
+                request.setParameters(parameters);
+                request.executeAsync();
+            }
+
+            @Override
+            public void onCancel() {
+
+            }
+
+            @Override
+            public void onError(FacebookException error) {
+
+            }
+        });
+
+        //기존 제공해주는 로그인 버튼으로도 가능.//
+        mLoginManager.logInWithReadPermissions(SNS_Login_Activity.this, Arrays.asList("email")); //이메일 획득 권한//
+    }
+
+    private boolean isLogin() {
+        AccessToken token = AccessToken.getCurrentAccessToken();
+
+        return token != null; //로그인 구분.//
+    }
+
+    private void setButtonLabel() {
+        if (isLogin()) {
+            facebook_login_button.setText("logout");
+        } else {
+            facebook_login_button.setText("login");
+        }
     }
 
     class Google_ImageTask extends AsyncTask<Void, Void, Boolean> {

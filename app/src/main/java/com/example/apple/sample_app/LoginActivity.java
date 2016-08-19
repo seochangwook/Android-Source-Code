@@ -259,7 +259,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private void printKeyHash() {
         // Add code to print out the key hash
         try {
-            PackageInfo info = getPackageManager().getPackageInfo("com.example.apple.sns_connection", PackageManager.GET_SIGNATURES);
+            PackageInfo info = getPackageManager().getPackageInfo("com.example.apple.sample_app", PackageManager.GET_SIGNATURES);
             for (Signature signature : info.signatures) {
                 MessageDigest md = MessageDigest.getInstance("SHA");
                 md.update(signature.toByteArray());
