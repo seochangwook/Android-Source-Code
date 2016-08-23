@@ -361,7 +361,7 @@
 << Sample image >>
 
 <p align="left">
-  <title> SNS 자동 로그인 기능 구현 (페이스북) </title>
+  <title> SNS 자동 로그인 기능 구현 (페이스북) - 서버의 시나리오 따라 매커니즘이 달라진다 </title>
   <div class="photoset-grid" data-layout="13">
       <img src="https://github.com/seochangwook/Team-Project-Sample-Code-android-/blob/master/Project_SampleImage/screen_51.jpeg" width="250" height="350">
       <img src="https://github.com/seochangwook/Team-Project-Sample-Code-android-/blob/master/Project_SampleImage/screen_52.jpeg" width="250" height="350">
