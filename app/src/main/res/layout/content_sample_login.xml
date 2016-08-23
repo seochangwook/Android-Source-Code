@@ -61,12 +61,11 @@
         android:layout_below="@+id/view"
         android:text="Sign" />
 
-    <TextView
-        android:id="@+id/textView11"
+    <Button
+        android:id="@+id/facebook_login_button_custom"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/sign_button"
-        android:text="New Text" />
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="200dp"
+        android:text="facebook_login" />
 </RelativeLayout>

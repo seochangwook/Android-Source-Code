@@ -24,6 +24,7 @@ import com.example.apple.sample_app.NetworkManage.NetworkManager;
 import com.example.apple.sample_app.view.view_fragment.Fragment_Chatting_List;
 import com.example.apple.sample_app.view.view_fragment.Fragment_ImageLoading;
 import com.example.apple.sample_app.view.view_fragment.Fragment_friend_list;
+import com.facebook.login.LoginManager;
 import com.google.gson.Gson;
 
 import java.io.IOException;
@@ -40,6 +41,11 @@ public class MainTabActivity extends AppCompatActivity {
     String user_name;
     String user_id;
     NetworkManager manager;
+
+    /**
+     * Facebook Login 관련 변수
+     **/
+    LoginManager mLoginManager; //로그인을 관리해주는 로그인 매니저.//
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
      * fragments for each of the sections. We use a
@@ -70,6 +76,8 @@ public class MainTabActivity extends AppCompatActivity {
 
             Log.d("splash data : ", response_data);
 
+            mLoginManager.logOut(); //로그아웃으면 다시 로그인 화면으로 돌아간다.//
+
             //json 파싱//
             Gson gson = new Gson();
 
@@ -93,7 +101,11 @@ public class MainTabActivity extends AppCompatActivity {
                     public void run() {
                         Toast.makeText(MainTabActivity.this, "로그아웃 실패", Toast.LENGTH_SHORT).show();
 
+                        startActivity(new Intent(MainTabActivity.this, SampleLoginActivity.class));
+
                         hidepDialog();
+
+                        finish();
                     }
                 });
             }
@@ -122,15 +134,17 @@ public class MainTabActivity extends AppCompatActivity {
         pDialog.setMessage("Please wait...");
         pDialog.setCancelable(false);
 
+        mLoginManager = LoginManager.getInstance();
+
         Intent intent = getIntent();
 
-        user_email = intent.getStringExtra("KEY_USER_EMAIL");
-        user_name = intent.getStringExtra("KEY_USER_NAME");
-        user_id = intent.getStringExtra("KEY_USER_ID");
+        //user_email = intent.getStringExtra("KEY_USER_EMAIL");
+        //user_name = intent.getStringExtra("KEY_USER_NAME");
+        //user_id = intent.getStringExtra("KEY_USER_ID");
 
-        Log.d("main / user email : ", user_email);
-        Log.d("main / user name : ", user_name);
-        Log.d("main / user id : ", user_id);
+        //Log.d("main / user email : ", user_email);
+        //Log.d("main / user name : ", user_name);
+        //Log.d("main / user id : ", user_id);
 
     }
 

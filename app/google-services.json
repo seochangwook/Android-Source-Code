@@ -1,33 +1,20 @@
 {
   "project_info": {
-    "project_number": "1046838876249",
-    "project_id": "sample-99190"
+    "project_number": "464147377968",
+    "project_id": "my-project-1-1470720309181"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1046838876249:android:564891b4f70e7c03",
+        "mobilesdk_app_id": "1:464147377968:android:564891b4f70e7c03",
         "android_client_info": {
           "package_name": "com.example.apple.sample_app"
         }
       },
-      "oauth_client": [
-        {
-          "client_id": "1046838876249-oup5g97fe4unqb64fj8spb36fet9694i.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.example.apple.sample_app",
-            "certificate_hash": "60BC67A9379342FBDFD4FCFEBEDB4B39FC637A26"
-          }
-        },
-        {
-          "client_id": "1046838876249-uvrsop3tnmih197c47kubgblr2h4jmlo.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
+      "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyDVAaylZWPwwP67HTXEsip-2iLunlKwKZc"
+          "current_key": "AIzaSyAPHd420JEuBvElSAS5GyPN4PQDOMSgN_E"
         }
       ],
       "services": {

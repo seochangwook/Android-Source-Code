@@ -12,6 +12,19 @@ public class PropertyManager {
     private static final String KEY_EMAIL = "email";
     private static final String KEY_PASSWORD = "password";
     private static final String KEY_REGISTERID = "registerid";
+
+    /**
+     * SNS로그인 연동 관련 저장소
+     **/
+    private static final String KEY_FACEBOOK_ID = "facebookid"; //저장은 facebookid로 해준다.//
+
+    /** Facebook로그인 관련 정보 **/
+
+    /**
+     * GCM 관련 정보
+     **/
+    private static final String REG_ID = "regToken";
+
     //PropertyManager의 객체는 싱글톤 디자인 패턴으로 설계.//
     private static PropertyManager instance; //private로 객체를 선언.//
     //공유 프래퍼런스 생성.//
@@ -59,6 +72,27 @@ public class PropertyManager {
 
     public void setRegisterid(String registerid) {
         mEditor.putString(KEY_REGISTERID, registerid);
+        mEditor.commit();
+    }
+
+    public String getKeyFacebookId() {
+        return mPrefs.getString(KEY_FACEBOOK_ID, "");
+    }
+
+    public void setKeyFacebookId(String facebookid) {
+        mEditor.putString(KEY_FACEBOOK_ID, facebookid);
+        mEditor.commit();
+    }
+
+    public String getRegistrationToken() {
+        return mPrefs.getString(REG_ID, "");
+    }
+
+    /**
+     * GCM
+     **/
+    public void setRegistrationToken(String regId) {
+        mEditor.putString(REG_ID, regId);
         mEditor.commit();
     }
 }

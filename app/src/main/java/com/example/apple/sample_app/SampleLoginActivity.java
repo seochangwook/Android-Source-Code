@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -15,14 +16,28 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.apple.sample_app.JSON_Data.RequestCode.FacebookRequestCode;
 import com.example.apple.sample_app.JSON_Data.RequestCode.SignInRequestCode;
 import com.example.apple.sample_app.JSON_Data.RequestFail.SignInRequestFail;
+import com.example.apple.sample_app.JSON_Data.RequestSuccess.FacebookSigninRequest_2;
 import com.example.apple.sample_app.JSON_Data.RequestSuccess.SignInRequest;
 import com.example.apple.sample_app.NetworkManage.NetworkManager;
 import com.example.apple.sample_app.data.Manager_Data.PropertyManager;
+import com.facebook.AccessToken;
+import com.facebook.AccessTokenTracker;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.FacebookSdk;
+import com.facebook.appevents.AppEventsLogger;
+import com.facebook.login.DefaultAudience;
+import com.facebook.login.LoginBehavior;
+import com.facebook.login.LoginManager;
+import com.facebook.login.LoginResult;
 import com.google.gson.Gson;
 
 import java.io.IOException;
+import java.util.Arrays;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -45,11 +60,86 @@ public class SampleLoginActivity extends AppCompatActivity {
     NetworkManager manager;
     SharedPreferences mPrefs; //공유 프래퍼런스 정의.//
     SharedPreferences.Editor mEditor; //프래퍼런스 에디터 정의//
+    Handler mHandler;
+    /**
+     * Facebook 로그인 관련
+     **/
+    //버튼 커스텀//
+    LoginManager mLoginManager;
+    Button facebook_login_button;
+    AccessTokenTracker tracker; //로그인 정보 추적//
     private ProgressDialog pDialog;
+    private CallbackManager callbackManager; //세션연결 콜백관리자.//
+    private Callback requestfacebooksignincallback = new Callback() {
+        @Override
+        public void onFailure(Call call, IOException e) //접속 실패의 경우.//
+        {
+            //네트워크 자체에서의 에러상황.//
+            Log.d("ERROR Message : ", e.getMessage());
+        }
+
+        @Override
+        public void onResponse(Call call, Response response) throws IOException {
+            String response_data = response.body().string();
+
+            Log.d("facebook login data : ", response_data);
+
+            //회원가입 유무를 판단가능.//
+            Gson gson = new Gson();
+
+            FacebookRequestCode result_code = gson.fromJson(response_data, FacebookRequestCode.class);
+
+            int code = result_code.get_request_code();
+
+            if (code == 1) //로그인은 되어 있지 않으나 회원가입은 된 경우//
+            {
+                Log.d("process : ", "code 1");
+            } else if (code == 2) //잘못된 토큰값.//
+            {
+                Log.d("process : ", "invalid token");
+            } else if (code == 3) //로그인도 되어 있지 않고 회원가입도 안된 경우.//
+            {
+                Log.d("process : ", "code 3");
+
+                //해당 구문으로 파싱.//
+                //가입을 할려면 이름과 이메일 주소가 필요한데 해당 파싱 후 정보를 회원가입 페이지로 전달.//
+                FacebookSigninRequest_2 facebookSigninRequest_2 = gson.fromJson(response_data, FacebookSigninRequest_2.class);
+
+                final String user_name = facebookSigninRequest_2.getResult().getName();
+                final String user_email = facebookSigninRequest_2.getResult().getEmail();
+                final String user_id = facebookSigninRequest_2.getResult().getId();
+
+                //회원가입을 바로 시도.//
+                runOnUiThread(new Runnable() {
+                    public void run() {
+                        //토큰값을 전달하고 사용자 이름정보와 프로필 이미지 경로, id를 받는다.//
+                        //id를 전달받으면 프레퍼런스에 저장.(로그인이 안되었다는 가정하에 진행)//
+
+
+                        Intent intent = new Intent(SampleLoginActivity.this, MainTabActivity.class);
+
+                        //필요한 인자 전달.//
+                        //intent.putExtra("KEY_USER_NAME", user_name);
+                        //intent.putExtra("KEY_USER_EMAIL", user_email);
+                        //서버로 부터 전송받아온 id를 전송//
+                        intent.putExtra("KEY_USER_ID", user_id);
+
+                        startActivity(intent);
+
+                        finish();
+                    }
+                });
+            }
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        FacebookSdk.sdkInitialize(getApplicationContext()); //초기 facebook연동을 하기 위해서 초기화//
+        AppEventsLogger.activateApp(this);
+
         setContentView(R.layout.activity_sample_login);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -58,6 +148,9 @@ public class SampleLoginActivity extends AppCompatActivity {
         login_button = (Button) findViewById(R.id.login_button_user);
         input_email_edit = (EditText) findViewById(R.id.input_email_edit);
         input_password_edit = (EditText) findViewById(R.id.input_password_edit);
+        facebook_login_button = (Button) findViewById(R.id.facebook_login_button_custom);
+
+        mLoginManager = LoginManager.getInstance();
 
         pDialog = new ProgressDialog(this);
         pDialog.setMessage("Please wait...");
@@ -193,6 +286,147 @@ public class SampleLoginActivity extends AppCompatActivity {
 
         input_email_edit.setText(user_email);
         input_password_edit.setText(user_password);
+
+        callbackManager = CallbackManager.Factory.create(); //onActivityResult설정.//
+
+        facebook_login_button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (isLogin()) {
+                    logoutFacebook();
+                } else {
+                    loginFacebook();
+                }
+
+            }
+        });
+    }
+
+    public void onStart() {
+        super.onStart();
+
+        /** Facebook AccessTokenTracker 관련 **/
+        if (tracker == null) {
+            tracker = new AccessTokenTracker() {
+                @Override
+                protected void onCurrentAccessTokenChanged(AccessToken oldAccessToken, AccessToken currentAccessToken) {
+                    setButtonLabel();
+                }
+            };
+        } else {
+            tracker.startTracking(); //추적을 시작.//
+        }
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        //트래킹 종료.//
+        tracker.stopTracking();
+    }
+
+    /**
+     * Facebook 관련 CustomLogin
+     **/
+
+    private void logoutFacebook() {
+        mLoginManager.logOut(); //로그아웃.//
+    }
+
+    private void loginFacebook() {
+        mLoginManager.setDefaultAudience(DefaultAudience.FRIENDS);
+        mLoginManager.setLoginBehavior(LoginBehavior.NATIVE_WITH_FALLBACK);
+
+        //콜백등록.//
+        mLoginManager.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+            @Override
+            public void onSuccess(LoginResult loginResult) {
+                //Access Token값을 가져온다.//
+                AccessToken accessToken = AccessToken.getCurrentAccessToken();
+
+                String token = accessToken.getToken();
+
+                Log.d("token : ", token);
+
+                String user_id = accessToken.getUserId();
+
+                //해당 토큰값을 서버로 전송한다.//
+                trans_facebook_data(user_registerid, token);
+
+                //Toast.makeText(SampleLoginActivity.this, "Token : " + token + "/ user id : " + user_id, Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onCancel() {
+
+            }
+
+            @Override
+            public void onError(FacebookException error) {
+
+            }
+        });
+
+        //기존 제공해주는 로그인 버튼으로도 가능.//
+        mLoginManager.logInWithReadPermissions(SampleLoginActivity.this, Arrays.asList("email")); //이메일 획득 권한//
+    }
+
+    public void trans_facebook_data(String user_registerid, String token) {
+        /** HttpUrl 설정 **/
+        manager = NetworkManager.getInstance();
+
+        OkHttpClient client = manager.getClient();
+
+        /** URL 설정 **/
+        HttpUrl.Builder builder = new HttpUrl.Builder();
+
+        builder.scheme("https"); //스킴정의(Http / Https)
+        builder.host("my-project-1-1470720309181.appspot.com"); //host정의.//
+        builder.addPathSegment("facebooksignin"); //path지정.//
+
+        /** RequestBody 설정 **/
+        RequestBody body = new FormBody.Builder()
+                .add("access_token", token)
+                .add("registrationId", user_registerid)
+                .build();
+
+        /** Request 설정 **/
+        Request request = new Request.Builder()
+                .url(builder.build())
+                .post(body)
+                .tag(this)
+                .build();
+
+        client.newCall(request).enqueue(requestfacebooksignincallback);
+    }
+
+    private boolean isLogin() {
+        AccessToken token = AccessToken.getCurrentAccessToken();
+
+        return token != null; //로그인 구분.//
+    }
+
+    private void setButtonLabel() {
+        if (isLogin()) {
+            facebook_login_button.setText("logout");
+        } else {
+            facebook_login_button.setText("login");
+        }
+    }
+
+    //인증에 대한 결과를 받는다.//
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        /** Facebook 로그인 관련 **/
+        //등록이 되어있어야지 정상적으로 onSuccess에서 정보를 받아온다.//
+        callbackManager.onActivityResult(requestCode, resultCode, data); //
+
+        Log.d("myLog", "requestCode  " + requestCode);
+        Log.d("myLog", "resultCode" + resultCode);
+        Log.d("myLog", "data  " + data.toString());
     }
 
     public void set_Data(final SignInRequest sign_request_info) {

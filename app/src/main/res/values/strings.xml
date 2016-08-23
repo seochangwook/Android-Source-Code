@@ -43,4 +43,6 @@
     <string name="title_activity_chat">ChatActivity</string>
     <string name="title_activity_main_activity__tab">MainActivity_Tab</string>
     <string name="title_activity_image_viewer">ImageViewer</string>
+    <string name="title_activity_facebook_sing_up">FacebookSingUpActivity</string>
+    <string name="title_activity_facebook__signup_">Facebook_Signup_Activity</string>
 </resources>
